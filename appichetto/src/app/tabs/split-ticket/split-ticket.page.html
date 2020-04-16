@@ -1,0 +1,66 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Add new ticket
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [scrollEvents]="true">
+  <ion-row>
+    <ion-col size="3">Name</ion-col>
+    <ion-col size="2">Quantity</ion-col>
+    <ion-col size="2">Price</ion-col>
+    <ion-col size="2">Participant</ion-col>
+    <ion-col size="2">Participant</ion-col>
+  </ion-row>
+  <ion-grid>
+    <ion-row center *ngFor="let product of ticket.products; index as index">
+      <ion-col size="3">{{ product.name }}</ion-col>
+      <ion-col size="2">{{ product.quantity }}</ion-col>
+      <ion-col size="2">{{ product.price }}</ion-col>
+      <ion-col size="2">
+        <ion-fab-button
+          *ngIf="product.participants.length === 0"
+          class="ion-fab-button-false"
+        >
+          <ion-icon name="person" size="small"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button
+          *ngIf="product.participants.length !== 0"
+          class="ion-fab-button-true"
+        >
+          <ion-icon name="person" size="small"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
+      <ion-col size="2">
+        <ion-fab-button
+          (click)="deleteProduct(index)"
+          class="ion-fab-button-false"
+        >
+          <ion-icon name="remove" size="small"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-input
+        [(ngModel)]="product.name"
+        placeholder="name"
+        type="text"
+      ></ion-input>
+      <ion-input
+        [(ngModel)]="product.quantity"
+        placeholder="quantity"
+        type="number"
+      ></ion-input>
+      <ion-input
+        [(ngModel)]="product.price"
+        placeholder="price"
+        type="number "
+      ></ion-input>
+      <ion-fab-button small (click)="addProduct()" >
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+      <ion-input></ion-input>
+    </ion-row>
+  </ion-grid>
+</ion-content>

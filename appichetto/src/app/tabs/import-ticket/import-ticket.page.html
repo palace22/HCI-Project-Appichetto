@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Import ticket
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment color="dark" [(ngModel)]="market">
+    <ion-segment-button value="esselunga">
+      <ion-label>Esselunga</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="coop">
+      <ion-label>Coop</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="conad">
+      <ion-label>Conad</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <br />
+  <ion-segment color="dark" [(ngModel)]="importMethod">
+    <ion-segment-button value="camera">
+      <ion-label>Camera</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pdf">
+      <ion-label>Import PDF</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="manual">
+      <ion-label>Manual</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-fab vertical="center" horizontal="center" slot="fixed">
+    <ion-button color="dark">
+      <ion-item color="dark" [ngSwitch]="market">
+        <ion-label *ngSwitchCase="'esselunga'">
+          ESSELUNGA
+        </ion-label>
+        <ion-label *ngSwitchCase="'coop'">
+          COOP
+        </ion-label>
+        <ion-label *ngSwitchCase="'conad'">
+          CONAD
+        </ion-label>
+      </ion-item>
+      <ion-item color="dark" [ngSwitch]="importMethod">
+        <ion-icon name="attach" *ngSwitchCase="'pdf'"></ion-icon>
+        <ion-icon name="camera" *ngSwitchCase="'camera'"></ion-icon>
+        <ion-icon name="add" *ngSwitchCase="'manual'"></ion-icon>
+      </ion-item>
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
+    <ion-input
+      placeholder=""
+      type="file"
+      *ngIf="importMethod==='pdf'"
+      (change)="readPdf($event)"
+      class="upload"
+    ></ion-input>
+  </ion-fab>
+</ion-content>

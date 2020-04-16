@@ -1,0 +1,36 @@
+* {
+  font-family: "Monospace";
+  font-size: small;
+}
+
+ion-fab-button {
+  width: 3em;
+  height: 3em;
+}
+ion-icon {
+  font-size: 25px;
+}
+
+ion-grid {
+  border: 2px solid #111111;
+  box-sizing: 10px;
+}
+
+ion-col {
+  text-align: center;
+  align-items: center;
+}
+
+// ion-row{
+//     border-bottom: 2px solid #111111;
+//     border-right: 2px solid #111111;
+//     border-left: 2px solid #111111;
+// }
+
+.ion-fab-button-true {
+  --background: #015005;
+}
+
+.ion-fab-button-false {
+  --background: #772209;
+}
