@@ -7,4 +7,5 @@ export class Ticket {
     timestamp?: number;
     owner?: User;
     products: Product[];
+    participans?: User[];
 }

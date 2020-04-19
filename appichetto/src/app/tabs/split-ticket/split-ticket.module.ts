@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { SplitTicketPage } from './split-ticket.page';
 import { RouterModule } from '@angular/router';
+import { TicketProductComponent } from './ticket-product/ticket-product.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,10 @@ import { RouterModule } from '@angular/router';
     IonicModule,
     RouterModule.forChild([{ path: '', component: SplitTicketPage }])
   ],
-  declarations: [SplitTicketPage]
+  declarations: [
+    SplitTicketPage,
+    TicketProductComponent,
+  ],
+
 })
-export class SplitTicketPageModule {}
+export class SplitTicketPageModule { }

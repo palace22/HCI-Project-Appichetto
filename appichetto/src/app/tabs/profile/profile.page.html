@@ -11,5 +11,10 @@
     <ion-img [src]="user.photoUrl"></ion-img>
   </ion-avatar>
   <ion-label>{{user.name}}</ion-label>
-  <ion-button class="xc" color="dark" (click)="logout()">LOGOUT</ion-button>
 </ion-content>
+
+<ion-footer>
+  <ion-button expand="block" class="xc" color="dark" (click)="logout()"
+    >LOGOUT</ion-button
+  >
+</ion-footer>

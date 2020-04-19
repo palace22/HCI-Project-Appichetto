@@ -34,7 +34,7 @@ export class UserRepositoryService {
     return this.firestore.collection(environment.firebaseDB.users).snapshotChanges();
   }
 
-  getUser(id:string) {
+  getUser(id: string) {
     return this.firestore.collection(environment.firebaseDB.users).doc(id)
   }
 
@@ -46,5 +46,19 @@ export class UserRepositoryService {
   deleteUser(user: User) {
     this.userDoc = this.firestore.doc(`${environment.firebaseDB.users}&${user.id}`)
     this.userDoc.delete()
+  }
+
+  getFriends(): User[] {
+    return [
+      { name: "Pino", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
+      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
+      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
+      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
+      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
+      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
+      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
+      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
+      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
+      { name: "Pluto", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" }]
   }
 }

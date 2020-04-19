@@ -22,7 +22,6 @@ export class LoginService {
       this.ngZone.run(() => {
         this.router.navigateByUrl('tabs/profile');
       })
-      console.log(result.user)
     })
   }
 

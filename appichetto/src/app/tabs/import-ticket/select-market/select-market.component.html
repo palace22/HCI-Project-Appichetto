@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Select market
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-grid
+  ><ion-row>
+    <ion-col
+      *ngFor="let market of markets"
+      size="fixed"
+      size-sm="6"
+      size-md="4"
+      size-lg="4"
+    >
+      <ion-card
+        (click)="updateMarket(market)"
+        [ngClass]="isSelected(market) ? 'selected-card' : 'unselected-card'"
+      >
+        <ion-card-content text-center>
+          <ion-img [src]="market.icon"></ion-img>
+          <ion-card-title>
+            {{ market.name }}
+          </ion-card-title>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>

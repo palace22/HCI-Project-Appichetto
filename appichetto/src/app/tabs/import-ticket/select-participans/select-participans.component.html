@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Select participans
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-grid
+  ><ion-row>
+    <ion-col
+      *ngFor="let user of friends"
+      size="fixed"
+      size-sm="6"
+      size-md="4"
+      size-lg="3"
+    >
+      <ion-card
+        (click)="updateParticipants(user)"
+        [ngClass]="isSelected(user) ? 'selected-card' : 'unselected-card'"
+      >
+        <ion-card-content text-center>
+          <ion-avatar>
+            <ion-img [src]="user.photoUrl"></ion-img>
+          </ion-avatar>
+          <ion-card-title>
+            {{ user.name }}
+          </ion-card-title>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>

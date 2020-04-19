@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-segment color="dark" [(ngModel)]="market">
+  <!-- <ion-segment color="dark" [(ngModel)]="market">
     <ion-segment-button value="esselunga">
       <ion-label>Esselunga</ion-label>
     </ion-segment-button>
@@ -58,5 +58,49 @@
       (change)="readPdf($event)"
       class="upload"
     ></ion-input>
-  </ion-fab>
+  </ion-fab> -->
+  <div
+    style="
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      font-size: 25px;
+      z-index: 2;
+    "
+    (click)="slidePrev()"
+  >
+    <ion-icon name="arrow-back"></ion-icon>
+  </div>
+  <div
+    style="
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      font-size: 25px;
+      z-index: 2;
+    "
+    (click)="slideNext()"
+  >
+    <ion-icon name="arrow-forward"></ion-icon>
+  </div>
+  <ion-slides scrollbar="true" pages pager="true" [options]="slideOpts">
+    <ion-slide>
+      <app-select-participans></app-select-participans>
+    </ion-slide>
+    <ion-slide>
+      <app-select-market></app-select-market>
+    </ion-slide>
+    <ion-slide>
+      <app-select-method></app-select-method>
+    </ion-slide>
+  </ion-slides>
 </ion-content>
+
+<ion-footer>
+  <ion-button
+    color="dark"
+    expand="block"
+    disabled="!hasMarketAndMethodSelected()"
+    >Go</ion-button
+  >
+</ion-footer>
