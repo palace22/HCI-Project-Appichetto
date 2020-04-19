@@ -13,3 +13,11 @@ ion-content ion-toolbar {
   filter: alpha(opacity=0);
   opacity: 0;
 }
+
+ion-segment {
+  --color: #000000;
+  --color-activated: #000000;
+  --color-checked: #000000;
+  --color-disabled: #000000;
+  --color-hover: #000000;
+}

@@ -1,0 +1,71 @@
+<ion-row>
+  <ion-col size="3">{{ product.name }}</ion-col>
+  <ion-col size="2">{{ product.quantity }}</ion-col>
+  <ion-col size="2">{{ product.price }}</ion-col>
+  <ion-col size="2">
+    <ion-icon
+      size="large"
+      name="person"
+      [ngClass]="
+        product.participants[0] !== undefined
+          ? 'ion-fab-button-true'
+          : 'ion-fab-button-false'
+      "
+      (click)="openSelect()"
+    ></ion-icon>
+    <ion-select
+      [hidden]="true"
+      #mySelect
+      multiple="true"
+      cancelText="Nah"
+      okText="Okay!"
+      (ionChange)="addParticipant(product, $event)"
+      [(ngModel)]="product.participants"
+    >
+      <ion-select-option
+        *ngFor="let participant of participants; index as i"
+        [(value)]="participant"
+      >
+        {{ participant.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-col>
+  <ion-col size="2">
+    <ion-fab-button (click)="select()">
+      <ion-icon name="remove" size="small"></ion-icon>
+    </ion-fab-button>
+  </ion-col>
+</ion-row>
+<ion-row *ngIf="selected" class="edit-row">
+  <ion-col>
+    <ion-input
+      [(ngModel)]="product.name"
+      placeholder="name"
+      type="text"
+    ></ion-input>
+  </ion-col>
+  <ion-col>
+    <ion-input
+      [(ngModel)]="product.quantity"
+      placeholder="quantity"
+      type="number"
+    ></ion-input>
+  </ion-col>
+  <ion-col>
+    <ion-input
+      [(ngModel)]="product.price"
+      placeholder="price"
+      type="number "
+    ></ion-input>
+  </ion-col>
+  <ion-col>
+    <ion-fab-button small (click)="select()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-col>
+  <ion-col>
+    <ion-fab-button small>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-col>
+</ion-row>
