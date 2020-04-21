@@ -16,29 +16,32 @@ export class UserRepositoryService {
   constructor(private firestore: AngularFirestore) {
     this.usersCollection = this.firestore.collection(environment.firebaseDB.users) as AngularFirestoreCollection<User>
 
-    this.users = this.firestore.collection(environment.firebaseDB.users).snapshotChanges().pipe(
+    this.users = this.usersCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as User
         const id = a.payload.doc.id
         return { id, ...data }
       }))
     )
-    this.users.forEach(u => console.log(u))
   }
 
-  addUser(user: User) {
-    this.usersCollection.doc(user.name).set(user);
+  async addUser(user: User) {
+    await this.usersCollection.doc(user.email).set(user);
   }
 
   getUsers() {
     return this.firestore.collection(environment.firebaseDB.users).snapshotChanges();
   }
 
-  getUser(id: string) {
-    return this.firestore.collection(environment.firebaseDB.users).doc(id)
+  async getUser(id: string): Promise<User> {
+    return await (await this.firestore.collection(environment.firebaseDB.users).doc(id).ref.get()).data() as User
   }
 
-  userUser(user: User) {
+  async userExists(id: string): Promise<boolean> {
+    return (await this.firestore.collection(environment.firebaseDB.users).doc(id).ref.get()).exists
+  }
+
+  updateUser(user: User) {
     this.userDoc = this.firestore.doc(`${environment.firebaseDB.users}&${user.id}`)
     this.userDoc.update(user)
   }

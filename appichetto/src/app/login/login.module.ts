@@ -10,6 +10,8 @@ import { RouterModule } from '@angular/router';
 import { UserRepositoryService } from '../repositories/user-repository.service';
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire'
+import { LoginService } from '../services/login.service';
+import { GoogleLoggedUserPipe } from '../pipe/google-logged-user.pipe';
 
 
 @NgModule({
@@ -20,6 +22,6 @@ import { AngularFireModule } from '@angular/fire'
     RouterModule.forChild([{ path: '', component: LoginPage }]),
   ],
   declarations: [LoginPage],
-  providers: [UserRepositoryService]
+  providers: [UserRepositoryService, LoginService, GoogleLoggedUserPipe]
 })
 export class LoginPageModule { }

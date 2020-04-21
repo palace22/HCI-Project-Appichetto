@@ -19,7 +19,7 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loginService.getLoggedUser()
+    this.loginService.getLogUser()
       .subscribe(user => {
         this.user = user
         if (this.user !== null) {

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { FriendsListComponent } from './profile/friends-list/friends-list.component';
 
 const routes: Routes = [
   {
@@ -43,7 +44,11 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../tabs/profile/profile.module').then(m => m.ProfilePageModule)
+              import('../tabs/profile/profile.module').then(m => m.ProfilePageModule),
+          },
+          {
+            path: 'friends-list',
+            component: FriendsListComponent,
           },
         ],
       },

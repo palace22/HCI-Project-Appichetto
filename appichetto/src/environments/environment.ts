@@ -15,7 +15,8 @@ export const environment = {
     measurementId: "G-0Z3SY0MSYT"
   },
   firebaseDB: {
-    users: "users"
+    users: "users",
+    user_friends: "user_group",
   }
 };
 

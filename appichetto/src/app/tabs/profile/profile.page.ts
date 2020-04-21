@@ -11,8 +11,8 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class ProfilePage {
   user: User = {
-    name: "",
-    photoUrl: "",
+    name: "Test Test",
+    photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA",
   }
 
   constructor(private router: Router, private loginService: LoginService) { }
@@ -34,4 +34,7 @@ export class ProfilePage {
     this.loginService.logout()
   }
 
+  goToAddFriends(){
+    this.router.navigateByUrl('tabs/profile/friends-list')
+  }
 }
