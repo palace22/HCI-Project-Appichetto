@@ -13,6 +13,7 @@ import { environment } from '../environments/environment'
 import { AngularFireModule } from '@angular/fire'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore';
+import { GoogleLoggedUserPipe } from './pipe/google-logged-user.pipe';
 
 @NgModule({
   declarations: [AppComponent],
