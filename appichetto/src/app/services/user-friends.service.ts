@@ -19,7 +19,7 @@ export class UserFriendsService {
     private userRepositoryService: UserRepositoryService,
   ) {
     this.userId = "palazzolo1995@gmail.com"//loginService.getLoggedUser().email
-    console.log(this.userId)
+    this.setLoggedUser()
   }
 
   setLoggedUser() {

@@ -23,10 +23,16 @@ ion-col {
 //     border-left: 2px solid #111111;
 // }
 
-.ion-fab-button-true {
-  --background: #015005;
+.selected-card {
+  box-shadow: 0 1px 50px rgba(0, 0, 0, 0.4);
 }
 
-.ion-fab-button-false {
-  --background: #772209;
+.button {
+  border: solid;
+  border-width: thin;
+  border-radius: 4px;
+}
+
+.new-product {
+  box-shadow: inset 0px 2px 8px rgba(0, 0, 0, 0.4);
 }

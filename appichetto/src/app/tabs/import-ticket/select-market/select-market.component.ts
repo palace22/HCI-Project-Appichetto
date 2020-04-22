@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-select-market',
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SelectMarketComponent implements OnInit {
   market: string
+  @Output()
+  marketChanged = new EventEmitter<string>()
+
   markets: Market[] = [
     { name: "Esselunga", icon: '../../../../assets/icon/Logo_esselunga.png' },
     { name: "Coop", icon: '../../../../assets/icon/1200px-Coop_italia_logo.svg.png' },
@@ -19,6 +22,7 @@ export class SelectMarketComponent implements OnInit {
 
   updateMarket(market: Market): void {
     this.market = market.name
+    this.marketChanged.emit(this.market)
   }
 
   isSelected(market: Market): boolean {

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
-import { plainToClass } from "class-transformer";
+import { User } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -19,22 +18,16 @@ export class ProfilePage {
 
   async ngOnInit() {
     try {
-      let firebaseUser = await this.loginService.getUser()
-      this.user = {
-        name: firebaseUser.displayName,
-        email: firebaseUser.email,
-        photoUrl: firebaseUser.photoURL
-      }
+      this.user = await this.loginService.getLoggedUser()
     } catch (error) {
     }
   }
-
 
   logout() {
     this.loginService.logout()
   }
 
-  goToAddFriends(){
+  goToAddFriends() {
     this.router.navigateByUrl('tabs/profile/friends-list')
   }
 }

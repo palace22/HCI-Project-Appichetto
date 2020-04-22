@@ -11,35 +11,44 @@
     <ion-col size="2">Quantity</ion-col>
     <ion-col size="2">Price</ion-col>
     <ion-col size="2">Participant</ion-col>
-    <ion-col size="2">Participant</ion-col>
+    <ion-col size="2">Edit</ion-col>
   </ion-row>
   <ion-grid *ngFor="let product of ticket.products; index as index">
     <app-ticket-product
-      [(product)]="product"
+      [product]="product"
       [participants]="participants"
+      (deleteProductChange)="deleteProduct(index, $event)"
     ></app-ticket-product>
   </ion-grid>
   <ion-grid>
-    <ion-row>
-      <ion-input
-        [(ngModel)]="product.name"
-        placeholder="name"
-        type="text"
-      ></ion-input>
-      <ion-input
-        [(ngModel)]="product.quantity"
-        placeholder="quantity"
-        type="number"
-      ></ion-input>
-      <ion-input
-        [(ngModel)]="product.price"
-        placeholder="price"
-        type="number "
-      ></ion-input>
-      <ion-fab-button small (click)="addProduct()">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-      <ion-input></ion-input>
+    <ion-row class="new-product">
+      <ion-col size="3">
+        <ion-input
+          [(ngModel)]="newProduct.name"
+          placeholder="name"
+          type="text"
+        ></ion-input>
+      </ion-col>
+      <ion-col size="2">
+        <ion-input
+          [(ngModel)]="newProduct.quantity"
+          placeholder="quantity"
+          type="number"
+        ></ion-input>
+      </ion-col>
+      <ion-col size="2">
+        <ion-input
+          [(ngModel)]="newProduct.price"
+          placeholder="price"
+          type="number"
+        ></ion-input>
+      </ion-col>
+      <ion-col size="4">
+        <ion-fab-button color="dark" [disabled]="!productIsReady()">
+          <ion-icon (click)="addProduct()" name="add" size="large"></ion-icon>
+        </ion-fab-button>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
+<ion-button slot="bottom" color="dark" expand="block">SAVE</ion-button>

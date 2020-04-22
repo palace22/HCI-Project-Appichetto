@@ -12,12 +12,11 @@ import { IonSelect } from '@ionic/angular';
   styleUrls: ['./split-ticket.page.scss'],
 })
 export class SplitTicketPage implements OnInit {
-  participants: User[] = [
-    { name: "Pluto" },
-    { name: "Pino" },
-    { name: "Pippo" },
-  ]
-  user: User = { name: "Pluto" }
+  participants: User[] = [{
+    name: "Pippo"
+  }]
+
+  user: User
   ticket: Ticket = {
     products: [
       {
@@ -34,7 +33,7 @@ export class SplitTicketPage implements OnInit {
         name: "Pasta pesto panna saliccia sugo",
         quantity: 2,
         price: 1.1,
-        participants: [this.participants[0]]
+        participants: []
       }, {
         name: "Pasta",
         quantity: 2,
@@ -55,41 +54,47 @@ export class SplitTicketPage implements OnInit {
         name: "Pasta pesto panna saliccia sugo",
         quantity: 2,
         price: 1.1,
-        participants: [this.participants[0], this.participants[1], this.participants[2]]
+        participants: []
       }
     ],
     timestamp: 9999,
   }
 
-  product: Product
+  newProduct: Product
 
   @ViewChild('mySelect', { static: true }) selectRef: IonSelect;
 
 
   constructor(private router: Router) {
-    this.product = new Product()
+    this.newProduct = new Product()
   }
 
   ngOnInit() {
     try {
       this.ticket = plainToClass(Ticket, this.router.getCurrentNavigation().extras.state.ticket)
+      this.participants = this.router.getCurrentNavigation().extras.state.participants
     } catch (error) {
     }
   }
 
+  productIsReady(): boolean {
+    return this.newProduct.name !== (undefined && "") && this.newProduct.price !== (undefined && "") && this.newProduct.quantity !== (undefined && "")
+  }
+
   addProduct() {
     try {
-      let newProduct = plainToClass(Product, this.product)
+      let newProduct = plainToClass(Product, this.newProduct)
+      newProduct.participants = []
       this.ticket.products.push(newProduct)
-      console.log(this.product)
-      this.product = new Product()
+      console.log(this.newProduct)
+      this.newProduct = new Product()
     } catch{
       console.log("ERROR")
     }
   }
 
-
-  deleteProduct(index: number) {
+  deleteProduct(index: number, $event) {
+    console.log($event)
     this.ticket.products.splice(index, 1)
   }
 

@@ -1,13 +1,14 @@
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { UserRepositoryService } from 'src/app/repositories/user-repository.service';
+import { LoginService } from 'src/app/services/login.service';
 import { ImportTicketPage } from './import-ticket.page';
 import { SelectMarketComponent } from './select-market/select-market.component';
 import { SelectMethodComponent } from './select-method/select-method.component';
-import { SelectParticipansComponent } from './select-participans/select-participans.component';
-import { UserRepositoryService } from 'src/app/repositories/user-repository.service';
+import { SelectParticipantsComponent } from './select-participants/select-participants.component';
 
 @NgModule({
   imports: [
@@ -20,8 +21,8 @@ import { UserRepositoryService } from 'src/app/repositories/user-repository.serv
     ImportTicketPage,
     SelectMarketComponent,
     SelectMethodComponent,
-    SelectParticipansComponent
+    SelectParticipantsComponent,
   ],
-  providers: [UserRepositoryService]
+  providers: [UserRepositoryService, LoginService]
 })
 export class ImportTicketPageModule { }
