@@ -43,9 +43,9 @@ export class FriendsListComponent implements OnInit {
     popover.present().then(() =>
       popover.onDidDismiss().then(async data => {
         let newFriend = data.data as User
-        if (this.userFriends.friends.findIndex(friend => friend.email !== newFriend.email) !== -1) {
+        if (this.userFriends.friends.findIndex(friend => friend.email === newFriend.email) === -1) {
           await this.presentToast("Added correctly")
-          this.userFriendsService.addFriend(newFriend.email, this.userFriends)
+          await this.userFriendsService.addFriend(newFriend.email, this.userFriends)
         } else {
           await this.presentToast("Can't add this user")
         }

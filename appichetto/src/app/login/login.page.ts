@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserRepositoryService } from '../repositories/user-repository.service';
-import { User } from '../models/user';
 import { LoginService } from '../services/login.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,27 +7,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  user: firebase.User;
-  loggedUser: User
 
   constructor(
-    private userRepo: UserRepositoryService,
     private loginService: LoginService
   ) { }
 
-  ngOnInit() {
-    this.loginService.getLogUser()
-      .subscribe(user => {
-        this.user = user
-        if (this.user !== null) {
-          this.loggedUser = {
-            name: this.user.displayName,
-            photoUrl: this.user.photoURL
-          }
-          //this.router.navigateByUrl("tabs/profile", { state: { loggedUser: this.loggedUser } })
-        }
-      })
-  }
+  ngOnInit() { }
 
   login() {
     this.loginService.login()

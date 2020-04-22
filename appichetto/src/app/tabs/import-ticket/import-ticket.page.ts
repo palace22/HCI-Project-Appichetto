@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { PdfToTextService } from 'src/app/services/pdf-to-text.service';
-import { Ticket } from 'src/app/models/ticket';
 import { Router } from '@angular/router';
-import { TicketFormatterService } from 'src/app/services/ticket-formatter.service';
-import { User } from 'src/app/models/user';
 import { IonSlides } from '@ionic/angular';
+import { Ticket } from 'src/app/models/ticket';
+import { User } from 'src/app/models/user';
+import { LoginService } from 'src/app/services/login.service';
+import { PdfToTextService } from 'src/app/services/pdf-to-text.service';
+import { TicketFormatterService } from 'src/app/services/ticket-formatter.service';
 
 @Component({
   selector: 'app-import-ticket',
@@ -13,14 +14,17 @@ import { IonSlides } from '@ionic/angular';
 })
 export class ImportTicketPage {
   market: string
-  importMethod: string
-  participans: User[]
+  method: string
+  participants: User[]
 
   constructor(
+    private loginService: LoginService,
     private pdfToTextService: PdfToTextService,
     private ticketFormatterService: TicketFormatterService,
     private router: Router,
-  ) { }
+  ) {
+    this.participants = new Array<User>()
+  }
 
   @ViewChild(IonSlides, { static: false }) slides: IonSlides;
   slidePrev() {
@@ -31,13 +35,17 @@ export class ImportTicketPage {
   }
 
   async readPdf($event) {
+    console.log($event)
     let arrayPdfTicket = await this.pdfToTextService.getPDFText($event.target.files[0])
+    console.log(arrayPdfTicket)
     let ticket: Ticket = this.ticketFormatterService.formatPdfTicket(arrayPdfTicket)
-    this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket } });
+    ticket.owner = await this.loginService.getLoggedUser()
+    this.participants.push(ticket.owner)
+    this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket, participants: this.participants } });
   }
 
   hasMarketAndMethodSelected() {
-    return this.market !== (undefined || "") && this.importMethod !== (undefined || "") && this.participans.length !== 0
+    return this.market !== (undefined && "") && this.method !== (undefined && "") && this.participants.length !== 0
   }
 
 

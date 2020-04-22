@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -29,8 +29,8 @@ export class UserRepositoryService {
     await this.usersCollection.doc(user.email).set(user);
   }
 
-  getUsers() {
-    return this.firestore.collection(environment.firebaseDB.users).snapshotChanges();
+  getUsers(): Observable<User[]> {
+    return this.usersCollection.valueChanges();
   }
 
   async getUser(id: string): Promise<User> {
@@ -49,19 +49,5 @@ export class UserRepositoryService {
   deleteUser(user: User) {
     this.userDoc = this.firestore.doc(`${environment.firebaseDB.users}&${user.id}`)
     this.userDoc.delete()
-  }
-
-  getFriends(): User[] {
-    return [
-      { name: "Pino", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
-      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
-      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
-      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
-      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
-      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
-      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
-      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
-      { name: "Pippo", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" },
-      { name: "Pluto", photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA" }]
   }
 }

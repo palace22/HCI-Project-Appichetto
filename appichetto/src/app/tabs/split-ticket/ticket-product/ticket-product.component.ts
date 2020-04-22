@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Ticket } from 'src/app/models/ticket';
 import { User } from 'src/app/models/user';
 import { IonSelect } from '@ionic/angular';
@@ -16,6 +16,10 @@ export class TicketProductComponent implements OnInit {
   product: Product
   @Input()
   participants: User[]
+
+  @Output()
+  deleteProductChange = new EventEmitter<boolean>()
+
   selected: boolean = false
 
   constructor() { }
@@ -27,7 +31,6 @@ export class TicketProductComponent implements OnInit {
   }
 
   addParticipant(product: Product, event) {
-    let user: User = event.target.value[0] as User
     console.log(product)
   }
 
@@ -37,6 +40,10 @@ export class TicketProductComponent implements OnInit {
 
   select() {
     this.selected = this.selected ? false : true
+  }
+
+  deleteProduct() {
+    this.deleteProductChange.emit(true)
   }
 
 }

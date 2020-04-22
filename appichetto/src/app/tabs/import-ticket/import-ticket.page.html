@@ -7,58 +7,6 @@
 </ion-header>
 
 <ion-content>
-  <!-- <ion-segment color="dark" [(ngModel)]="market">
-    <ion-segment-button value="esselunga">
-      <ion-label>Esselunga</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="coop">
-      <ion-label>Coop</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="conad">
-      <ion-label>Conad</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-  <br />
-  <ion-segment color="dark" [(ngModel)]="importMethod">
-    <ion-segment-button value="camera">
-      <ion-label>Camera</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="pdf">
-      <ion-label>Import PDF</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="manual">
-      <ion-label>Manual</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-
-  <ion-fab vertical="center" horizontal="center" slot="fixed">
-    <ion-button color="dark">
-      <ion-item color="dark" [ngSwitch]="market">
-        <ion-label *ngSwitchCase="'esselunga'">
-          ESSELUNGA
-        </ion-label>
-        <ion-label *ngSwitchCase="'coop'">
-          COOP
-        </ion-label>
-        <ion-label *ngSwitchCase="'conad'">
-          CONAD
-        </ion-label>
-      </ion-item>
-      <ion-item color="dark" [ngSwitch]="importMethod">
-        <ion-icon name="attach" *ngSwitchCase="'pdf'"></ion-icon>
-        <ion-icon name="camera" *ngSwitchCase="'camera'"></ion-icon>
-        <ion-icon name="add" *ngSwitchCase="'manual'"></ion-icon>
-      </ion-item>
-      <ion-icon name="add"></ion-icon>
-    </ion-button>
-    <ion-input
-      placeholder=""
-      type="file"
-      *ngIf="importMethod==='pdf'"
-      (change)="readPdf($event)"
-      class="upload"
-    ></ion-input>
-  </ion-fab> -->
   <div
     style="
       position: absolute;
@@ -85,13 +33,19 @@
   </div>
   <ion-slides scrollbar="true" pages pager="true" [options]="slideOpts">
     <ion-slide>
-      <app-select-participans></app-select-participans>
+      <app-select-participants
+        [participants]="participants"
+      ></app-select-participants>
     </ion-slide>
     <ion-slide>
-      <app-select-market></app-select-market>
+      <app-select-market
+        (marketChanged)="this.market = $event"
+      ></app-select-market>
     </ion-slide>
     <ion-slide>
-      <app-select-method></app-select-method>
+      <app-select-method
+        (methodChanged)="this.method = $event"
+      ></app-select-method>
     </ion-slide>
   </ion-slides>
 </ion-content>
@@ -100,7 +54,14 @@
   <ion-button
     color="dark"
     expand="block"
-    disabled="!hasMarketAndMethodSelected()"
+    [disabled]="!hasMarketAndMethodSelected()"
     >Go</ion-button
   >
+  <ion-input
+    placeholder=""
+    type="file"
+    *ngIf="method==='pdf'"
+    (change)="readPdf($event)"
+    class="upload"
+  ></ion-input>
 </ion-footer>
