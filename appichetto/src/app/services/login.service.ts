@@ -19,7 +19,7 @@ export class LoginService {
     private userRepository: UserRepositoryService,
     private googleLoggedUserPipe: GoogleLoggedUserPipe,
   ) {
-    this.googleProvider = new auth.GoogleAuthProvider
+    this.googleProvider = new auth.GoogleAuthProvider()
     this.googleLoggedUserPipe = new GoogleLoggedUserPipe()
   }
 
@@ -44,9 +44,7 @@ export class LoginService {
 
   async getLoggedUser(): Promise<User> {
     let user: firebase.User = await this.angularFireAuth.currentUser
-    if (user)
       return this.googleLoggedUserPipe.transform(user)
-    return { name: "Test Test", email: "test@gmail.com", photoUrl: "https://www.ilpost.it/wp-content/uploads/2019/05/pulp-fiction.jpg" }
   }
 
 }
