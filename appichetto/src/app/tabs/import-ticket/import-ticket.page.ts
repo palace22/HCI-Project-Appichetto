@@ -34,11 +34,23 @@ export class ImportTicketPage {
     this.slides.slideNext();
   }
 
+  async importTicket() {
+    let ticket: Ticket = {
+      products: []
+    }
+    if (this.method === "manual")
+      this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket, participants: this.participants } });
+
+    await this.navigateToSplitTicket(ticket)
+  }
+
   async readPdf($event) {
-    console.log($event)
     let arrayPdfTicket = await this.pdfToTextService.getPDFText($event.target.files[0])
-    console.log(arrayPdfTicket)
     let ticket: Ticket = this.ticketFormatterService.formatPdfTicket(arrayPdfTicket)
+    await this.navigateToSplitTicket(ticket)
+  }
+
+  async navigateToSplitTicket(ticket: Ticket) {
     ticket.owner = await this.loginService.getLoggedUser()
     this.participants.push(ticket.owner)
     this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket, participants: this.participants } });

@@ -52,6 +52,7 @@
 
 <ion-footer>
   <ion-button
+    (click)="importTicket()"
     color="dark"
     expand="block"
     [disabled]="!hasMarketAndMethodSelected()"
