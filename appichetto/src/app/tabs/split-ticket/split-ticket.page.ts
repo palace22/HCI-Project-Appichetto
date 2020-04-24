@@ -13,8 +13,9 @@ import { IonSelect } from '@ionic/angular';
 })
 export class SplitTicketPage implements OnInit {
   participants: User[] = [{
-    name: "Pippo"
-  }]
+    name: "Pippo",
+  },
+    {name: "Pluto"}]
 
   user: User
   ticket: Ticket = {
