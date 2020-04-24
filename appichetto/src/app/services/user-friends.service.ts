@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/user';
-import { UserFriendsRepositoryService } from '../repositories/user-friends-repository.service';
-import { LoginService } from './login.service';
-import { UserFriends } from '../models/user-friends';
 import { Observable } from 'rxjs';
+import { User } from '../models/user';
+import { UserFriends } from '../models/user-friends';
+import { UserFriendsRepositoryService } from '../repositories/user-friends-repository.service';
 import { UserRepositoryService } from '../repositories/user-repository.service';
 
 @Injectable({
@@ -15,20 +14,12 @@ export class UserFriendsService {
 
   constructor(
     private userFriendsRepositoryService: UserFriendsRepositoryService,
-    private loginService: LoginService,
     private userRepositoryService: UserRepositoryService,
   ) {
-    this.userId = "palazzolo1995@gmail.com"//loginService.getLoggedUser().email
-    this.setLoggedUser()
   }
 
-  setLoggedUser() {
-    this.userFriendsRepositoryService.setLoggedUser(this.userId)
-    this.userFriends = this.userFriendsRepositoryService.getUserFriends()
-  }
-
-  getUserFriends(): Observable<UserFriends> {
-    return this.userFriends
+  getUserFriends(userId: string): Observable<UserFriends> {
+    return this.userFriendsRepositoryService.getUserFriends(userId)
   }
 
   async addFriend(friendId: string, userFriends: UserFriends) {

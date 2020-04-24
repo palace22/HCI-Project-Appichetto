@@ -9,3 +9,13 @@ export class Ticket {
     products: Product[];
     participants?: User[];
 }
+
+export class ParticipantTicket {
+    id?: string;
+    description?: string;
+    timestamp?: number;
+    owner?: User;
+    products: Product[];
+    participant: User;
+}
+

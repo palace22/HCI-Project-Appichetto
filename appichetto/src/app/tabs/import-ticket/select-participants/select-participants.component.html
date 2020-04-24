@@ -7,20 +7,22 @@
 </ion-header>
 <ion-grid
   ><ion-row>
-    <ion-col *ngFor="let user of friends">
-      <ion-card
-        (click)="updateParticipants(user)"
-        [ngClass]="isSelected(user) ? 'selected-card' : 'unselected-card'"
-      >
-        <ion-card-content text-center>
-          <ion-avatar class="avatar">
-            <ion-img [src]="user.photoUrl"></ion-img>
-          </ion-avatar>
-          <ion-card-title>
-            {{ user.name }}
-          </ion-card-title>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
+    <div *ngIf="userFriendsObs | async">
+      <ion-col *ngFor="let user of userFriends.friends">
+        <ion-card
+          (click)="updateParticipants(user)"
+          [ngClass]="isSelected(user) ? 'selected-card' : 'unselected-card'"
+        >
+          <ion-card-content text-center>
+            <ion-avatar>
+              <ion-img [src]="user.photoUrl"></ion-img>
+            </ion-avatar>
+            <ion-card-title>
+              {{ user.name }}
+            </ion-card-title>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </div>
   </ion-row>
 </ion-grid>

@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { ProfilePage } from './profile.page';
 import { FriendsListComponent } from './friends-list/friends-list.component';
 import { AddFriendsPopoverComponent } from './friends-list/add-friends-popover/add-friends-popover.component';
+import { UserFriendsService } from 'src/app/services/user-friends.service';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { AddFriendsPopoverComponent } from './friends-list/add-friends-popover/a
     ProfilePage,
     FriendsListComponent,
     AddFriendsPopoverComponent,
-  ]
+  ],
+  providers: [UserFriendsService]
 })
 export class ProfilePageModule { }

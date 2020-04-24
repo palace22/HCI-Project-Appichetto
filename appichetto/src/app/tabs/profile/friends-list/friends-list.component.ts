@@ -5,6 +5,7 @@ import { UserFriends } from 'src/app/models/user-friends';
 import { Observable } from 'rxjs';
 import { PopoverController, ToastController } from '@ionic/angular';
 import { AddFriendsPopoverComponent } from './add-friends-popover/add-friends-popover.component';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-friends-list',
@@ -17,15 +18,18 @@ export class FriendsListComponent implements OnInit {
 
   constructor(
     private userFriendsService: UserFriendsService,
+    private loginService: LoginService,
     private popoverController: PopoverController,
     public toastController: ToastController,
   ) {
-    userFriendsService.setLoggedUser()
   }
 
   ngOnInit() {
-    this.userFriendsObs = this.userFriendsService.getUserFriends()
-    this.userFriendsObs.subscribe(userFriends => this.userFriends = userFriends)
+    let loggedUserEmail = "palazzolo1995@gmail.com"// await (await this.loginService.getLoggedUser()).email
+    this.userFriendsObs = this.userFriendsService.getUserFriends(loggedUserEmail)
+    this.userFriendsObs.subscribe(userFriends => {
+      this.userFriends = userFriends
+    })
   }
 
   remove(friend: User) {

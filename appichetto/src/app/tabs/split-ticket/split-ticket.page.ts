@@ -86,7 +86,6 @@ export class SplitTicketPage implements OnInit {
       let newProduct = plainToClass(Product, this.newProduct)
       newProduct.participants = []
       this.ticket.products.push(newProduct)
-      console.log(this.newProduct)
       this.newProduct = new Product()
     } catch{
       console.log("ERROR")
@@ -98,21 +97,10 @@ export class SplitTicketPage implements OnInit {
     this.ticket.products.splice(index, 1)
   }
 
-  openSelect() {
-    this.selectRef.open();
-  }
-
-  closeSelect() {
-    //this.selectRef.close();
-  }
-
   addParticipant(product: Product, event) {
     let user: User = event.target.value[0] as User
-    console.log(event.target.value[0])
-    console.log(product)
     product.participants.push(user)
-    console.log(product)
-    console.log(this.ticket.products[1])
-
   }
+
+  
 }
