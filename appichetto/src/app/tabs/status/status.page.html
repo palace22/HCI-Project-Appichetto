@@ -15,7 +15,7 @@
 
     <div *ngIf="userFriendsObs | async">
         <ion-list [scrollEvents]="true">
-            <ion-item button *ngFor="let friend of userFriends.friends">
+            <ion-item button *ngFor="let friend of userFriends.friends" (click)="goToFriendTicket(friend)">
                 <ion-item-sliding>
                     <ion-item>
                         <ion-avatar item-start>
