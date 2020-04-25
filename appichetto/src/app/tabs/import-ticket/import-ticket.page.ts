@@ -39,9 +39,7 @@ export class ImportTicketPage {
       products: []
     }
     if (this.method === "manual")
-      this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket, participants: this.participants } });
-
-    await this.navigateToSplitTicket(ticket)
+      await this.navigateToSplitTicket(ticket)
   }
 
   async readPdf($event) {
@@ -51,9 +49,14 @@ export class ImportTicketPage {
   }
 
   async navigateToSplitTicket(ticket: Ticket) {
-    ticket.owner = await this.loginService.getLoggedUser()
-    this.participants.push(ticket.owner)
-    this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket, participants: this.participants } });
+    this.loginService.getLoggedUser().then(owner => {
+      ticket.owner = owner
+      this.participants.push(ticket.owner)
+      ticket.participants = this.participants
+      ticket.timestamp = Date.now()
+      ticket.id = Date.now().toString()
+      this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket, participants: this.participants } });
+    })
   }
 
   hasMarketAndMethodSelected() {

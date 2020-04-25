@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Product} from 'src/app/models/product';
-import {Ticket} from 'src/app/models/ticket';
-import {Router} from '@angular/router';
-import {plainToClass} from 'class-transformer';
-import {User} from 'src/app/models/user';
-import {IonSelect} from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Product } from 'src/app/models/product';
+import { Ticket } from 'src/app/models/ticket';
+import { Router } from '@angular/router';
+import { plainToClass } from 'class-transformer';
+import { User } from 'src/app/models/user';
+import { IonSelect } from '@ionic/angular';
+import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
 
 @Component({
     selector: 'app-split-ticket',
@@ -17,58 +18,65 @@ export class SplitTicketPage implements OnInit {
     },
         {name: 'Pluto'}];
 
-    user: User;
-    ticket: Ticket = {
-        products: [
-            {
-                name: 'Pasta e patate e fagioli',
-                quantity: 2,
-                price: 1.1,
-                participants: [this.user]
-            }, {
-                name: 'Pasta',
-                quantity: 2,
-                price: 1.1,
-                participants: []
-            }, {
-                name: 'Pasta pesto panna saliccia sugo',
-                quantity: 2,
-                price: 1.1,
-                participants: []
-            }, {
-                name: 'Pasta',
-                quantity: 2,
-                price: 1.1,
-                participants: []
-            },
-            {
-                name: 'Pasta e patate e fagioli',
-                quantity: 2,
-                price: 1.1,
-                participants: []
-            }, {
-                name: 'Pasta',
-                quantity: 2,
-                price: 1111111111.1,
-                participants: []
-            }, {
-                name: 'Pasta pesto panna saliccia sugo',
-                quantity: 2,
-                price: 1.1,
-                participants: []
-            }
-        ],
-        timestamp: 9999,
-    };
+
+  user: User
+  ticket: Ticket = {
+    products: [
+      {
+        name: "Pasta e patate e fagioli",
+        quantity: 2,
+        price: 1.1,
+        participants: [this.user]
+      }, {
+        name: "Pasta",
+        quantity: 2,
+        price: 1.1,
+        participants: []
+      }, {
+        name: "Pasta pesto panna saliccia sugo",
+        quantity: 2,
+        price: 1.1,
+        participants: []
+      }, {
+        name: "Pasta",
+        quantity: 2,
+        price: 1.1,
+        participants: []
+      },
+      {
+        name: "Pasta e patate e fagioli",
+        quantity: 2,
+        price: 1.1,
+        participants: []
+      }, {
+        name: "Pasta",
+        quantity: 2,
+        price: 1111111111.1,
+        participants: []
+      }, {
+        name: "Pasta pesto panna saliccia sugo",
+        quantity: 2,
+        price: 1.1,
+        participants: []
+      }
+    ],
+    timestamp: 9999,
+    owner: { name: "Pippo" },
+    id: "aaa",
+    participants: [{ name: "Pippo" }]
+  }
 
     newProduct: Product;
 
     @ViewChild('mySelect', {static: true}) selectRef: IonSelect;
 
 
-    constructor(private router: Router) {
-        this.newProduct = new Product();
-    }
+
+  constructor(
+    private router: Router,
+    private retrieveTicketService: RetrieveTicketService) {
+    this.newProduct = new Product()
+  }
 
     ngOnInit() {
         try {
@@ -103,5 +111,9 @@ export class SplitTicketPage implements OnInit {
         product.participants.push(user);
     }
 
+
+  saveTicket() {
+    this.retrieveTicketService.saveTicket(this.ticket)
+  }
 
 }

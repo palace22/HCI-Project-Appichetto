@@ -19,6 +19,7 @@ export class LoginService {
     private userRepository: UserRepositoryService,
     private googleLoggedUserPipe: GoogleLoggedUserPipe,
   ) {
+
     this.googleProvider = new auth.GoogleAuthProvider()
     this.googleLoggedUserPipe = new GoogleLoggedUserPipe()
   }

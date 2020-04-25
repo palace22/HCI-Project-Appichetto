@@ -4,12 +4,9 @@ import { User } from '../models/user';
 @Pipe({
   name: 'loggedUser'
 })
-@Injectable({
-  providedIn: 'root'
-})
 export class GoogleLoggedUserPipe implements PipeTransform {
 
-  transform(loggedUser: any): User {
+  transform(loggedUser: firebase.User): User {
     let user: User = {
       name: loggedUser.displayName,
       email: loggedUser.email,
