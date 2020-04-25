@@ -17,21 +17,27 @@ export class StatusPage implements OnInit {
     userFriendsObs: Observable<UserFriends>;
     userFriends: UserFriends;
     debts={};
+    noFriends = false;
     user: User;
 
     constructor(private userFriendsService: UserFriendsService, private debtService: DebtService, private loginService: LoginService) {
     }
 
      async ngOnInit() {
+         // federico.vaccaro@stud.unifi.it
+         // palazzolo1995@gmail.com
          this.user = {name: '', email: 'palazzolo1995@gmail.com'};// await this.loginService.getLoggedUser();
          this.userFriendsObs = this.userFriendsService.getUserFriends(this.user.email);
          this.userFriendsObs.subscribe( async userFriends => {
-             this.userFriends = userFriends;
-             this.userFriends.friends.forEach(user => this.debts[user.email] = this.getDebt(user));
-             return this.debtService.getDebtWithUser(this.user);
-
+             if (userFriends !== undefined){
+                 this.userFriends = userFriends;
+                 this.userFriends.friends.forEach(user => this.debts[user.email] = this.getDebt(user));
+                 return this.debtService.getDebtWithUser(this.user);
+             }else {
+                this.userFriends = new UserFriends();
+                this.noFriends = true;
+             }
          });
-         // console.log(this.debts);
      }
 
     getDebt(user: User) {
