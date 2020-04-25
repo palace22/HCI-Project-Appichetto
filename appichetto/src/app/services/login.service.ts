@@ -5,6 +5,7 @@ import { auth } from 'firebase';
 import { User } from '../models/user';
 import { GoogleLoggedUserPipe } from '../pipe/google-logged-user.pipe';
 import { UserRepositoryService } from '../repositories/user-repository.service';
+import { first } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -44,8 +45,8 @@ export class LoginService {
   }
 
   async getLoggedUser(): Promise<User> {
-    let user: firebase.User = await this.angularFireAuth.currentUser
-      return this.googleLoggedUserPipe.transform(user)
+    let user: firebase.User = await this.angularFireAuth.authState.pipe(first()).toPromise()
+    return this.googleLoggedUserPipe.transform(user)
   }
 
 }

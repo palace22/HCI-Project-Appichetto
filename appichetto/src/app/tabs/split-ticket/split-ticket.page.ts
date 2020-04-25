@@ -4,7 +4,7 @@ import { Ticket } from 'src/app/models/ticket';
 import { Router } from '@angular/router';
 import { plainToClass } from 'class-transformer';
 import { User } from 'src/app/models/user';
-import { IonSelect } from '@ionic/angular';
+import { IonSelect, ToastController } from '@ionic/angular';
 import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
 
 @Component({
@@ -13,11 +13,10 @@ import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service'
     styleUrls: ['./split-ticket.page.scss'],
 })
 export class SplitTicketPage implements OnInit {
-    participants: User[] = [{
-        name: 'Pippo',
-    },
-        {name: 'Pluto'}];
-
+  participants: User[] = [{
+    name: "Pippo",
+  },
+  { name: "Pluto" }]
 
   user: User
   ticket: Ticket = {
@@ -74,7 +73,9 @@ export class SplitTicketPage implements OnInit {
 
   constructor(
     private router: Router,
-    private retrieveTicketService: RetrieveTicketService) {
+    private retrieveTicketService: RetrieveTicketService,
+    public toastController: ToastController,
+  ) {
     this.newProduct = new Product()
   }
 
@@ -112,8 +113,25 @@ export class SplitTicketPage implements OnInit {
     }
 
 
-  saveTicket() {
-    this.retrieveTicketService.saveTicket(this.ticket)
+  async saveTicket() {
+    try {
+      this.retrieveTicketService.saveTicket(this.ticket)
+      this.presentToast("Saved correctly").then(
+        () => this.router.navigateByUrl("tabs/status")
+      )
+    } catch (error) {
+      await this.presentToast("Error while saving")
+      await this.presentToast(error)
+    }
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: "middle",
+    });
+    toast.present();
   }
 
 }

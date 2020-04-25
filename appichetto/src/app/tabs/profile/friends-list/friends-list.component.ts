@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user';
-import { UserFriendsService } from 'src/app/services/user-friends.service';
-import { UserFriends } from 'src/app/models/user-friends';
-import { Observable } from 'rxjs';
 import { PopoverController, ToastController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/models/user';
+import { UserFriends } from 'src/app/models/user-friends';
+import { UserFriendsService } from 'src/app/services/user-friends.service';
 import { AddFriendsPopoverComponent } from './add-friends-popover/add-friends-popover.component';
-import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-friends-list',
@@ -15,25 +14,24 @@ import { LoginService } from 'src/app/services/login.service';
 export class FriendsListComponent implements OnInit {
   userFriendsObs: Observable<UserFriends>
   userFriends: UserFriends
-
+  loggedUserEmail: string
   constructor(
     private userFriendsService: UserFriendsService,
-    private loginService: LoginService,
     private popoverController: PopoverController,
     public toastController: ToastController,
   ) {
   }
 
   ngOnInit() {
-    let loggedUserEmail = "palazzolo1995@gmail.com"// await (await this.loginService.getLoggedUser()).email
-    this.userFriendsObs = this.userFriendsService.getUserFriends(loggedUserEmail)
+    this.loggedUserEmail = "palazzolo1995@gmail.com"// await (await this.loginService.getLoggedUser()).email
+    this.userFriendsObs = this.userFriendsService.getUserFriends(this.loggedUserEmail)
     this.userFriendsObs.subscribe(userFriends => {
       this.userFriends = userFriends
     })
   }
 
   remove(friend: User) {
-    this.userFriendsService.removeFriend(friend, this.userFriends)
+    this.userFriendsService.removeFriend(this.loggedUserEmail, friend, this.userFriends)
   }
 
   async add(ev: any) {
@@ -49,7 +47,7 @@ export class FriendsListComponent implements OnInit {
         let newFriend = data.data as User
         if (this.userFriends.friends.findIndex(friend => friend.email === newFriend.email) === -1) {
           await this.presentToast("Added correctly")
-          await this.userFriendsService.addFriend(newFriend.email, this.userFriends)
+          await this.userFriendsService.addFriend(this.loggedUserEmail, newFriend.email, this.userFriends)
         } else {
           await this.presentToast("Can't add this user")
         }
