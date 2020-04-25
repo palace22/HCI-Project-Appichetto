@@ -19,6 +19,7 @@ export class ProfilePage {
   async ngOnInit() {
     try {
       this.user = await this.loginService.getLoggedUser()
+      console.log(this.user)
     } catch (error) {
     }
   }

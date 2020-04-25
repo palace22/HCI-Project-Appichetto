@@ -45,7 +45,7 @@ export class LoginService {
 
   async getLoggedUser(): Promise<User> {
     let user: firebase.User = await this.angularFireAuth.currentUser
-      return this.googleLoggedUserPipe.transform(user)
+    return this.googleLoggedUserPipe.transform(user)
   }
 
 }

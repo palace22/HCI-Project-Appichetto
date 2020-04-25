@@ -9,8 +9,6 @@ import { UserRepositoryService } from '../repositories/user-repository.service';
   providedIn: 'root'
 })
 export class UserFriendsService {
-  userId: string
-  userFriends: Observable<UserFriends>
 
   constructor(
     private userFriendsRepositoryService: UserFriendsRepositoryService,
@@ -22,18 +20,18 @@ export class UserFriendsService {
     return this.userFriendsRepositoryService.getUserFriends(userId)
   }
 
-  async addFriend(friendId: string, userFriends: UserFriends) {
+  async addFriend(userId: string, friendId: string, userFriends: UserFriends) {
     let user: User = await this.userRepositoryService.getUser(friendId)
     console.log(user)
     userFriends.friends.push(user)
-    this.userFriendsRepositoryService.updateUserFriends(this.userId, userFriends)
+    this.userFriendsRepositoryService.updateUserFriends(userId, userFriends)
   }
 
-  async removeFriend(friend: User, userFriends: UserFriends) {
+  async removeFriend(userId: string, friend: User, userFriends: UserFriends) {
     let index = userFriends.friends.findIndex(f => f.email === friend.email)
     console.log(index)
     userFriends.friends.splice(index, 1)
-    this.userFriendsRepositoryService.updateUserFriends(this.userId, userFriends)
+    this.userFriendsRepositoryService.updateUserFriends(userId, userFriends)
   }
 
   async searchFriend(friendId: string): Promise<User> {

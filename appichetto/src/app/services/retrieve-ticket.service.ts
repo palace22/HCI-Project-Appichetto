@@ -21,6 +21,6 @@ export class RetrieveTicketService {
 
   saveTicket(ticket: Ticket) {
     const firebaseTicket = this.firebaseTicketPipe.transform(ticket)
-    this.ticketCollection.doc(ticket.owner.name).collection("my-ticket").doc(ticket.timestamp.toString()).set(firebaseTicket)
+    this.ticketCollection.doc(ticket.owner.name).collection("my-ticket").doc(ticket.timestamp.toString()).set(firebaseTicket).catch(error => { throw new Error(error) })
   }
 }
