@@ -10,17 +10,20 @@ import { TicketProductComponent } from './ticket-product/ticket-product.componen
 import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild([{ path: '', component: SplitTicketPage }])
-  ],
-  declarations: [
-    SplitTicketPage,
-    TicketProductComponent,
-  ],
-  providers: [RetrieveTicketService]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild([{path: '', component: SplitTicketPage}])
+    ],
+    declarations: [
+        SplitTicketPage,
+        TicketProductComponent,
+    ],
+    exports: [
+        TicketProductComponent
+    ],
+    providers: [RetrieveTicketService]
 
 })
 export class SplitTicketPageModule {

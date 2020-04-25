@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { Ticket } from 'src/app/models/ticket';
 import { User } from 'src/app/models/user';
-import { IonSelect } from '@ionic/angular';
+import {IonSelect, PopoverController} from '@ionic/angular';
 import { Product } from 'src/app/models/product';
+import {ParticipantsPopoverComponent} from './participants-popover/participants-popover.component';
 
 @Component({
   selector: 'app-ticket-product',
@@ -10,6 +11,10 @@ import { Product } from 'src/app/models/product';
   styleUrls: ['./ticket-product.component.scss'],
 })
 export class TicketProductComponent implements OnInit {
+
+  constructor(private popoverController: PopoverController) {
+  }
+
   @ViewChild('mySelect', { static: false }) selectRef: IonSelect;
 
   @Input()
@@ -20,11 +25,14 @@ export class TicketProductComponent implements OnInit {
   @Output()
   deleteProductChange = new EventEmitter<boolean>()
 
+  @Input()
+  viewMode = false;
+
   selected: boolean = false
 
-  constructor() { }
-
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.product);
+  }
 
   openSelect() {
     this.selectRef.open();
@@ -45,5 +53,19 @@ export class TicketProductComponent implements OnInit {
   deleteProduct() {
     this.deleteProductChange.emit(true)
   }
+
+
+
+  async presentPopover(ev: any, participants: User[]) {
+    const popover = await this.popoverController.create({
+      component: ParticipantsPopoverComponent,
+      event: ev,
+      componentProps: {participantList: participants},
+      translucent: true
+    });
+    return await popover.present();
+  }
+
+
 
 }
