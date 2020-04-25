@@ -1,0 +1,34 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Your status</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="userFriendsObs | async">
+        <ion-list [scrollEvents]="true">
+            <ion-item button *ngFor="let friend of userFriends.friends">
+                <ion-item-sliding>
+                    <ion-item>
+                        <ion-avatar item-start>
+                            <ion-img [src]="friend.photoUrl"></ion-img>
+                        </ion-avatar>
+                        <ion-item>{{ friend.name }}</ion-item>
+                        <ion-list slot="end">
+                            <ion-text color="danger" >
+                                Debt: -{{ debts[friend.email].debt }}<br>
+                            </ion-text>
+                            <ion-text color="success">
+                                Credit: +{{ debts[friend.email].credit }}<br>
+                            </ion-text>
+                            <ion-text>
+                                Total = {{ debts[friend.email].total }}
+                            </ion-text>
+                        </ion-list>
+                    </ion-item>
+                </ion-item-sliding>
+            </ion-item>
+        </ion-list>
+    </div>
+
+</ion-content>
