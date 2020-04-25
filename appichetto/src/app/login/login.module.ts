@@ -1,18 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-import { IonicModule } from '@ionic/angular';
-
-
-import { LoginPage } from './login.page';
 import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { UserRepositoryService } from '../repositories/user-repository.service';
-import { environment } from 'src/environments/environment';
-import { AngularFireModule } from '@angular/fire'
 import { LoginService } from '../services/login.service';
-import { GoogleLoggedUserPipe } from '../pipe/google-logged-user.pipe';
-
+import { LoginPage } from './login.page';
 
 @NgModule({
   imports: [
@@ -21,7 +14,12 @@ import { GoogleLoggedUserPipe } from '../pipe/google-logged-user.pipe';
     IonicModule,
     RouterModule.forChild([{ path: '', component: LoginPage }]),
   ],
-  declarations: [LoginPage],
-  providers: [UserRepositoryService, LoginService, GoogleLoggedUserPipe]
+  declarations: [
+    LoginPage,
+  ],
+  providers: [
+    UserRepositoryService,
+    LoginService,
+  ],
 })
 export class LoginPageModule { }

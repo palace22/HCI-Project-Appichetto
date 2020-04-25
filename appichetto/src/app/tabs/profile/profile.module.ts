@@ -1,12 +1,13 @@
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ProfilePage } from './profile.page';
-import { FriendsListComponent } from './friends-list/friends-list.component';
-import { AddFriendsPopoverComponent } from './friends-list/add-friends-popover/add-friends-popover.component';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { LoginService } from 'src/app/services/login.service';
 import { UserFriendsService } from 'src/app/services/user-friends.service';
+import { AddFriendsPopoverComponent } from './friends-list/add-friends-popover/add-friends-popover.component';
+import { FriendsListComponent } from './friends-list/friends-list.component';
+import { ProfilePage } from './profile.page';
 
 @NgModule({
   imports: [
@@ -20,6 +21,9 @@ import { UserFriendsService } from 'src/app/services/user-friends.service';
     FriendsListComponent,
     AddFriendsPopoverComponent,
   ],
-  providers: [UserFriendsService]
+  providers: [
+    UserFriendsService,
+    LoginService,
+  ]
 })
 export class ProfilePageModule { }

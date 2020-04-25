@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { SplitTicketPage } from './split-ticket.page';
 import { RouterModule } from '@angular/router';
 import { TicketProductComponent } from './ticket-product/ticket-product.component';
+import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { TicketProductComponent } from './ticket-product/ticket-product.componen
     SplitTicketPage,
     TicketProductComponent,
   ],
+  providers: [RetrieveTicketService]
 
 })
 export class SplitTicketPageModule { }

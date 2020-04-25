@@ -14,7 +14,6 @@ export class TicketFormatterService {
     let ticket: Ticket = {
       products: [],
       timestamp: undefined,
-      description: "",
     }
 
     let productArray: string[] = []

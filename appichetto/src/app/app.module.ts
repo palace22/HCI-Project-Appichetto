@@ -14,9 +14,10 @@ import { AngularFireModule } from '@angular/fire'
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore';
 import { GoogleLoggedUserPipe } from './pipe/google-logged-user.pipe';
+import { FirebaseTicketPipe } from './pipe/firebase-ticket.pipe';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, FirebaseTicketPipe],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -28,7 +29,9 @@ import { GoogleLoggedUserPipe } from './pipe/google-logged-user.pipe';
   providers: [
     StatusBar,
     SplashScreen,
-    AngularFirestore,  
+    AngularFirestore,
+    GoogleLoggedUserPipe,
+    FirebaseTicketPipe,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

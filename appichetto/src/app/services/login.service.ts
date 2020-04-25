@@ -20,7 +20,6 @@ export class LoginService {
     private googleLoggedUserPipe: GoogleLoggedUserPipe,
   ) {
     this.googleProvider = new auth.GoogleAuthProvider
-    this.googleLoggedUserPipe = new GoogleLoggedUserPipe()
   }
 
   async login() {

@@ -3,11 +3,20 @@ import { Product } from './product';
 
 export class Ticket {
     id?: string;
+    //description?: string;
+    timestamp?: number;
+    owner?: User;
+    products?: Product[];
+    participants?: User[];
+}
+
+export class TicketFirebase {
+    id?: string;
     description?: string;
     timestamp?: number;
     owner?: User;
-    products: Product[];
-    participants?: User[];
+    products;
+    participants?;
 }
 
 export class ParticipantTicket {

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { plainToClass } from 'class-transformer';
 import { User } from 'src/app/models/user';
 import { IonSelect } from '@ionic/angular';
+import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
 
 @Component({
   selector: 'app-split-ticket',
@@ -58,6 +59,9 @@ export class SplitTicketPage implements OnInit {
       }
     ],
     timestamp: 9999,
+    owner: { name: "Pippo" },
+    id: "aaa",
+    participants: [{ name: "Pippo" }]
   }
 
   newProduct: Product
@@ -65,7 +69,9 @@ export class SplitTicketPage implements OnInit {
   @ViewChild('mySelect', { static: true }) selectRef: IonSelect;
 
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private retrieveTicketService: RetrieveTicketService) {
     this.newProduct = new Product()
   }
 
@@ -102,5 +108,8 @@ export class SplitTicketPage implements OnInit {
     product.participants.push(user)
   }
 
-  
+  saveTicket() {
+    this.retrieveTicketService.saveTicket(this.ticket)
+  }
+
 }
