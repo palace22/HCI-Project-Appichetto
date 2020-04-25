@@ -14,8 +14,9 @@ import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service'
 })
 export class SplitTicketPage implements OnInit {
   participants: User[] = [{
-    name: "Pippo"
-  }]
+    name: "Pippo",
+  },
+    {name: "Pluto"}]
 
   user: User
   ticket: Ticket = {
