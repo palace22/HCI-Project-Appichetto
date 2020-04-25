@@ -10,8 +10,8 @@ import { LoginService } from 'src/app/services/login.service';
 })
 export class ProfilePage {
   user: User = {
-    name: "Test Test",
-    photoUrl: "https://lh3.googleusercontent.com/a-/AOh14GhzALiBI_3zL0U9QaC3AM9Rtm2i1iwVRYyQSU-9XA",
+    name: "",
+    photoUrl: "",
   }
 
   constructor(private router: Router, private loginService: LoginService) { }
@@ -19,7 +19,6 @@ export class ProfilePage {
   async ngOnInit() {
     try {
       this.user = await this.loginService.getLoggedUser()
-      console.log(this.user)
     } catch (error) {
     }
   }
