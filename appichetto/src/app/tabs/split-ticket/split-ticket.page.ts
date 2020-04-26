@@ -65,9 +65,10 @@ export class SplitTicketPage implements OnInit {
     participants: [{ name: "Pippo" }]
   }
 
-  newProduct: Product
+  newProduct: Product;
 
   @ViewChild('mySelect', { static: true }) selectRef: IonSelect;
+
 
 
   constructor(
@@ -78,41 +79,39 @@ export class SplitTicketPage implements OnInit {
     this.newProduct = new Product()
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     try {
-      this.ticket = plainToClass(Ticket, await this.retrieveTicketService.getTicket())
-      //plainToClass(Ticket, this.router.getCurrentNavigation().extras.state.ticket)
-      this.participants = this.ticket.participants
-      console.log(this.ticket)
-      //this.participants = this.router.getCurrentNavigation().extras.state.participants
+      this.ticket = plainToClass(Ticket, this.router.getCurrentNavigation().extras.state.ticket);
+      this.participants = this.router.getCurrentNavigation().extras.state.participants;
     } catch (error) {
     }
   }
 
   productIsReady(): boolean {
-    return this.newProduct.name !== (undefined && "") && this.newProduct.price !== (undefined && "") && this.newProduct.quantity !== (undefined && "")
+    return this.newProduct.name !== (undefined && '') && this.newProduct.price !== (undefined && '') && this.newProduct.quantity !== (undefined && '');
   }
 
   addProduct() {
     try {
-      let newProduct = plainToClass(Product, this.newProduct)
-      newProduct.participants = []
-      this.ticket.products.push(newProduct)
-      this.newProduct = new Product()
-    } catch{
-      console.log("ERROR")
+      let newProduct = plainToClass(Product, this.newProduct);
+      newProduct.participants = [];
+      this.ticket.products.push(newProduct);
+      this.newProduct = new Product();
+    } catch {
+      console.log('ERROR');
     }
   }
 
   deleteProduct(index: number, $event) {
-    console.log($event)
-    this.ticket.products.splice(index, 1)
+    console.log($event);
+    this.ticket.products.splice(index, 1);
   }
 
   addParticipant(product: Product, event) {
-    let user: User = event.target.value[0] as User
-    product.participants.push(user)
+    let user: User = event.target.value[0] as User;
+    product.participants.push(user);
   }
+
 
   async saveTicket() {
     try {

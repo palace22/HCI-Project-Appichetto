@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {TabsPage} from './tabs.page';
 import {FriendsListComponent} from './profile/friends-list/friends-list.component';
+import {FriendTicketsComponent} from './status/friend-tickets/friend-tickets.component';
 
 const routes: Routes = [
     {
@@ -17,11 +18,20 @@ const routes: Routes = [
     {
         path: 'tabs',
         component: TabsPage,
-        children: [{
-            path: 'status',
-            loadChildren: () =>
-                import('../tabs/status/status.module').then(m => m.StatusPageModule)
+        children: [
+            {
+                path: 'status',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: () => import('../tabs/status/status.module').then(m => m.StatusPageModule),
                     },
+                    {
+                        path: 'friend-tickets',
+                        component: FriendTicketsComponent,
+                    }
+                ]
+            },
             {
                 path: 'ticket',
                 children: [
