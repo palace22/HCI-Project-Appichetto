@@ -78,10 +78,13 @@ export class SplitTicketPage implements OnInit {
     this.newProduct = new Product()
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     try {
-      this.ticket = plainToClass(Ticket, this.router.getCurrentNavigation().extras.state.ticket)
-      this.participants = this.router.getCurrentNavigation().extras.state.participants
+      this.ticket = plainToClass(Ticket, await this.retrieveTicketService.getTicket())
+      //plainToClass(Ticket, this.router.getCurrentNavigation().extras.state.ticket)
+      this.participants = this.ticket.participants
+      console.log(this.ticket)
+      //this.participants = this.router.getCurrentNavigation().extras.state.participants
     } catch (error) {
     }
   }

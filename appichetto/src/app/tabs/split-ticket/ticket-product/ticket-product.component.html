@@ -13,12 +13,13 @@
       ></ion-icon>
     </ion-fab-button>
     <ion-select
+      [compareWith]="compareUser"
       [hidden]="true"
       #mySelect
       multiple="true"
       cancelText="Nah"
       okText="Okay!"
-      (ionChange)="addParticipant(product, $event)"
+      [value]="product.participants"
       [(ngModel)]="product.participants"
     >
       <ion-select-option

@@ -30,12 +30,15 @@ export class TicketProductComponent implements OnInit {
     this.selectRef.open();
   }
 
-  addParticipant(product: Product, event) {
-    console.log(product)
-  }
-
-  compareUser = (user1, user2) => {
-    return user1.name === user2.name;
+  compareUser = (user1: User, users: User[]) => {
+    if (Array.isArray(users)) {
+      return users.findIndex(user => user.email === user1.email) !== -1
+    }
+    // else {
+    //   let userToCompare = user2 as User
+    //   console.log(userToCompare)
+    //   return user1.email === userToCompare.email
+    // }
   };
 
   select() {

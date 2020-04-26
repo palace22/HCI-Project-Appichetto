@@ -23,4 +23,8 @@ export class RetrieveTicketService {
     const firebaseTicket = this.firebaseTicketPipe.transform(ticket)
     this.ticketCollection.doc(ticket.owner.name).collection("my-ticket").doc(ticket.timestamp.toString()).set(firebaseTicket).catch(error => { throw new Error(error) })
   }
+
+  async getTicket() {
+    return await (await this.ticketCollection.doc("Giuseppe Palazzolo").collection("my-ticket").doc("1587831699023").ref.get()).data()
+  }
 }
