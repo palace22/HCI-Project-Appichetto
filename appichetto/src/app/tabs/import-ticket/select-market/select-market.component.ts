@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { environment } from '../../../../environments/environment'
 
 @Component({
   selector: 'app-select-market',
@@ -10,11 +11,7 @@ export class SelectMarketComponent implements OnInit {
   @Output()
   marketChanged = new EventEmitter<string>()
 
-  markets: Market[] = [
-    { name: "Esselunga", icon: '../../../../assets/icon/Logo_esselunga.png' },
-    { name: "Coop", icon: '../../../../assets/icon/1200px-Coop_italia_logo.svg.png' },
-    { name: "Conad", icon: '../../../../assets/icon/Conad-Logo-1-.svg.png' },
-  ]
+  markets: Market[] = environment.markets
 
   constructor() { }
 

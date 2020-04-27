@@ -1,8 +1,9 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {TabsPage} from './tabs.page';
-import {FriendsListComponent} from './profile/friends-list/friends-list.component';
-import {FriendTicketsComponent} from './status/friend-tickets/friend-tickets.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { TabsPage } from './tabs.page';
+import { FriendsListComponent } from './profile/friends-list/friends-list.component';
+import { FriendTicketsComponent } from './status/friend-tickets/friend-tickets.component';
+import { TicketHistoryComponent } from './profile/ticket-history/ticket-history.component';
 
 const routes: Routes = [
     {
@@ -29,7 +30,7 @@ const routes: Routes = [
                     {
                         path: 'friend-tickets',
                         component: FriendTicketsComponent,
-                    }
+                    },
                 ]
             },
             {
@@ -64,6 +65,10 @@ const routes: Routes = [
                     {
                         path: 'friends-list',
                         component: FriendsListComponent,
+                    },
+                    {
+                        path: 'ticket-history',
+                        component: TicketHistoryComponent,
                     },
                 ],
             },

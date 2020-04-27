@@ -93,4 +93,25 @@ export class RetrieveTicketService {
         const arr = new Array(this.sampleTicket);
         return arr;
     }
+
+    getTickets(): Ticket[] {
+        return [{
+            market: "Esselunga",
+            owner: { name: "Pippo" },
+            timestamp: Date.now(),
+            totalPrice: 12,
+        },
+        {
+            market: "Coop",
+            owner: { name: "Pluto" },
+            timestamp: Date.now(),
+            totalPrice: 42,
+        },
+        {
+            market: "Conad",
+            owner: { name: "Paperino" },
+            timestamp: Date.now(),
+            totalPrice: 32.33,
+        }]
+    }
 }

@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Ticket } from 'src/app/models/ticket';
-import { User } from 'src/app/models/user';
-import {IonSelect, PopoverController} from '@ionic/angular';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { IonSelect, PopoverController } from '@ionic/angular';
 import { Product } from 'src/app/models/product';
-import {ParticipantsPopoverComponent} from './participants-popover/participants-popover.component';
+import { User } from 'src/app/models/user';
+import { ParticipantsPopoverComponent } from './participants-popover/participants-popover.component';
 
 @Component({
   selector: 'app-ticket-product',

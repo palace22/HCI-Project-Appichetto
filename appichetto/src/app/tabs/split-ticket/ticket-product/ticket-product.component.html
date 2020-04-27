@@ -3,13 +3,12 @@
   <ion-col size="2">{{ product.quantity }}</ion-col>
   <ion-col size="2">{{ product.price }}</ion-col>
   <ion-col size="2">
-    <ion-fab-button color="dark" [hidden]="viewMode">
+    <ion-fab-button color="dark" [hidden]="viewMode" (click)="openSelect()">
       <ion-icon
         size="large"
         [name]="
           product.participants[0] !== undefined ? 'person' : 'person-outline'
         "
-        (click)="openSelect()"
       ></ion-icon>
     </ion-fab-button>
     <ion-select
@@ -21,8 +20,9 @@
       okText="Okay!"
       [value]="product.participants"
       [(ngModel)]="product.participants"
-    >
+      >
       <ion-select-option
+        color="dark"
         *ngFor="let participant of participants; index as i"
         [value]="participant"
       >
@@ -30,18 +30,22 @@
       </ion-select-option>
     </ion-select>
     <ion-fab-button color="dark" [hidden]="!viewMode">
-          <ion-icon
-                  size="large"
-                  [name]="
+      <ion-icon
+        size="large"
+        [name]="
           product.participants[0] !== undefined ? 'person' : 'person-outline'
         "
-                  (click)="presentPopover($event, product.participants)"
-          ></ion-icon>
-      </ion-fab-button>
-
+        (click)="presentPopover($event, product.participants)"
+      ></ion-icon>
+    </ion-fab-button>
   </ion-col>
   <ion-col size="2">
-    <ion-fab-button class="avatar" expand="block" color="dark" [hidden]="this.viewMode">
+    <ion-fab-button
+      class="avatar"
+      expand="block"
+      color="dark"
+      [hidden]="this.viewMode"
+    >
       <ion-icon (click)="select()" name="brush" size="large"></ion-icon>
     </ion-fab-button>
   </ion-col>
