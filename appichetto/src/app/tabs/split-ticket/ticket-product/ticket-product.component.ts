@@ -31,7 +31,6 @@ export class TicketProductComponent implements OnInit {
   selected: boolean = false
 
   ngOnInit() {
-    console.log(this.product);
   }
 
   openSelect() {

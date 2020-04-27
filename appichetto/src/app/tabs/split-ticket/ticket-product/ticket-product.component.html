@@ -1,9 +1,9 @@
 <ion-row *ngIf="!selected">
-  <ion-col size="3">{{ product.name }}</ion-col>
-  <ion-col size="2">{{ product.quantity }}</ion-col>
-  <ion-col size="2">{{ product.price }}</ion-col>
-  <ion-col size="2">
-    <ion-fab-button color="dark" [hidden]="viewMode">
+  <ion-col>{{ product.name }}</ion-col>
+  <ion-col>{{ product.quantity }}</ion-col>
+  <ion-col>{{ product.price }}</ion-col>
+  <ion-col>
+    <ion-fab-button color="dark" *ngIf="!viewMode">
       <ion-icon
         size="large"
         [name]="
@@ -28,7 +28,7 @@
         {{ participant.name }}
       </ion-select-option>
     </ion-select>
-    <ion-fab-button color="dark" [hidden]="!viewMode">
+    <ion-fab-button color="dark" *ngIf="viewMode">
           <ion-icon
                   size="large"
                   [name]="
@@ -39,13 +39,13 @@
       </ion-fab-button>
 
   </ion-col>
-  <ion-col size="2">
-    <ion-fab-button class="avatar" expand="block" color="dark" [hidden]="this.viewMode">
+  <ion-col *ngIf="!this.viewMode">
+    <ion-fab-button class="avatar" expand="block" color="dark">
       <ion-icon (click)="select()" name="brush" size="large"></ion-icon>
     </ion-fab-button>
   </ion-col>
 </ion-row>
-<ion-row *ngIf="selected" class="selected-card">
+<ion-row *ngIf="selected" class="selected-card" [hidden]="!this.viewMode">
   <ion-col>
     <ion-input
       [(ngModel)]="product.name"

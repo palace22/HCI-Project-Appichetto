@@ -1,27 +1,109 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title >Tickets with: {{ friend.name }}</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>Tickets with: {{ friend.name }}</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content [scrollEvents]="true">
-  <ion-list *ngFor="let ticket of this.ticketsByFriend">
-  <ion-row>
-    <ion-col size="3">Name</ion-col>
-    <ion-col size="2">Quantity</ion-col>
-    <ion-col size="2">Price</ion-col>
-    <ion-col size="2">Participant</ion-col>
-  </ion-row>
-  <ion-grid *ngFor="let product of ticket.products; index as index">
-    <app-ticket-product
-            [product]="product"
-            [participants]="ticket.participants"
-            [viewMode]="true"
-    ></app-ticket-product>
-  </ion-grid>
-  </ion-list>
+<ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="debts">
+        <ion-label>Debts</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="credits">
+        <ion-label>Credits</ion-label>
+    </ion-segment-button>
+</ion-segment>
+
+
+<ion-content *ngIf="debtsSelected">
+    <ion-grid>
+        <ion-header>
+            <h4>Total debt: -10.4</h4>
+        </ion-header>
+
+        <ion-row *ngFor="let item of items">
+            <ion-col>
+                <ion-card>
+                    <ion-card-header (click)="expandItem(item)">
+                        <ion-card-title>Ticket {{ item.ticket.timestamp }}
+                        </ion-card-title>
+                    </ion-card-header>
+
+
+                    <ion-card-content>
+                        <div slot="end">
+                            <ion-text color="danger">Debt: -{{item.debt}}</ion-text>
+                        </div>
+
+                        <app-expandable [expanded]="item.expanded">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col>Name</ion-col>
+                                    <ion-col>Quantity</ion-col>
+                                    <ion-col>Price</ion-col>
+                                    <ion-col>Participant</ion-col>
+                                </ion-row>
+                            </ion-grid>
+                            <ion-grid *ngFor="let product of item.ticket.products;">
+                                <app-ticket-product style="margin-left: 3%"
+                                                    [product]="product"
+                                                    [participants]="item.ticket.participants"
+                                                    [viewMode]="true"
+                                ></app-ticket-product>
+                            </ion-grid>
+                        </app-expandable>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </ion-content>
+
+<ion-content *ngIf="!debtsSelected">
+    <ion-grid>
+        <ion-header>
+            <h4>Total credit: +5.4</h4>
+        </ion-header>
+
+        <ion-row *ngFor="let item of items">
+            <ion-col>
+                <ion-card>
+                    <ion-card-header (click)="expandItem(item)">
+                        <ion-card-title>Ticket {{ item.ticket.timestamp }}
+                        </ion-card-title>
+                    </ion-card-header>
+
+
+                    <ion-card-content>
+                        <div slot="end">
+                            <ion-text color="danger">Debt: -{{item.debt}}</ion-text>
+                        </div>
+
+                        <app-expandable [expanded]="item.expanded">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col>Name</ion-col>
+                                    <ion-col>Quantity</ion-col>
+                                    <ion-col>Price</ion-col>
+                                    <ion-col>Participant</ion-col>
+                                </ion-row>
+                            </ion-grid>
+                            <ion-grid *ngFor="let product of item.ticket.products;">
+                                <app-ticket-product style="margin-left: 3%"
+                                                    [product]="product"
+                                                    [participants]="item.ticket.participants"
+                                                    [viewMode]="true"
+                                ></app-ticket-product>
+                            </ion-grid>
+                        </app-expandable>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
+
+
 
