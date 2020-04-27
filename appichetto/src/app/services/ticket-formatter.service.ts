@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Ticket } from '../models/ticket';
+import { Product } from '../models/product';
 
 type ArrayPdfTicket = {
   "str": string
@@ -46,6 +47,8 @@ export class TicketFormatterService {
       priceArray.push(parseFloat(pdfTicket[index].str.slice(leftPriceLimit, rightPriceLimit).replace(",", ".")))
     }
 
+    let prods: Product[] = new Array<Product>()
+
     //Clean from invalid and sales
     for (let index = 0; index < productArray.length; index++) {
       if (Number.isNaN(priceArray[index])) {
@@ -67,9 +70,21 @@ export class TicketFormatterService {
           quantity: 1,
           participants: []
         })
-    }
 
+
+    }
+    ticket.products.forEach((product) => {
+      let indexOfDuplicateProduct = prods.findIndex(prod => prod.name === product.name)
+      console.log(indexOfDuplicateProduct)
+      console.log(prods)
+      if (indexOfDuplicateProduct !== -1) {
+        prods[indexOfDuplicateProduct].quantity += 1
+      } else {
+        prods.push(product)
+      }
+    })
     ticket.timestamp = Date.now()
+    ticket.products = prods
 
     return ticket
   }
