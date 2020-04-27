@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
-import { Ticket } from 'src/app/models/ticket';
-import { User } from 'src/app/models/user';
-import {IonSelect, PopoverController} from '@ionic/angular';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { IonSelect, PopoverController } from '@ionic/angular';
 import { Product } from 'src/app/models/product';
-import {ParticipantsPopoverComponent} from './participants-popover/participants-popover.component';
+import { User } from 'src/app/models/user';
+import { ParticipantsPopoverComponent } from './participants-popover/participants-popover.component';
 
 @Component({
   selector: 'app-ticket-product',
@@ -37,12 +36,15 @@ export class TicketProductComponent implements OnInit {
     this.selectRef.open();
   }
 
-  addParticipant(product: Product, event) {
-    console.log(product)
-  }
-
-  compareUser = (user1, user2) => {
-    return user1.name === user2.name;
+  compareUser = (user1: User, users: User[]) => {
+    if (Array.isArray(users)) {
+      return users.findIndex(user => user.email === user1.email) !== -1
+    }
+    // else {
+    //   let userToCompare = user2 as User
+    //   console.log(userToCompare)
+    //   return user1.email === userToCompare.email
+    // }
   };
 
   select() {

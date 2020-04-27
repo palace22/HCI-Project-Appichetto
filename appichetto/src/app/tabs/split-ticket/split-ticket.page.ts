@@ -8,9 +8,9 @@ import { IonSelect, ToastController } from '@ionic/angular';
 import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
 
 @Component({
-    selector: 'app-split-ticket',
-    templateUrl: './split-ticket.page.html',
-    styleUrls: ['./split-ticket.page.scss'],
+  selector: 'app-split-ticket',
+  templateUrl: './split-ticket.page.html',
+  styleUrls: ['./split-ticket.page.scss'],
 })
 export class SplitTicketPage implements OnInit {
   participants: User[] = [{
@@ -65,9 +65,9 @@ export class SplitTicketPage implements OnInit {
     participants: [{ name: "Pippo" }]
   }
 
-    newProduct: Product;
+  newProduct: Product;
 
-    @ViewChild('mySelect', {static: true}) selectRef: IonSelect;
+  @ViewChild('mySelect', { static: true }) selectRef: IonSelect;
 
 
 
@@ -79,38 +79,38 @@ export class SplitTicketPage implements OnInit {
     this.newProduct = new Product()
   }
 
-    ngOnInit() {
-        try {
-            this.ticket = plainToClass(Ticket, this.router.getCurrentNavigation().extras.state.ticket);
-            this.participants = this.router.getCurrentNavigation().extras.state.participants;
-        } catch (error) {
-        }
+  ngOnInit() {
+    try {
+      this.ticket = plainToClass(Ticket, this.router.getCurrentNavigation().extras.state.ticket);
+      this.participants = this.router.getCurrentNavigation().extras.state.participants;
+    } catch (error) {
     }
+  }
 
-    productIsReady(): boolean {
-        return this.newProduct.name !== (undefined && '') && this.newProduct.price !== (undefined && '') && this.newProduct.quantity !== (undefined && '');
-    }
+  productIsReady(): boolean {
+    return this.newProduct.name !== (undefined && '') && this.newProduct.price !== (undefined && '') && this.newProduct.quantity !== (undefined && '');
+  }
 
-    addProduct() {
-        try {
-            let newProduct = plainToClass(Product, this.newProduct);
-            newProduct.participants = [];
-            this.ticket.products.push(newProduct);
-            this.newProduct = new Product();
-        } catch {
-            console.log('ERROR');
-        }
+  addProduct() {
+    try {
+      let newProduct = plainToClass(Product, this.newProduct);
+      newProduct.participants = [];
+      this.ticket.products.push(newProduct);
+      this.newProduct = new Product();
+    } catch {
+      console.log('ERROR');
     }
+  }
 
-    deleteProduct(index: number, $event) {
-        console.log($event);
-        this.ticket.products.splice(index, 1);
-    }
+  deleteProduct(index: number, $event) {
+    console.log($event);
+    this.ticket.products.splice(index, 1);
+  }
 
-    addParticipant(product: Product, event) {
-        let user: User = event.target.value[0] as User;
-        product.participants.push(user);
-    }
+  addParticipant(product: Product, event) {
+    let user: User = event.target.value[0] as User;
+    product.participants.push(user);
+  }
 
 
   async saveTicket() {

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Ticket } from 'src/app/models/ticket';
+import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
 
 @Component({
   selector: 'app-ticket-history',
@@ -7,8 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TicketHistoryComponent implements OnInit {
 
-  constructor() { }
+  ticketHistory: Ticket[]
 
-  ngOnInit() {}
+  constructor(private retrieveTicketService: RetrieveTicketService) { }
+
+  ngOnInit() {
+    this.ticketHistory = this.retrieveTicketService.getTickets()
+  }
 
 }

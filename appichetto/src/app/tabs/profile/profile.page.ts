@@ -30,4 +30,8 @@ export class ProfilePage {
   goToAddFriends() {
     this.router.navigateByUrl('tabs/profile/friends-list')
   }
+
+  goToTicketHistory() {
+    this.router.navigateByUrl('tabs/profile/ticket-history')
+  }
 }

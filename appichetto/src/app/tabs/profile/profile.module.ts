@@ -8,6 +8,9 @@ import { UserFriendsService } from 'src/app/services/user-friends.service';
 import { AddFriendsPopoverComponent } from './friends-list/add-friends-popover/add-friends-popover.component';
 import { FriendsListComponent } from './friends-list/friends-list.component';
 import { ProfilePage } from './profile.page';
+import { TicketPreviewComponent } from 'src/app/components/ticket-preview/ticket-preview.component';
+import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
+import { TicketHistoryComponent } from './ticket-history/ticket-history.component';
 
 @NgModule({
   imports: [
@@ -20,10 +23,13 @@ import { ProfilePage } from './profile.page';
     ProfilePage,
     FriendsListComponent,
     AddFriendsPopoverComponent,
+    TicketHistoryComponent,
+    TicketPreviewComponent,
   ],
   providers: [
     UserFriendsService,
     LoginService,
+    RetrieveTicketService,
   ]
 })
 export class ProfilePageModule { }

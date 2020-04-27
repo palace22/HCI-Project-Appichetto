@@ -8,6 +8,8 @@ export class Ticket {
     owner?: User;
     products?: Product[];
     participants?: User[];
+    market?: String;
+    totalPrice?: number;
 }
 
 export class TicketFirebase {
