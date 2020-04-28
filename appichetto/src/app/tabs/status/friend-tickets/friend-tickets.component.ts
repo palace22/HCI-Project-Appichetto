@@ -1,8 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {User} from '../../../models/user';
 import {Router} from '@angular/router';
 import {Ticket} from '../../../models/ticket';
 import {RetrieveTicketService} from '../../../services/retrieve-ticket.service';
+import {LoginService} from '../../../services/login.service';
+import {UserFriends} from '../../../models/user-friends';
+import {UserFriendsService} from '../../../services/user-friends.service';
+import {Observable} from 'rxjs';
+import {IonSlides} from '@ionic/angular';
+import {FriendSlideComponent} from './friend-slide/friend-slide.component';
 
 @Component({
     selector: 'app-friend-tickets',
@@ -11,56 +17,48 @@ import {RetrieveTicketService} from '../../../services/retrieve-ticket.service';
 })
 export class FriendTicketsComponent implements OnInit {
 
-    loggedUser: User;
-    friend: User;
-    ticketsByFriend: Ticket[];
-    ticketsByUser: Ticket[];
+    private loggedUser: User;
+    private userFriends: UserFriends;
+    private userFriendsObs: Observable<UserFriends>;
 
-    items = [];
-
-    slideOpts = {
+    private slideOpts = {
         initialSlide: 0,
         speed: 400,
     };
-    private debtsSelected: boolean;
+    private startingUserIndex: any;
+    private selectedFriendName: string;
 
-    constructor(private router: Router, private retrieveTicketService: RetrieveTicketService) {
-        this.debtsSelected = true;
+    @ViewChildren('friendSlide') slideList: QueryList<FriendSlideComponent>;
+    @ViewChild(IonSlides, {static: false}) slides: IonSlides;
+
+
+    constructor(private router: Router, private loginService: LoginService, private userFriendsService: UserFriendsService) {
+        this.startingUserIndex = router.getCurrentNavigation().extras.state ? router.getCurrentNavigation().extras.state.friendIndex : 0;
+        this.slideOpts.initialSlide = this.startingUserIndex;
     }
 
-    expandItem(item): void {
-        if (item.expanded) {
-            item.expanded = false;
-        } else {
-            this.items.map(listItem => {
-                if (item === listItem) {
-                    listItem.expanded = !listItem.expanded;
+
+    async ngOnInit() {
+        try {
+            this.loggedUser = await this.loginService.getLoggedUser();
+
+            this.userFriendsObs = this.userFriendsService.getUserFriends(this.loggedUser.email);
+            this.userFriendsObs.subscribe(userFriends => {
+                if (userFriends !== undefined) {
+                    this.userFriends = userFriends;
+                    this.selectedFriendName = userFriends.friends[this.startingUserIndex].name;
                 } else {
-                    listItem.expanded = false;
+                    this.userFriends = {friends: []};
                 }
-                return listItem;
             });
+        } catch (e) {
+            this.router.navigateByUrl('tabs/status');
         }
     }
 
-    ngOnInit() {
-        this.loggedUser = {name: 'PALAZZOLO', email: 'palazzolo1995@gmail.com'};// await this.loginService.getLoggedUser();
-        this.friend = this.router.getCurrentNavigation().extras.state.friend;
-        this.ticketsByFriend = this.retrieveTicketService.getTicketBoughtByWithParticipant(this.friend, this.loggedUser);
-        this.ticketsByUser = this.retrieveTicketService.getTicketBoughtByWithParticipant(this.loggedUser, this.friend);
-
-        this.ticketsByFriend.forEach(t => {
-            this.items.push({ticket: t, expanded: false, debt:(Math.random()*10.0).toFixed(2)});
-        });
+    getSlideFriendName() {
+        this.slides.getActiveIndex().then(i => this.selectedFriendName = this.slideList.toArray()[i].getFriendName());
     }
 
-    segmentChanged(ev: any) {
-        console.log(ev.detail.valueOf().value);
-        if(ev.detail.valueOf().value === 'debts'){
-            this.debtsSelected = true;
-        }
-        else{
-            this.debtsSelected = false;
-        }
-    }
+
 }

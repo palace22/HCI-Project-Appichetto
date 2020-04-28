@@ -23,8 +23,8 @@ export class SelectParticipantsComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-    let loggedUserEmail = "palazzolo1995@gmail.com"//await (await this.loginService.getLoggedUser()).email
+ async  ngOnInit() {
+    let loggedUserEmail = await (await this.loginService.getLoggedUser()).email
     this.userFriendsObs = this.userFriendsService.getUserFriends(loggedUserEmail)
     this.userFriendsObs.subscribe(userFriends => {
       this.userFriends = userFriends

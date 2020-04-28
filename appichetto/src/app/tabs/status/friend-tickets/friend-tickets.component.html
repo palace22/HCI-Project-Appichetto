@@ -1,108 +1,36 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
-        <ion-title>Tickets with: {{ friend.name }}</ion-title>
+        <div *ngIf="userFriendsObs | async">
+            <ion-title *ngIf="selectedFriendName">
+                <span>Tickets with: {{ selectedFriendName }}</span>
+            </ion-title>
+        </div>
+
         <ion-buttons slot="start">
-            <ion-back-button></ion-back-button>
+            <ion-back-button defaultHref="tabs/status"></ion-back-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
-<ion-segment (ionChange)="segmentChanged($event)" value="debts">
-    <ion-segment-button value="debts">
-        <ion-label>Debts</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="credits">
-        <ion-label>Credits</ion-label>
-    </ion-segment-button>
-</ion-segment>
+<ion-content>
+    <div *ngIf="userFriendsObs | async">
+        <ion-slides [options]="this.slideOpts" (ionSlideDidChange)="getSlideFriendName()">
+            <div style="position: absolute; top: 50%; left: 16px;font-size: 25px; z-index: 2;">
+                <ion-icon name="arrow-back"></ion-icon>
+            </div>
+            <div style="position: absolute; top: 50%; right: 16px; font-size: 25px; z-index: 2;">
+                <ion-icon name="arrow-forward"></ion-icon>
+            </div>
 
+            <ion-slide  *ngFor="let friend of userFriends.friends">
+                <app-friend-slide #friendSlide [friend]="friend" [loggedUser]="loggedUser"></app-friend-slide>
+            </ion-slide>
+        </ion-slides>
+    </div>
 
-<ion-content *ngIf="debtsSelected">
-    <ion-grid>
-        <ion-header>
-            <h4>Total debt: -10.4</h4>
-        </ion-header>
-
-        <ion-row *ngFor="let item of items">
-            <ion-col>
-                <ion-card>
-                    <ion-card-header (click)="expandItem(item)">
-                        <ion-card-title>Ticket {{ item.ticket.timestamp }}
-                        </ion-card-title>
-                    </ion-card-header>
-
-
-                    <ion-card-content>
-                        <div slot="end">
-                            <ion-text color="danger">Debt: -{{item.debt}}</ion-text>
-                        </div>
-
-                        <app-expandable [expanded]="item.expanded">
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col>Name</ion-col>
-                                    <ion-col>Quantity</ion-col>
-                                    <ion-col>Price</ion-col>
-                                    <ion-col>Participant</ion-col>
-                                </ion-row>
-                            </ion-grid>
-                            <ion-grid *ngFor="let product of item.ticket.products;">
-                                <app-ticket-product style="margin-left: 3%"
-                                                    [product]="product"
-                                                    [participants]="item.ticket.participants"
-                                                    [viewMode]="true"
-                                ></app-ticket-product>
-                            </ion-grid>
-                        </app-expandable>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
-</ion-content>
-
-<ion-content *ngIf="!debtsSelected">
-    <ion-grid>
-        <ion-header>
-            <h4>Total credit: +5.4</h4>
-        </ion-header>
-
-        <ion-row *ngFor="let item of items">
-            <ion-col>
-                <ion-card>
-                    <ion-card-header (click)="expandItem(item)">
-                        <ion-card-title>Ticket {{ item.ticket.timestamp }}
-                        </ion-card-title>
-                    </ion-card-header>
-
-
-                    <ion-card-content>
-                        <div slot="end">
-                            <ion-text color="danger">Debt: -{{item.debt}}</ion-text>
-                        </div>
-
-                        <app-expandable [expanded]="item.expanded">
-                            <ion-grid>
-                                <ion-row>
-                                    <ion-col>Name</ion-col>
-                                    <ion-col>Quantity</ion-col>
-                                    <ion-col>Price</ion-col>
-                                    <ion-col>Participant</ion-col>
-                                </ion-row>
-                            </ion-grid>
-                            <ion-grid *ngFor="let product of item.ticket.products;">
-                                <app-ticket-product style="margin-left: 3%"
-                                                    [product]="product"
-                                                    [participants]="item.ticket.participants"
-                                                    [viewMode]="true"
-                                ></app-ticket-product>
-                            </ion-grid>
-                        </app-expandable>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+    <div *ngIf="!(userFriendsObs | async)" style="position: absolute; left: 50%; right: 50%; bottom: 50%;">
+        <ion-spinner></ion-spinner>
+    </div>
 </ion-content>
 
 

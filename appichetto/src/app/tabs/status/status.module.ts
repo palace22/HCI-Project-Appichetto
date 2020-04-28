@@ -12,6 +12,7 @@ import {FriendTicketsComponent} from './friend-tickets/friend-tickets.component'
 import {ExpandableComponent} from './expandable/expandable.component';
 import { TicketProductComponent } from 'src/app/components/split-ticket/ticket-product/ticket-product.component';
 import { ParticipantsPopoverComponent } from 'src/app/components/split-ticket/ticket-product/participants-popover/participants-popover.component';
+import {FriendSlideComponent} from './friend-tickets/friend-slide/friend-slide.component';
 
 @NgModule({
     imports: [
@@ -21,7 +22,7 @@ import { ParticipantsPopoverComponent } from 'src/app/components/split-ticket/ti
         RouterModule.forChild([{path: '', component: StatusPage}]),
         // SplitTicketPageModule
     ],
-    declarations: [StatusPage, FriendTicketsComponent, TicketProductComponent, ParticipantsPopoverComponent, ExpandableComponent]
+    declarations: [StatusPage, FriendTicketsComponent, TicketProductComponent, ParticipantsPopoverComponent, ExpandableComponent, FriendSlideComponent]
 })
 export class StatusPageModule {
 }

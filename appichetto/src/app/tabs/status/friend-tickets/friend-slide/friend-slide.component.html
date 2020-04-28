@@ -1,0 +1,97 @@
+<ion-segment (ionChange)="segmentChanged($event)" value="debts">
+    <ion-segment-button value="debts">
+        <ion-label>Debts</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="credits">
+        <ion-label>Credits</ion-label>
+    </ion-segment-button>
+</ion-segment>
+
+<div *ngIf="friend">
+<div *ngIf="debtsSelected">
+    <ion-grid>
+        <ion-header>
+            <h4>Total debt: -10.4</h4>
+        </ion-header>
+
+        <ion-row *ngFor="let item of items">
+            <ion-col>
+                <ion-card>
+                    <ion-card-header (click)="expandItem(item)">
+                        <ion-card-title>Ticket {{ item.ticket.timestamp }}
+                        </ion-card-title>
+                    </ion-card-header>
+
+
+                    <ion-card-content>
+                        <div slot="end">
+                            <ion-text color="danger">Debt: -{{item.debt}}</ion-text>
+                        </div>
+
+                        <app-expandable [expanded]="item.expanded">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col>Name</ion-col>
+                                    <ion-col>Quantity</ion-col>
+                                    <ion-col>Price</ion-col>
+                                    <ion-col>Participant</ion-col>
+                                </ion-row>
+                                <app-ticket-product *ngFor="let product of item.ticket.products;"
+                                                    [product]="product"
+                                                    [participants]="item.ticket.participants"
+                                                    [viewMode]="true"
+                                ></app-ticket-product>
+                            </ion-grid>
+                        </app-expandable>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>
+<div *ngIf="!debtsSelected">
+    <ion-grid>
+        <ion-header>
+            <h4>Total credit: +5.4</h4>
+        </ion-header>
+
+        <ion-row *ngFor="let item of items">
+            <ion-col>
+                <ion-card>
+                    <ion-card-header (click)="expandItem(item)">
+                        <ion-card-title>Ticket {{ item.ticket.timestamp }}
+                        </ion-card-title>
+                    </ion-card-header>
+
+
+                    <ion-card-content>
+                        <div slot="end">
+                            <ion-text color="success">Credit: +{{item.credit}}</ion-text>
+                        </div>
+
+                        <app-expandable [expanded]="item.expanded">
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col>Name</ion-col>
+                                    <ion-col>Quantity</ion-col>
+                                    <ion-col>Price</ion-col>
+                                    <ion-col>Participant</ion-col>
+                                </ion-row>
+                            </ion-grid>
+                            <ion-grid *ngFor="let product of item.ticket.products;">
+                                <app-ticket-product style="margin-left: 3%"
+                                                    [product]="product"
+                                                    [participants]="item.ticket.participants"
+                                                    [viewMode]="true"
+                                ></app-ticket-product>
+                            </ion-grid>
+                        </app-expandable>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</div>
+</div>
+
+
