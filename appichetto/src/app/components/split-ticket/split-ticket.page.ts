@@ -84,6 +84,7 @@ export class SplitTicketPage implements OnInit {
   ngOnInit() {
     try {
       this.ticket = plainToClass(Ticket, this.router.getCurrentNavigation().extras.state.ticket);
+      console.log(this.ticket)
       this.participants = this.ticket.participants;
     } catch (error) {
     }

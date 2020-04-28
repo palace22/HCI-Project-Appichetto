@@ -4,6 +4,7 @@ import { TabsPage } from './tabs.page';
 import { FriendsListComponent } from './profile/friends-list/friends-list.component';
 import { FriendTicketsComponent } from './status/friend-tickets/friend-tickets.component';
 import { TicketHistoryComponent } from './profile/ticket-history/ticket-history.component';
+import { SplitTicketPage } from '../components/split-ticket/split-ticket.page';
 
 const routes: Routes = [
     {
@@ -48,8 +49,7 @@ const routes: Routes = [
                     },
                     {
                         path: 'split',
-                        loadChildren: () =>
-                            import('../tabs/split-ticket/split-ticket.module').then(m => m.SplitTicketPageModule)
+                        component: SplitTicketPage,
                     },
 
                 ]
@@ -69,6 +69,10 @@ const routes: Routes = [
                     {
                         path: 'ticket-history',
                         component: TicketHistoryComponent,
+                    },
+                    {
+                        path: 'show-ticket',
+                        component: SplitTicketPage,
                     },
                 ],
             },

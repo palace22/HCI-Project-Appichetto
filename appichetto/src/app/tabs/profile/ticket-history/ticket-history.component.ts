@@ -29,7 +29,8 @@ export class TicketHistoryComponent implements OnInit {
   }
 
   viewTicket(ticket: Ticket) {
-    this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket } });
+    console.log(ticket)
+    this.router.navigateByUrl("tabs/profile/show-ticket", { state: { ticket: ticket } });
   }
 
 }

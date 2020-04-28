@@ -11,7 +11,8 @@ import { ProfilePage } from './profile.page';
 import { TicketPreviewComponent } from 'src/app/components/ticket-preview/ticket-preview.component';
 import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
 import { TicketHistoryComponent } from './ticket-history/ticket-history.component';
-import { SplitTicketPage } from '../split-ticket/split-ticket.page';
+import { SplitTicketPage } from '../../components/split-ticket/split-ticket.page';
+import { TicketProductComponent } from 'src/app/components/split-ticket/ticket-product/ticket-product.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { SplitTicketPage } from '../split-ticket/split-ticket.page';
     TicketHistoryComponent,
     TicketPreviewComponent,
     SplitTicketPage,
+    TicketProductComponent,
   ],
   providers: [
     UserFriendsService,

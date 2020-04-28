@@ -9,9 +9,9 @@ import {IonicModule} from '@ionic/angular';
 import {StatusPage} from './status.page';
 import {RouterModule} from '@angular/router';
 import {FriendTicketsComponent} from './friend-tickets/friend-tickets.component';
-import {TicketProductComponent} from '../split-ticket/ticket-product/ticket-product.component';
-import {ParticipantsPopoverComponent} from '../split-ticket/ticket-product/participants-popover/participants-popover.component';
 import {ExpandableComponent} from './expandable/expandable.component';
+import { TicketProductComponent } from 'src/app/components/split-ticket/ticket-product/ticket-product.component';
+import { ParticipantsPopoverComponent } from 'src/app/components/split-ticket/ticket-product/participants-popover/participants-popover.component';
 
 @NgModule({
     imports: [

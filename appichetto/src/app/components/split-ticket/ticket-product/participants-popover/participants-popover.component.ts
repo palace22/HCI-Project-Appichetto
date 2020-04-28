@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavParams} from '@ionic/angular';
-import {User} from '../../../../models/user';
+import { User } from 'src/app/models/user';
 
 @Component({
     selector: 'app-participants-popover',
