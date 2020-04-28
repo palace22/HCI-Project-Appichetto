@@ -14,7 +14,7 @@ export class FirebaseTicketPipe implements PipeTransform {
       participants: ticket.participants.map((obj) => { return Object.assign({}, obj) }),
       products: ticket.products.map((obj) => { return Object.assign({}, obj) }),
       market: ticket.market,
-      //totalPrice: ticket.totalPrice,
+      totalPrice: ticket.totalPrice,
     }
     return firebaseTicket;
   }

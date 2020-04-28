@@ -60,5 +60,4 @@ export class FriendTicketsComponent implements OnInit {
         this.slides.getActiveIndex().then(i => this.selectedFriendName = this.slideList.toArray()[i].getFriendName());
     }
 
-
 }

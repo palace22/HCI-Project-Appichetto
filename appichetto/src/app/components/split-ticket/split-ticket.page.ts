@@ -74,7 +74,6 @@ export class SplitTicketPage implements OnInit {
 
   constructor(
     private router: Router,
-    private retrieveTicketService: RetrieveTicketService,
     private ticketService: TicketService,
     public toastController: ToastController,
   ) {
@@ -99,6 +98,8 @@ export class SplitTicketPage implements OnInit {
       let newProduct = plainToClass(Product, this.newProduct);
       newProduct.participants = [];
       this.ticket.products.push(newProduct);
+      this.ticket.totalPrice += newProduct.price * newProduct.quantity
+      console.log(this.ticket.totalPrice)
       this.newProduct = new Product();
     } catch {
       console.log('ERROR');
@@ -119,7 +120,6 @@ export class SplitTicketPage implements OnInit {
   async saveTicket() {
     try {
       this.ticketService.save(this.ticket)
-      //this.retrieveTicketService.saveTicket(this.ticket)
       this.presentToast("Saved correctly").then(
         () => this.router.navigateByUrl("tabs/status")
       )

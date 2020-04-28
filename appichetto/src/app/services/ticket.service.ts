@@ -3,6 +3,8 @@ import { Ticket, DebtTicket } from '../models/ticket';
 import { TicketRepositoryService } from '../repositories/ticket-repository.service';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
+import { LoginService } from './login.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +12,11 @@ import { User } from '../models/user';
 export class TicketService {
 
   constructor(
-    private ticketRepositoryService: TicketRepositoryService
+    private ticketRepositoryService: TicketRepositoryService,
+    private loginService: LoginService,
   ) { }
 
-  initializeDebtTickets(ticket: Ticket): Map<string, DebtTicket> {
+  private initializeDebtTickets(ticket: Ticket): Map<string, DebtTicket> {
     let debtTicket: Map<string, DebtTicket> = new Map<string, DebtTicket>()
 
     ticket.participants.forEach(participant => debtTicket.set(participant.email, {
@@ -23,13 +26,14 @@ export class TicketService {
       market: ticket.market,
       participant: participant,
       products: [],
-      totalPrice: 0
+      totalPrice: 0,
+      paidPrice: 0,
     }))
 
     return debtTicket
   }
 
-  split(ticket: Ticket, debtTicket: Map<string, DebtTicket>) {
+  private split(ticket: Ticket, debtTicket: Map<string, DebtTicket>) {
     ticket.products.forEach(product => {
       let participantPrice = product.price / product.participants.length
 
@@ -57,7 +61,24 @@ export class TicketService {
     )
   }
 
-  getTicketOf(user: User) {
-    return this.ticketRepositoryService.getActiveTicketsOf(user)
+  getTicketsOfLoggedUser(): Promise<Observable<Ticket[]>> {
+    return this.loginService.getLoggedUser()
+      .then(loggedUser => {
+        return this.ticketRepositoryService.getActiveTicketsOf(loggedUser)
+      })
+  }
+
+  getDebtTicketsOf(user: User): Promise<Observable<DebtTicket[]>> {
+    return this.loginService.getLoggedUser()
+      .then(loggedUser => {
+        return this.ticketRepositoryService.getDebtTicketsOf(user, loggedUser)
+      })
+  }
+
+  getCreditTicketsTowards(user: User): Promise<Observable<DebtTicket[]>> {
+    return this.loginService.getLoggedUser()
+      .then(loggedUser => {
+        return this.ticketRepositoryService.getDebtTicketsOf(loggedUser, user)
+      })
   }
 }

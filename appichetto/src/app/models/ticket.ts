@@ -29,6 +29,7 @@ export class DebtTicket {
     participant: User;
     market?: string;
     totalPrice?: number;
+    paidPrice?: number;
 }
 
 export class DebtTicketFirebase {
@@ -39,5 +40,6 @@ export class DebtTicketFirebase {
     participant: User;
     market?: string;
     totalPrice?: number;
+    paidPrice?: number;
 }
 
