@@ -16,14 +16,51 @@ export class FriendTicketsComponent implements OnInit {
     ticketsByFriend: Ticket[];
     ticketsByUser: Ticket[];
 
+    items = [];
+
+    slideOpts = {
+        initialSlide: 0,
+        speed: 400,
+    };
+    private debtsSelected: boolean;
+
     constructor(private router: Router, private retrieveTicketService: RetrieveTicketService) {
+        this.debtsSelected = true;
+    }
+
+    expandItem(item): void {
+        if (item.expanded) {
+            item.expanded = false;
+        } else {
+            this.items.map(listItem => {
+                if (item === listItem) {
+                    listItem.expanded = !listItem.expanded;
+                } else {
+                    listItem.expanded = false;
+                }
+                return listItem;
+            });
+        }
     }
 
     ngOnInit() {
-        this.loggedUser = {name: '', email: 'palazzolo1995@gmail.com'};// await this.loginService.getLoggedUser();
+        this.loggedUser = {name: 'PALAZZOLO', email: 'palazzolo1995@gmail.com'};// await this.loginService.getLoggedUser();
         this.friend = this.router.getCurrentNavigation().extras.state.friend;
-        this.ticketsByFriend = this.retrieveTicketService.getTicketBoughtByWithParticipant(this.friend, this.loggedUser)
-        this.ticketsByUser = this.retrieveTicketService.getTicketBoughtByWithParticipant(this.loggedUser, this.friend)
+        this.ticketsByFriend = this.retrieveTicketService.getTicketBoughtByWithParticipant(this.friend, this.loggedUser);
+        this.ticketsByUser = this.retrieveTicketService.getTicketBoughtByWithParticipant(this.loggedUser, this.friend);
+
+        this.ticketsByFriend.forEach(t => {
+            this.items.push({ticket: t, expanded: false, debt:(Math.random()*10.0).toFixed(2)});
+        });
     }
 
+    segmentChanged(ev: any) {
+        console.log(ev.detail.valueOf().value);
+        if(ev.detail.valueOf().value === 'debts'){
+            this.debtsSelected = true;
+        }
+        else{
+            this.debtsSelected = false;
+        }
+    }
 }

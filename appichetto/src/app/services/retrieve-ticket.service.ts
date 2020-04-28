@@ -83,7 +83,7 @@ export class RetrieveTicketService {
             p.participants.push(boughtBy, participant);
         });
 
-        const arr = new Array(this.sampleTicket);
+        const arr = new Array(this.sampleTicket, this.sampleTicket, this.sampleTicket);
         return arr;
     }
 

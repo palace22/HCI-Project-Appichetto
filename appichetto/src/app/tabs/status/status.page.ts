@@ -27,7 +27,7 @@ export class StatusPage implements OnInit {
     async ngOnInit() {
         // federico.vaccaro@stud.unifi.it
         // palazzolo1995@gmail.com
-        this.user = {name: '', email: 'palazzolo1995@gmail.com'};// await this.loginService.getLoggedUser();
+        this.user = {name: 'PALAZZOLO', email: 'palazzolo1995@gmail.com'};// await this.loginService.getLoggedUser();
         this.userFriendsObs = this.userFriendsService.getUserFriends(this.user.email);
         this.userFriendsObs.subscribe(async userFriends => {
             if (userFriends !== undefined) {

@@ -11,6 +11,7 @@ import {RouterModule} from '@angular/router';
 import {FriendTicketsComponent} from './friend-tickets/friend-tickets.component';
 import {TicketProductComponent} from '../split-ticket/ticket-product/ticket-product.component';
 import {ParticipantsPopoverComponent} from '../split-ticket/ticket-product/participants-popover/participants-popover.component';
+import {ExpandableComponent} from './expandable/expandable.component';
 
 @NgModule({
     imports: [
@@ -20,7 +21,7 @@ import {ParticipantsPopoverComponent} from '../split-ticket/ticket-product/parti
         RouterModule.forChild([{path: '', component: StatusPage}]),
         // SplitTicketPageModule
     ],
-    declarations: [StatusPage, FriendTicketsComponent, TicketProductComponent, ParticipantsPopoverComponent]
+    declarations: [StatusPage, FriendTicketsComponent, TicketProductComponent, ParticipantsPopoverComponent, ExpandableComponent]
 })
 export class StatusPageModule {
 }
