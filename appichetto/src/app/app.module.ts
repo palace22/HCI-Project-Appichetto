@@ -15,9 +15,10 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
 import { AngularFirestore } from '@angular/fire/firestore';
 import { GoogleLoggedUserPipe } from './pipe/google-logged-user.pipe';
 import { FirebaseTicketPipe } from './pipe/firebase-ticket.pipe';
+import { FirebaseDebtTicketPipe } from './pipe/firebase-debt-ticket.pipe';
 
 @NgModule({
-  declarations: [AppComponent, FirebaseTicketPipe],
+  declarations: [AppComponent, FirebaseTicketPipe, FirebaseDebtTicketPipe],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -32,6 +33,7 @@ import { FirebaseTicketPipe } from './pipe/firebase-ticket.pipe';
     AngularFirestore,
     GoogleLoggedUserPipe,
     FirebaseTicketPipe,
+    FirebaseDebtTicketPipe,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

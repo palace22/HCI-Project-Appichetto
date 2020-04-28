@@ -1,32 +1,43 @@
 import { User } from './user';
-import { Product } from './product';
+import { Product, DebtProduct } from './product';
 
 export class Ticket {
     id?: string;
-    //description?: string;
     timestamp?: number;
     owner?: User;
     products?: Product[];
     participants?: User[];
-    market?: String;
+    market?: string;
     totalPrice?: number;
 }
 
 export class TicketFirebase {
     id?: string;
-    description?: string;
     timestamp?: number;
     owner?: User;
     products;
     participants?;
+    market?: string;
+    totalPrice?: number;
 }
 
-export class ParticipantTicket {
+export class DebtTicket {
     id?: string;
-    description?: string;
     timestamp?: number;
     owner?: User;
-    products: Product[];
+    products: DebtProduct[];
     participant: User;
+    market?: string;
+    totalPrice?: number;
+}
+
+export class DebtTicketFirebase {
+    id?: string;
+    timestamp?: number;
+    owner?: User;
+    products;
+    participant: User;
+    market?: string;
+    totalPrice?: number;
 }
 

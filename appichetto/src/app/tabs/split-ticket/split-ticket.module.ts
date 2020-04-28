@@ -1,20 +1,21 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
-import {IonicModule} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
 import { SplitTicketPage } from './split-ticket.page';
 import { RouterModule } from '@angular/router';
 import { TicketProductComponent } from './ticket-product/ticket-product.component';
 import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
+import { TicketService } from 'src/app/services/ticket.service';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        RouterModule.forChild([{path: '', component: SplitTicketPage}])
+        RouterModule.forChild([{ path: '', component: SplitTicketPage }])
     ],
     declarations: [
         SplitTicketPage,
@@ -23,7 +24,7 @@ import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service'
     exports: [
         TicketProductComponent
     ],
-    providers: [RetrieveTicketService]
+    providers: [RetrieveTicketService, TicketService]
 
 })
 export class SplitTicketPageModule {

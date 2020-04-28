@@ -7,3 +7,9 @@ export class Product {
     price: number;
     participants?: User[]
 }
+
+export class DebtProduct {
+    name: string;
+    quantity: number;
+    price: number;
+}
