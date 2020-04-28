@@ -70,8 +70,6 @@ export class TicketFormatterService {
           quantity: 1,
           participants: []
         })
-
-
     }
     ticket.products.forEach((product) => {
       let indexOfDuplicateProduct = prods.findIndex(prod => prod.name === product.name)

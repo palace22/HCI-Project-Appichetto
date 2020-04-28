@@ -6,15 +6,16 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [scrollEvents]="true">
-  <ion-row>
-    <ion-col size="3">Name</ion-col>
-    <ion-col size="2">Quantity</ion-col>
-    <ion-col size="2">Price</ion-col>
-    <ion-col size="2">Participant</ion-col>
-    <ion-col size="2">Edit</ion-col>
-  </ion-row>
-  <ion-grid *ngFor="let product of ticket.products; index as index">
+  <ion-grid>
+    <ion-row>
+      <ion-col>Name</ion-col>
+      <ion-col>Quantity</ion-col>
+      <ion-col>Price</ion-col>
+      <ion-col>Participant</ion-col>
+      <ion-col>Edit</ion-col>
+    </ion-row>
     <app-ticket-product
+      *ngFor="let product of ticket.products; index as index"
       [product]="product"
       [participants]="participants"
       (deleteProductChange)="deleteProduct(index, $event)"
