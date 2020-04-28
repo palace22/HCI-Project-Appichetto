@@ -36,7 +36,8 @@ export class ImportTicketPage {
 
   async importTicket() {
     let ticket: Ticket = {
-      products: []
+      products: [],
+      totalPrice: 0,
     }
     if (this.method === "manual")
       await this.navigateToSplitTicket(ticket)
@@ -56,7 +57,7 @@ export class ImportTicketPage {
       ticket.participants = this.participants
       ticket.timestamp = Date.now()
       ticket.id = Date.now().toString()
-      this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket} });
+      this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket } });
     })
   }
 

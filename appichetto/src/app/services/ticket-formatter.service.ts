@@ -51,18 +51,16 @@ export class TicketFormatterService {
 
     //Clean from invalid and sales
     for (let index = 0; index < productArray.length; index++) {
-      if (Number.isNaN(priceArray[index])) {
-        productArray.splice(index, 1)
-        priceArray.splice(index, 1)
-      }
 
       if (productArray[index].includes("SCONTO")) {
         priceArray[index - 1] -= priceArray[index]
         productArray.splice(index, 1)
         priceArray.splice(index, 1)
       }
+    }
 
-      //Final insert
+    //Final insert
+    for (let index = 0; index < productArray.length; index++)
       ticket.products.push(
         {
           name: productArray[index],
@@ -70,11 +68,17 @@ export class TicketFormatterService {
           quantity: 1,
           participants: []
         })
+
+    ticket.totalPrice = 0
+    for (let index = 0; index < ticket.products.length; index++) {
+      if (typeof ticket.products[index].price === "number")
+        ticket.totalPrice += ticket.products[index].price
+      else
+        ticket.products.splice(index--, 1)
     }
+
     ticket.products.forEach((product) => {
       let indexOfDuplicateProduct = prods.findIndex(prod => prod.name === product.name)
-      console.log(indexOfDuplicateProduct)
-      console.log(prods)
       if (indexOfDuplicateProduct !== -1) {
         prods[indexOfDuplicateProduct].quantity += 1
       } else {

@@ -22,14 +22,12 @@ export class UserFriendsService {
 
   async addFriend(userId: string, friendId: string, userFriends: UserFriends) {
     let user: User = await this.userRepositoryService.getUser(friendId)
-    console.log(user)
     userFriends.friends.push(user)
     this.userFriendsRepositoryService.updateUserFriends(userId, userFriends)
   }
 
   async removeFriend(userId: string, friend: User, userFriends: UserFriends) {
     let index = userFriends.friends.findIndex(f => f.email === friend.email)
-    console.log(index)
     userFriends.friends.splice(index, 1)
     this.userFriendsRepositoryService.updateUserFriends(userId, userFriends)
   }

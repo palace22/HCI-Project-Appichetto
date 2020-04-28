@@ -15,6 +15,7 @@ export class FirebaseDebtTicketPipe implements PipeTransform {
       products: ticket.products.map((obj) => { return Object.assign({}, obj) }),
       market: ticket.market,
       totalPrice: ticket.totalPrice,
+      paidPrice: ticket.paidPrice,
     }
     return firebaseTicket;
   }

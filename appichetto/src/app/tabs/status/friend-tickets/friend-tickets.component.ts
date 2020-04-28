@@ -55,7 +55,6 @@ export class FriendTicketsComponent implements OnInit {
     }
 
     segmentChanged(ev: any) {
-        console.log(ev.detail.valueOf().value);
         if(ev.detail.valueOf().value === 'debts'){
             this.debtsSelected = true;
         }

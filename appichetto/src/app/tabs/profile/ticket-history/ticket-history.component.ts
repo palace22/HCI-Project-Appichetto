@@ -23,13 +23,11 @@ export class TicketHistoryComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    let loggedUser: User = await this.loginService.getLoggedUser()
-    this.ticketHistoryObs = this.ticketService.getTicketOf(loggedUser)
+    this.ticketHistoryObs = await this.ticketService.getTicketsOfLoggedUser()
     this.ticketHistoryObs.subscribe(ticketHistory => this.ticketHistory = ticketHistory)
   }
 
   viewTicket(ticket: Ticket) {
-    console.log(ticket)
     this.router.navigateByUrl("tabs/profile/show-ticket", { state: { ticket: ticket } });
   }
 
