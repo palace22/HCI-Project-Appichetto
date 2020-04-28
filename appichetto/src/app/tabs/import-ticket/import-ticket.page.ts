@@ -56,7 +56,7 @@ export class ImportTicketPage {
       ticket.participants = this.participants
       ticket.timestamp = Date.now()
       ticket.id = Date.now().toString()
-      this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket, participants: this.participants } });
+      this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket} });
     })
   }
 

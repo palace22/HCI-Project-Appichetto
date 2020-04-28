@@ -44,7 +44,7 @@ export class TicketRepositoryService {
   }
 
   getActiveTicketsOf(owner: User): Observable<Ticket[]> {
-    let activeTickets: AngularFirestoreCollection<Ticket> = this.ticketDebtCollection.doc(owner.email).collection(environment.firebaseDB.owner_ticket) as AngularFirestoreCollection<Ticket>
+    let activeTickets: AngularFirestoreCollection<Ticket> = this.ticketCollection.doc(owner.email).collection(environment.firebaseDB.owner_ticket) as AngularFirestoreCollection<Ticket>
     return activeTickets.valueChanges()
   }
 }

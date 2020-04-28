@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Ticket } from 'src/app/models/ticket';
-import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
+import { TicketService } from 'src/app/services/ticket.service';
+import { LoginService } from 'src/app/services/login.service';
+import { Observable } from 'rxjs';
+import { User } from 'src/app/models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ticket-history',
@@ -9,12 +13,23 @@ import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service'
 })
 export class TicketHistoryComponent implements OnInit {
 
+  ticketHistoryObs: Observable<Ticket[]>
   ticketHistory: Ticket[]
 
-  constructor(private retrieveTicketService: RetrieveTicketService) { }
+  constructor(
+    private router: Router,
+    private ticketService: TicketService,
+    private loginService: LoginService,
+  ) { }
 
-  ngOnInit() {
-    this.ticketHistory = this.retrieveTicketService.getTickets()
+  async ngOnInit() {
+    let loggedUser: User = await this.loginService.getLoggedUser()
+    this.ticketHistoryObs = this.ticketService.getTicketOf(loggedUser)
+    this.ticketHistoryObs.subscribe(ticketHistory => this.ticketHistory = ticketHistory)
+  }
+
+  viewTicket(ticket: Ticket) {
+    this.router.navigateByUrl("tabs/ticket/split", { state: { ticket: ticket } });
   }
 
 }

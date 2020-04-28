@@ -7,9 +7,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let ticket of ticketHistory">
-      <app-ticket-preview [ticket]="ticket"></app-ticket-preview>
-    </ion-item>
-  </ion-list>
+  <ion-item *ngIf="ticketHistory === undefined">
+    <ion-progress-bar type="indeterminate"></ion-progress-bar>
+  </ion-item>
+  <div *ngIf="ticketHistoryObs | async">
+    <ion-list>
+      <ion-item
+        *ngFor="let ticket of ticketHistory"
+        (click)="viewTicket(ticket)"
+      >
+        <app-ticket-preview [ticket]="ticket"></app-ticket-preview>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
