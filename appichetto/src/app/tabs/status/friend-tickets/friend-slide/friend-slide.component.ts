@@ -30,8 +30,6 @@ export class FriendSlideComponent implements OnInit {
         this.ticketsByFriend = this.retrieveTicketService.getTicketBoughtByWithParticipant(this.friend, this.loggedUser);
         this.ticketsByUser = this.retrieveTicketService.getTicketBoughtByWithParticipant(this.loggedUser, this.friend);
 
-        console.log(this.ticketsByFriend);
-
         this.ticketsByFriend.forEach(t => {
             this.items.push({
                 ticket: t,

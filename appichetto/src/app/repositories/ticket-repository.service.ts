@@ -69,4 +69,9 @@ export class TicketRepositoryService {
     let activeTickets: AngularFirestoreCollection<Ticket> = this.ticketCollection.doc(owner.email).collection(environment.firebaseDB.owner_ticket) as AngularFirestoreCollection<Ticket>
     return activeTickets.valueChanges()
   }
+
+  deleteDebtTicket(ticket: DebtTicket) {
+    let savedDebtTicket = this.ticketDebtCollection.doc(ticket.participant.email).collection(ticket.owner.email).doc(ticket.timestamp.toString())
+    savedDebtTicket.delete()
+  }
 }

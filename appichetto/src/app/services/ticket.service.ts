@@ -97,4 +97,14 @@ export class TicketService {
           return [].concat.apply([], paidTicketFriend) as DebtTicket[]
         })
   }
+
+  payDebtTicket(debtTicket: DebtTicket) {
+    if (debtTicket.paidPrice === debtTicket.totalPrice) {
+      this.ticketRepositoryService.savePaidDebtTicket(debtTicket)
+      this.ticketRepositoryService.deleteDebtTicket(debtTicket)
+    } else {
+      this.ticketRepositoryService.saveDebtTicket(debtTicket)
+    }
+
+  }
 }

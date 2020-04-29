@@ -18,7 +18,6 @@ export class PaidTicketComponent implements OnInit {
 
   async ngOnInit() {
     this.paidTickets = await this.ticketService.getPaidTicketsOfLoggedUser()
-    console.log(this.paidTickets)
   }
 
   getDate(date: string) {
