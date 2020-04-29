@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from 'src/app/models/user';
 import {UserFriendsService} from 'src/app/services/user-friends.service';
 import {DebtService} from '../../services/debt.service';
@@ -6,6 +6,7 @@ import {UserFriends} from 'src/app/models/user-friends';
 import {Observable} from 'rxjs';
 import {LoginService} from '../../services/login.service';
 import {Router} from '@angular/router';
+import {IonSlides} from '@ionic/angular';
 
 
 @Component({
@@ -21,13 +22,15 @@ export class StatusPage implements OnInit {
     noFriends = false;
     user: User;
 
+
     constructor(private userFriendsService: UserFriendsService, private debtService: DebtService, private loginService: LoginService, private router: Router) {
     }
 
     async ngOnInit() {
         // federico.vaccaro@stud.unifi.it
         // palazzolo1995@gmail.com
-        this.user = {name: 'PALAZZOLO', email: 'palazzolo1995@gmail.com'};// await this.loginService.getLoggedUser();
+        // this.user = {name: 'PALAZZOLO', email: 'palazzolo1995@gmail.com'};// await this.loginService.getLoggedUser();
+        this.user = await this.loginService.getLoggedUser();
         this.userFriendsObs = this.userFriendsService.getUserFriends(this.user.email);
         this.userFriendsObs.subscribe(async userFriends => {
             if (userFriends !== undefined) {
@@ -45,7 +48,7 @@ export class StatusPage implements OnInit {
         return this.debtService.getDebtWithUser(user);
     }
 
-    goToFriendTicket(user: User) {
-        this.router.navigateByUrl('tabs/status/friend-tickets', {state: {friend: user}});
+    goToFriendTicket(index) {
+        this.router.navigateByUrl('tabs/status/friend-tickets', {state: {friendIndex: index}});
     }
 }

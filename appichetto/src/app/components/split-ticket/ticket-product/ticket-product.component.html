@@ -39,40 +39,40 @@
       ></ion-icon>
     </ion-fab-button>
   </ion-col>
-  <ion-col *ngIf="!this.viewMode">
+  <ion-col size="2" *ngIf="!this.viewMode">
     <ion-fab-button class="avatar" expand="block" color="dark">
       <ion-icon (click)="select()" name="brush" size="large"></ion-icon>
     </ion-fab-button>
   </ion-col>
 </ion-row>
 <ion-row *ngIf="selected" class="selected-card">
-  <ion-col>
+  <ion-col size="2">
     <ion-input
       [(ngModel)]="product.name"
       placeholder="name"
       type="text"
     ></ion-input>
-  </ion-col>
-  <ion-col>
+  </ion-col >
+  <ion-col size="2">
     <ion-input
       [(ngModel)]="product.quantity"
       placeholder="quantity"
       type="number"
     ></ion-input>
   </ion-col>
-  <ion-col>
+  <ion-col size="2">
     <ion-input
       [(ngModel)]="product.price"
       placeholder="price"
       type="number "
     ></ion-input>
   </ion-col>
-  <ion-col>
+  <ion-col size="2">
     <ion-fab-button expand="block" color="dark">
       <ion-icon name="trash" (click)="deleteProduct()" size="large"></ion-icon>
     </ion-fab-button>
   </ion-col>
-  <ion-col>
+  <ion-col size="2">
     <ion-fab-button class="avatar" expand="block" color="dark">
       <ion-icon name="save" (click)="select()" size="large"></ion-icon>
     </ion-fab-button>

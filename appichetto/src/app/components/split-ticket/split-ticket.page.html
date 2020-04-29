@@ -6,13 +6,13 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [scrollEvents]="true">
-  <ion-grid>
+  <ion-grid [fixed]="true">
     <ion-row>
-      <ion-col>Name</ion-col>
-      <ion-col>Quantity</ion-col>
-      <ion-col>Price</ion-col>
-      <ion-col>Participant</ion-col>
-      <ion-col>Edit</ion-col>
+      <ion-col size="2">Name</ion-col>
+      <ion-col size="2">Quantity</ion-col>
+      <ion-col size="2">Price</ion-col>
+      <ion-col size="2">Participant</ion-col>
+      <ion-col size="2">Edit</ion-col>
     </ion-row>
     <app-ticket-product
       *ngFor="let product of ticket.products; index as index"
@@ -23,28 +23,28 @@
   </ion-grid>
   <ion-grid>
     <ion-row class="new-product">
-      <ion-col size="3">
+      <ion-col>
         <ion-input
           [(ngModel)]="newProduct.name"
           placeholder="name"
           type="text"
         ></ion-input>
       </ion-col>
-      <ion-col size="2">
+      <ion-col>
         <ion-input
           [(ngModel)]="newProduct.quantity"
           placeholder="quantity"
           type="number"
         ></ion-input>
       </ion-col>
-      <ion-col size="2">
+      <ion-col>
         <ion-input
           [(ngModel)]="newProduct.price"
           placeholder="price"
           type="number"
         ></ion-input>
       </ion-col>
-      <ion-col size="4">
+      <ion-col>
         <ion-fab-button color="dark" [disabled]="!productIsReady()">
           <ion-icon (click)="addProduct()" name="add" size="large"></ion-icon>
         </ion-fab-button>
