@@ -23,6 +23,7 @@ export class UserFriendsRepositoryService {
   }
 
   updateUserFriends(userId: string, userFriends: UserFriends) {
+    console.log(userId)
     this.userFriendsDoc = this.userFriendsCollection.doc(userId)
     this.userFriendsDoc.update(userFriends)
   }

@@ -38,6 +38,7 @@ export class ImportTicketPage {
     let ticket: Ticket = {
       products: [],
       totalPrice: 0,
+      paidPrice: 0,
     }
     if (this.method === "manual")
       await this.navigateToSplitTicket(ticket)

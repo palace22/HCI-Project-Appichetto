@@ -5,6 +5,9 @@ import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
 import { LoginService } from './login.service';
 import { Observable } from 'rxjs';
+import { UserFriendsService } from './user-friends.service';
+import { first, takeLast } from 'rxjs/operators';
+import { UserFriends } from '../models/user-friends';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +17,7 @@ export class TicketService {
   constructor(
     private ticketRepositoryService: TicketRepositoryService,
     private loginService: LoginService,
+    private userFriendsService: UserFriendsService,
   ) { }
 
   private initializeDebtTickets(ticket: Ticket): Map<string, DebtTicket> {
@@ -51,14 +55,14 @@ export class TicketService {
   }
 
   save(ticket: Ticket) {
-    let debtTicket: Map<string, DebtTicket> = this.initializeDebtTickets(ticket)
-    debtTicket = this.split(ticket, debtTicket)
+    let debtTickets: Map<string, DebtTicket> = this.initializeDebtTickets(ticket)
+    debtTickets = this.split(ticket, debtTickets)
 
     this.ticketRepositoryService.saveOwnerTicket(ticket)
 
-    debtTicket.forEach(debtTicket =>
+    debtTickets.forEach(debtTicket => {
       this.ticketRepositoryService.saveDebtTicket(debtTicket)
-    )
+    })
   }
 
   getTicketsOfLoggedUser(): Promise<Observable<Ticket[]>> {
@@ -80,5 +84,17 @@ export class TicketService {
       .then(loggedUser => {
         return this.ticketRepositoryService.getDebtTicketsOf(loggedUser, user)
       })
+  }
+
+  async getPaidTicketsOfLoggedUser(): Promise<DebtTicket[]> {
+    let loggedUser: User = await this.loginService.getLoggedUser()
+    let loggedUserFriends: UserFriends = await this.userFriendsService.getUserFriends(loggedUser.email).pipe(first()).toPromise()
+    return await Promise.all(
+      loggedUserFriends.friends.map(
+        async friend => {
+          return await this.ticketRepositoryService.getDebtTicketsOf(friend, loggedUser).pipe(first()).toPromise()//TODO getPaidDebtTicketsOf(loggedUser, friend)
+        })).then(paidTicketFriend => {
+          return [].concat.apply([], paidTicketFriend) as DebtTicket[]
+        })
   }
 }

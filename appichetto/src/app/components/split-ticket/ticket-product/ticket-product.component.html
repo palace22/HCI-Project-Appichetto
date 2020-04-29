@@ -3,8 +3,8 @@
   <ion-col>{{ product.quantity }}</ion-col>
   <ion-col>{{ product.price }}</ion-col>
   <ion-col>
-    <ion-fab-button color="dark" [hidden]="viewMode" (click)="openSelect()">
-      <ion-icon
+    <ion-fab-button color="dark" [hidden]="viewMode" (click)="openSelect()" *ngIf="product.participants !== undefined">
+      <ion-icon 
         size="large"
         [name]="
           product.participants[0] !== undefined ? 'person' : 'person-outline'
@@ -29,7 +29,7 @@
         {{ participant.name }}
       </ion-select-option>
     </ion-select>
-    <ion-fab-button color="dark" [hidden]="!viewMode">
+    <ion-fab-button color="dark" [hidden]="!viewMode"  *ngIf="product.participants !== undefined">
       <ion-icon
         size="large"
         [name]="

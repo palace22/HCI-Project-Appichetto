@@ -5,6 +5,7 @@ import { FriendsListComponent } from './profile/friends-list/friends-list.compon
 import { FriendTicketsComponent } from './status/friend-tickets/friend-tickets.component';
 import { TicketHistoryComponent } from './profile/ticket-history/ticket-history.component';
 import { SplitTicketPage } from '../components/split-ticket/split-ticket.page';
+import { PaidTicketComponent } from './profile/paid-ticket/paid-ticket.component';
 
 const routes: Routes = [
     {
@@ -65,6 +66,10 @@ const routes: Routes = [
                     {
                         path: 'friends-list',
                         component: FriendsListComponent,
+                    },
+                    {
+                        path: 'paid-ticket',
+                        component: PaidTicketComponent,
                     },
                     {
                         path: 'ticket-history',

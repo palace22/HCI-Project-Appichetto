@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login.service';
+import { TicketService } from 'src/app/services/ticket.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,7 @@ export class ProfilePage {
     photoUrl: "",
   }
 
-  constructor(private router: Router, private loginService: LoginService) { }
+  constructor(private router: Router, private loginService: LoginService, private ticketService: TicketService) { }
 
   async ngOnInit() {
     try {
@@ -33,5 +34,13 @@ export class ProfilePage {
 
   goToTicketHistory() {
     this.router.navigateByUrl('tabs/profile/ticket-history')
+  }
+
+  goToPaidTicket() {
+    this.router.navigateByUrl('tabs/profile/paid-ticket')
+  }
+
+  test() {
+    this.ticketService.getPaidTicketsOfLoggedUser()
   }
 }

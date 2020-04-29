@@ -9,6 +9,7 @@ export class Ticket {
     participants?: User[];
     market?: string;
     totalPrice?: number;
+    paidPrice?: number;
 }
 
 export class TicketFirebase {
@@ -19,6 +20,7 @@ export class TicketFirebase {
     participants?;
     market?: string;
     totalPrice?: number;
+    paidPrice?: number;
 }
 
 export class DebtTicket {
