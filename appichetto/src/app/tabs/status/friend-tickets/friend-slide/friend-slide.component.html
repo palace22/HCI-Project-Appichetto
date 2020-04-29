@@ -7,25 +7,25 @@
     </ion-segment-button>
 </ion-segment>
 
-<div *ngIf="friend">
+<div *ngIf="ticketsByFriendObs | async">
     <div *ngIf="debtsSelected">
         <ion-grid>
-            <ion-row *ngFor="let item of items">
+            <ion-row *ngFor="let ticket of ticketsByFriend">
                 <ion-col>
                     <ion-card>
-                        <ion-card-header (click)="expandItem(item)" style="padding-top: -30%">
+                        <ion-card-header (click)="selectTicket(ticket)" style="padding-top: -30%">
                             <ion-grid>
                                 <ion-row>
                                     <ion-col></ion-col>
                                     <ion-col size="10">
                                         <ion-card-title>
                                             <ion-text style="text-align: left">
-                                                Ticket {{ item.ticket.timestamp }}</ion-text>
+                                                Ticket {{ ticket.timestamp }}</ion-text>
                                         </ion-card-title>
                                     </ion-col>
                                     <ion-col>
                                         <ion-icon style="margin-left: 50%; margin-top: 17%;"
-                                                  [name]="!item.expanded ? 'chevron-down-outline' : 'chevron-up-outline'"
+                                                  [name]="!(selectedTicketTimestamp === ticket.timestamp) ? 'chevron-down-outline' : 'chevron-up-outline'"
                                         ></ion-icon>
                                     </ion-col>
                                 </ion-row>
@@ -33,9 +33,9 @@
                         </ion-card-header>
 
                         <ion-card-content>
-                            <ion-text color="danger" style="margin-bottom: -30%">Debt: -{{item.debt}}</ion-text>
+                            <ion-text color="danger" style="margin-bottom: -30%">Debt: -{{ticket.totalPrice}}</ion-text>
 
-                            <app-expandable [expanded]="item.expanded">
+                            <app-expandable [expanded]="selectedTicketTimestamp === ticket.timestamp">
                                 <ion-grid>
                                     <ion-row>
                                         <ion-col>Name</ion-col>
@@ -43,9 +43,9 @@
                                         <ion-col>Price</ion-col>
                                         <ion-col>Participant</ion-col>
                                     </ion-row>
-                                    <app-ticket-product *ngFor="let product of item.ticket.products;"
+                                    <app-ticket-product *ngFor="let product of ticket.products;"
                                                         [product]="product"
-                                                        [participants]="item.ticket.participants"
+                                                        [participants]="[ticket.participant]"
                                                         [viewMode]="true"
                                     ></app-ticket-product>
                                 </ion-grid>
