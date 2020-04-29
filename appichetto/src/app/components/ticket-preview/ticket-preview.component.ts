@@ -15,8 +15,6 @@ export class TicketPreviewComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.ticket)
-    console.log(this.ticket.totalPrice)
   }
 
   getMarketIcon(market: string): string {

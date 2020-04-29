@@ -83,7 +83,6 @@ export class SplitTicketPage implements OnInit {
   ngOnInit() {
     try {
       this.ticket = plainToClass(Ticket, this.router.getCurrentNavigation().extras.state.ticket);
-      console.log(this.ticket)
       this.participants = this.ticket.participants;
     } catch (error) {
     }
@@ -99,7 +98,6 @@ export class SplitTicketPage implements OnInit {
       newProduct.participants = [];
       this.ticket.products.push(newProduct);
       this.ticket.totalPrice += newProduct.price * newProduct.quantity
-      console.log(this.ticket.totalPrice)
       this.newProduct = new Product();
     } catch {
       console.log('ERROR');
@@ -107,7 +105,8 @@ export class SplitTicketPage implements OnInit {
   }
 
   deleteProduct(index: number, $event) {
-    console.log($event);
+    console.log($event)
+    this.ticket.totalPrice -= this.ticket.products[index].price * this.ticket.products[index].quantity
     this.ticket.products.splice(index, 1);
   }
 

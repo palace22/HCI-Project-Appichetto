@@ -13,6 +13,8 @@ import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service'
 import { TicketHistoryComponent } from './ticket-history/ticket-history.component';
 import { SplitTicketPage } from '../../components/split-ticket/split-ticket.page';
 import { TicketProductComponent } from 'src/app/components/split-ticket/ticket-product/ticket-product.component';
+import { PaidTicketComponent } from './paid-ticket/paid-ticket.component';
+import { ExpandableComponent } from '../status/expandable/expandable.component';
 
 @NgModule({
   imports: [
@@ -29,6 +31,8 @@ import { TicketProductComponent } from 'src/app/components/split-ticket/ticket-p
     TicketPreviewComponent,
     SplitTicketPage,
     TicketProductComponent,
+    PaidTicketComponent,
+    ExpandableComponent,
   ],
   providers: [
     UserFriendsService,

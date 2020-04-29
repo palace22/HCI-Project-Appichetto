@@ -13,7 +13,8 @@ import { Observable } from 'rxjs';
 })
 export class TicketRepositoryService {
   ticketCollection: AngularFirestoreCollection<Ticket>;
-  ticketDebtCollection: AngularFirestoreCollection<Ticket>;
+  ticketDebtCollection: AngularFirestoreCollection<DebtTicket>;
+  paidTicketDebtCollection: AngularFirestoreCollection<DebtTicket>;
 
   constructor(
     private firestore: AngularFirestore,
@@ -22,11 +23,19 @@ export class TicketRepositoryService {
   ) {
     this.ticketCollection = this.firestore.collection(environment.firebaseDB.ticket_history) as AngularFirestoreCollection<Ticket>;
     this.ticketDebtCollection = this.firestore.collection(environment.firebaseDB.debt_ticket) as AngularFirestoreCollection<DebtTicket>;
+    this.paidTicketDebtCollection = this.firestore.collection(environment.firebaseDB.paid_debt_ticket) as AngularFirestoreCollection<DebtTicket>;
   }
 
   saveOwnerTicket(ticket: Ticket) {
     const firebaseTicket = this.firebaseTicketPipe.transform(ticket);
     this.ticketCollection.doc(ticket.owner.email).collection(environment.firebaseDB.owner_ticket).doc(ticket.timestamp.toString()).set(firebaseTicket).catch(error => {
+      throw new Error(error);
+    });
+  }
+
+  saveOwnerPassedTicket(ticket: Ticket) {
+    const firebaseTicket = this.firebaseTicketPipe.transform(ticket);
+    this.ticketCollection.doc(ticket.owner.email).collection(environment.firebaseDB.owner_passed_ticket).doc(ticket.timestamp.toString()).set(firebaseTicket).catch(error => {
       throw new Error(error);
     });
   }
@@ -38,13 +47,31 @@ export class TicketRepositoryService {
     });
   }
 
+  savePaidDebtTicket(ticket: DebtTicket) {
+    const firebaseTicket = this.firebaseDebtTicketPipe.transform(ticket);
+    this.ticketDebtCollection.doc(ticket.participant.email).collection(ticket.owner.email).doc(ticket.timestamp.toString()).set(firebaseTicket).catch(error => {
+      throw new Error(error);
+    });
+  }
+
+
   getDebtTicketsOf(debtor: User, owner: User): Observable<DebtTicket[]> {
     let debtTickets: AngularFirestoreCollection<DebtTicket> = this.ticketDebtCollection.doc(debtor.email).collection(owner.email) as AngularFirestoreCollection<DebtTicket>
+    return debtTickets.valueChanges()
+  }
+
+  getPaidDebtTicketsOf(debtor: User, owner: User): Observable<DebtTicket[]> {
+    let debtTickets: AngularFirestoreCollection<DebtTicket> = this.paidTicketDebtCollection.doc(debtor.email).collection(owner.email) as AngularFirestoreCollection<DebtTicket>
     return debtTickets.valueChanges()
   }
 
   getActiveTicketsOf(owner: User): Observable<Ticket[]> {
     let activeTickets: AngularFirestoreCollection<Ticket> = this.ticketCollection.doc(owner.email).collection(environment.firebaseDB.owner_ticket) as AngularFirestoreCollection<Ticket>
     return activeTickets.valueChanges()
+  }
+
+  deleteDebtTicket(ticket: DebtTicket) {
+    let savedDebtTicket = this.ticketDebtCollection.doc(ticket.participant.email).collection(ticket.owner.email).doc(ticket.timestamp.toString())
+    savedDebtTicket.delete()
   }
 }
