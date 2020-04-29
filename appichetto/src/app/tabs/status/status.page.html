@@ -16,12 +16,11 @@
     <div *ngIf="userFriendsObs | async">
         <ion-list [scrollEvents]="true">
             <ion-item button *ngFor="let friend of userFriends.friends; index as index" (click)="goToFriendTicket(index)">
-                <ion-item-sliding>
-                    <ion-item>
                         <ion-avatar item-start>
                             <ion-img [src]="friend.photoUrl"></ion-img>
                         </ion-avatar>
                         <ion-item>{{ friend.name }}</ion-item>
+                        <div slot="end">
                         <ion-list slot="end">
                             <ion-text color="danger">
                                 Debt: -{{ debts[friend.email].debt }}<br>
@@ -33,8 +32,7 @@
                                 Total = {{ debts[friend.email].total }}
                             </ion-text>
                         </ion-list>
-                    </ion-item>
-                </ion-item-sliding>
+                        </div>
             </ion-item>
         </ion-list>
     </div>
