@@ -15,6 +15,9 @@ export class FriendSlideComponent implements OnInit {
     ticketsByFriend: Ticket[];
     ticketsByUser: Ticket[];
 
+    debt: number;
+    credit: number;
+
     private debtsSelected: boolean;
     private items = [];
 
@@ -30,7 +33,11 @@ export class FriendSlideComponent implements OnInit {
         this.ticketsByFriend = this.retrieveTicketService.getTicketBoughtByWithParticipant(this.friend, this.loggedUser);
         this.ticketsByUser = this.retrieveTicketService.getTicketBoughtByWithParticipant(this.loggedUser, this.friend);
 
-        console.log(this.ticketsByFriend);
+        this.debt = Math.random() * 10;
+        this.credit = Math.random() * 10;
+
+        console.log(this.debt);
+        console.log(this.credit);
 
         this.ticketsByFriend.forEach(t => {
             this.items.push({

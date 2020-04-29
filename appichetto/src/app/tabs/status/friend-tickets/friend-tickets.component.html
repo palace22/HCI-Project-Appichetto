@@ -12,16 +12,16 @@
     </ion-toolbar>
 </ion-header>
 
+<div style="position: absolute; top: 50%; left: 16px;font-size: 25px; z-index: 2;">
+    <ion-icon name="arrow-back"></ion-icon>
+</div>
+<div style="position: absolute; top: 50%; right: 16px; font-size: 25px; z-index: 2;">
+    <ion-icon name="arrow-forward"></ion-icon>
+</div>
+
 <ion-content>
     <div *ngIf="userFriendsObs | async">
-        <ion-slides [options]="this.slideOpts" (ionSlideDidChange)="getSlideFriendName()">
-            <div style="position: absolute; top: 50%; left: 16px;font-size: 25px; z-index: 2;">
-                <ion-icon name="arrow-back"></ion-icon>
-            </div>
-            <div style="position: absolute; top: 50%; right: 16px; font-size: 25px; z-index: 2;">
-                <ion-icon name="arrow-forward"></ion-icon>
-            </div>
-
+        <ion-slides [options]="this.slideOpts" (ionSlideDidChange)="getInfoFromCurrentSlide()"  (ionSlidesDidLoad)="getInfoFromCurrentSlide()">
             <ion-slide  *ngFor="let friend of userFriends.friends">
                 <app-friend-slide #friendSlide [friend]="friend" [loggedUser]="loggedUser"></app-friend-slide>
             </ion-slide>
@@ -32,6 +32,12 @@
         <ion-spinner></ion-spinner>
     </div>
 </ion-content>
+
+<ion-footer style="text-align: center">
+    <h6>Debt: <ion-text color="danger">-{{ this.displayedDebt }}</ion-text>; Credit: <ion-text color="success">+{{ this.displayedCredit }}</ion-text>; Total: {{ this.displayedTotal }}</h6>
+    <ion-button expand="block" (click)="presentPopover()" [disabled]="this.total > 0.0">Pay</ion-button>
+</ion-footer>
+
 
 
 

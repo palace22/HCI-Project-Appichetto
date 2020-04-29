@@ -6,6 +6,7 @@ import {environment} from 'src/environments/environment';
 import {FirebaseTicketPipe} from '../pipe/firebase-ticket.pipe';
 import {User} from '../models/user';
 import {Product} from '../models/product';
+import {tick} from '@angular/core/testing';
 
 @Injectable({
     providedIn: 'root'
@@ -90,6 +91,7 @@ export class RetrieveTicketService {
             newProd.participants.push(boughtBy, participant)
             ticket.products.push(newProd);
         });
+        ticket.timestamp = 9595;
 
 
         const arr = [ticket, ticket, ticket];
