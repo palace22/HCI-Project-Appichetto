@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { UserRepositoryService } from '../repositories/user-repository.service';
 import { LoginService } from '../services/login.service';
 import { LoginPage } from './login.page';
+import { UserFriendsRepositoryService } from '../repositories/user-friends-repository.service';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { LoginPage } from './login.page';
   ],
   providers: [
     UserRepositoryService,
+    UserFriendsRepositoryService,
     LoginService,
   ],
 })
