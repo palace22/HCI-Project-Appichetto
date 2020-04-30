@@ -28,9 +28,9 @@ export class FriendTicketsComponent implements OnInit {
         speed: 400,
     };
     private startingUserIndex: any;
-    private selectedFriendName: string;
+    private selectedFriend: User;
 
-    private total: number;
+    private total = 0.0;
 
     displayedDebt: string;
     displayedCredit: string;
@@ -38,6 +38,9 @@ export class FriendTicketsComponent implements OnInit {
 
     @ViewChildren('friendSlide') slideList: QueryList<FriendSlideComponent>;
     @ViewChild(IonSlides, {static: false}) slides: IonSlides;
+
+    private debt: number;
+    private credit: number;
 
 
     constructor(private router: Router, private loginService: LoginService, private userFriendsService: UserFriendsService, private popoverController: PopoverController) {
@@ -66,11 +69,14 @@ export class FriendTicketsComponent implements OnInit {
     getInfoFromCurrentSlide() {
         this.slides.getActiveIndex().then(i => {
             const friendSlideComponent = this.slideList.toArray()[i];
-            this.selectedFriendName = friendSlideComponent.getFriendName();
-            console.log(this.selectedFriendName);
+            this.selectedFriend = friendSlideComponent.getFriend();
+            console.log(this.selectedFriend);
 
             friendSlideComponent.debtCreditTotalSubject.subscribe(dct => {
                 this.total = dct.credit - dct.debt;
+                this.debt = dct.debt;
+                this.credit = dct.credit;
+
                 this.displayedDebt = dct.debt.toFixed(2);
                 this.displayedCredit = dct.credit.toFixed(2);
                 this.displayedTotal = (dct.credit - dct.debt).toFixed(2);
@@ -82,7 +88,7 @@ export class FriendTicketsComponent implements OnInit {
         const popover = await this.popoverController.create({
             component: PayPopoverComponent,
             event: ev,
-            componentProps: {price: this.total},
+            componentProps: {total: this.total, debt: this.debt, credit: this.credit, friend: this.selectedFriend},
             translucent: true,
         });
         return await popover.present();

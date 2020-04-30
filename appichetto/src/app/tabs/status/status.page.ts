@@ -1,12 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from 'src/app/models/user';
 import {UserFriendsService} from 'src/app/services/user-friends.service';
-import {DebtService} from '../../services/debt.service';
+import {AccountingService} from '../../services/accounting.service';
 import {UserFriends} from 'src/app/models/user-friends';
 import {Observable} from 'rxjs';
 import {LoginService} from '../../services/login.service';
 import {Router} from '@angular/router';
 import {IonSlides} from '@ionic/angular';
+import {TicketService} from '../../services/ticket.service';
 
 
 @Component({
@@ -19,11 +20,12 @@ export class StatusPage implements OnInit {
     userFriendsObs: Observable<UserFriends>;
     userFriends: UserFriends;
     debts = {};
+    credits = {};
     noFriends = false;
     user: User;
 
 
-    constructor(private userFriendsService: UserFriendsService, private debtService: DebtService, private loginService: LoginService, private router: Router) {
+    constructor(private userFriendsService: UserFriendsService, private ticketService: TicketService, private loginService: LoginService, private router: Router) {
     }
 
     async ngOnInit() {
@@ -35,17 +37,24 @@ export class StatusPage implements OnInit {
         this.userFriendsObs.subscribe(async userFriends => {
             if (userFriends !== undefined) {
                 this.userFriends = userFriends;
-                this.userFriends.friends.forEach(user => this.debts[user.email] = this.getDebt(user));
-                return this.debtService.getDebtWithUser(this.user);
-            } else {
-                this.userFriends = new UserFriends();
-                this.noFriends = true;
+                for (const user of this.userFriends.friends) {
+
+                    this.debts[user.email] = 0.0;
+                    this.credits[user.email] = 0.0;
+
+                    const ticketsByFriendObs = await this.ticketService.getDebtTicketsOf(user);
+                    ticketsByFriendObs.subscribe(tArr => {
+                        tArr.forEach(t => this.debts[user.email] += (t.totalPrice - t.paidPrice));
+                    });
+
+                    const ticketsByMeObs = await this.ticketService.getCreditTicketsFrom(user);
+                    ticketsByMeObs.subscribe(tArr => {
+                        tArr.forEach(t => this.credits[user.email] += (t.totalPrice - t.paidPrice));
+                    });
+                }
+                this.noFriends = this.userFriends.friends.length === 0;
             }
         });
-    }
-
-    getDebt(user: User) {
-        return this.debtService.getDebtWithUser(user);
     }
 
     goToFriendTicket(index) {

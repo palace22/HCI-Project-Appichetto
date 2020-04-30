@@ -13,6 +13,7 @@ import {ExpandableComponent} from './expandable/expandable.component';
 import { TicketProductComponent } from 'src/app/components/split-ticket/ticket-product/ticket-product.component';
 import { ParticipantsPopoverComponent } from 'src/app/components/split-ticket/ticket-product/participants-popover/participants-popover.component';
 import {FriendSlideComponent} from './friend-tickets/friend-slide/friend-slide.component';
+import {PayPopoverComponent} from './friend-tickets/pay-popover/pay-popover.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,7 @@ import {FriendSlideComponent} from './friend-tickets/friend-slide/friend-slide.c
         RouterModule.forChild([{path: '', component: StatusPage}]),
         // SplitTicketPageModule
     ],
-    declarations: [StatusPage, FriendTicketsComponent, TicketProductComponent, ParticipantsPopoverComponent, ExpandableComponent, FriendSlideComponent]
+    declarations: [StatusPage, FriendTicketsComponent, TicketProductComponent, ParticipantsPopoverComponent, ExpandableComponent, FriendSlideComponent, PayPopoverComponent]
 })
 export class StatusPageModule {
 }
