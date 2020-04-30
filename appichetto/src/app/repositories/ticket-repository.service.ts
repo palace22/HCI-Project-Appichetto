@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Ticket, DebtTicket } from '../models/ticket';
 import { FirebaseTicketPipe } from '../pipe/firebase-ticket.pipe';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFirestoreCollection } from '@angular/fire/firestore/public_api';
+import { AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore/public_api';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
 import { FirebaseDebtTicketPipe } from '../pipe/firebase-debt-ticket.pipe';
@@ -68,6 +68,25 @@ export class TicketRepositoryService {
   getActiveTicketsOf(owner: User): Observable<Ticket[]> {
     let activeTickets: AngularFirestoreCollection<Ticket> = this.ticketCollection.doc(owner.email).collection(environment.firebaseDB.owner_ticket) as AngularFirestoreCollection<Ticket>
     return activeTickets.valueChanges()
+  }
+
+  async getTicketOf(owner: User, ticketId: string): Promise<Ticket> {
+    return await (await this.ticketCollection.doc(owner.email).collection(environment.firebaseDB.owner_ticket).doc(ticketId).ref.get()).data() as Ticket
+  }
+
+  updateTicket(ticket: Ticket) {
+    let ticketDoc = this.ticketCollection.doc(ticket.owner.email).collection(environment.firebaseDB.owner_ticket).doc(ticket.timestamp.toString())
+    ticketDoc.update(ticket)
+  }
+
+  updateDebtTicket(debtTicket: DebtTicket) {
+    let debtTicketDoc = this.ticketCollection.doc(debtTicket.owner.email).collection(environment.firebaseDB.owner_ticket).doc(debtTicket.timestamp.toString())
+    debtTicketDoc.update(debtTicket)
+  }
+
+  deleteTicket(ticket: Ticket) {
+    let ticketDoc = this.ticketCollection.doc(ticket.owner.email).collection(environment.firebaseDB.owner_ticket).doc(ticket.timestamp.toString())
+    ticketDoc.delete()
   }
 
   deleteDebtTicket(ticket: DebtTicket) {
