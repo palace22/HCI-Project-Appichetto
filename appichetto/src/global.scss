@@ -40,3 +40,9 @@
 ion-fab-button {
   margin: auto;
 }
+
+ion-segment-button {
+  --color-checked: black;
+  --color-focused: #6e6e6e;
+  --color-hover: #6e6e6e;
+}

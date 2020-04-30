@@ -72,6 +72,13 @@ export class TicketService {
       })
   }
 
+  getPassedTicketsOfLoggedUser(): Promise<Observable<Ticket[]>> {
+    return this.loginService.getLoggedUser()
+      .then(loggedUser => {
+        return this.ticketRepositoryService.getPassedTicketsOf(loggedUser)
+      })
+  }
+
   getDebtTicketsOf(user: User): Promise<Observable<DebtTicket[]>> {
     return this.loginService.getLoggedUser()
       .then(loggedUser => {
@@ -92,7 +99,7 @@ export class TicketService {
     return await Promise.all(
       loggedUserFriends.friends.map(
         async friend => {
-          return await this.ticketRepositoryService.getDebtTicketsOf(friend, loggedUser).pipe(first()).toPromise()//TODO getPaidDebtTicketsOf(loggedUser, friend)
+          return await this.ticketRepositoryService.getPaidDebtTicketsOf(loggedUser, friend).pipe(first()).toPromise()
         })).then(paidTicketFriend => {
           return [].concat.apply([], paidTicketFriend) as DebtTicket[]
         })
