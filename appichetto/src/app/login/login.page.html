@@ -10,10 +10,13 @@
       <img src="../../assets/ApPichetto-logo.svg" />
     </ion-row>
     <ion-row class="fullheight xc">
-      <ion-button color="dark" (click)="login()">
+      <ion-button *ngIf="!loadingUser" color="dark" (click)="login()">
         <ion-icon name="logo-google"></ion-icon>
         Login with Google
       </ion-button>
+      <ion-spinner  *ngIf="loadingUser" name="crescent"></ion-spinner>
+    </ion-row>
+    <ion-row>
     </ion-row>
   </ion-grid>
 </ion-content>

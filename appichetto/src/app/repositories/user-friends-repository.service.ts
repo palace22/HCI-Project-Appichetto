@@ -16,6 +16,10 @@ export class UserFriendsRepositoryService {
     this.userFriendsCollection = this.firestore.collection(environment.firebaseDB.user_friends) as AngularFirestoreCollection<UserFriends>
   }
 
+  initialize(userId: string) {
+    this.userFriendsCollection.doc(userId).set({ friends: [] })
+  }
+
   getUserFriends(userId: string): Observable<UserFriends> {
     this.userFriendsDoc = this.userFriendsCollection.doc(userId) as AngularFirestoreDocument<UserFriends>
     this.userFriends = this.userFriendsDoc.valueChanges()

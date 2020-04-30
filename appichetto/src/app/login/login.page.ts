@@ -7,12 +7,18 @@ import { LoginService } from '../services/login.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  loadingUser: boolean = true
 
   constructor(
     private loginService: LoginService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.loginService.getLoadingUser().subscribe(isLoading => {
+    this.loadingUser = isLoading
+      console.log(isLoading)
+    })
+  }
 
   login() {
     this.loginService.login()
