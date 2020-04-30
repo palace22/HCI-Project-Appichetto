@@ -3,13 +3,15 @@ import {User} from '../../../../models/user';
 import {DebtTicket, Ticket} from '../../../../models/ticket';
 import {RetrieveTicketService} from '../../../../services/retrieve-ticket.service';
 import {TicketService} from '../../../../services/ticket.service';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Subject} from 'rxjs';
 
 @Component({
     selector: 'app-friend-slide',
     templateUrl: './friend-slide.component.html',
     styleUrls: ['./friend-slide.component.scss'],
 })
+
 export class FriendSlideComponent implements OnInit {
     @Input()
     private friend: User;
@@ -18,8 +20,11 @@ export class FriendSlideComponent implements OnInit {
     ticketsByFriendObs: Observable<DebtTicket[]>;
     ticketsByFriend: DebtTicket[];
 
-    debt: number;
-    credit: number;
+    ticketsByMeObs: Observable<DebtTicket[]>;
+    ticketsByMe: DebtTicket[];
+
+    debtCreditTotalSubject: BehaviorSubject<any>;
+
     selectedTicketTimestamp: number;
 
     private debtsSelected: boolean;
@@ -27,27 +32,32 @@ export class FriendSlideComponent implements OnInit {
 
     @Input()
     private loggedUser: User;
+    private debt = 0.0;
+    private credit = 0.0;
 
     constructor(private ticketService: TicketService) {
         this.debtsSelected = true;
+        this.debtCreditTotalSubject = new BehaviorSubject<any>({debt: 0.0, credit: 0.0, total: 0.0});
     }
 
     async ngOnInit() {
 
         // this.ticketsByFriend = this.ticketService.getTicketBoughtByWithParticipant(this.friend, this.loggedUser);
         this.ticketsByFriendObs = await this.ticketService.getDebtTicketsOf(this.friend);
-        this.ticketsByFriendObs.subscribe(t => {
-            this.ticketsByFriend = t;
-            console.log(this.ticketsByFriend)
+        this.ticketsByFriendObs.subscribe(tArr => {
+            this.ticketsByFriend = tArr;
+            this.ticketsByFriend.forEach(t => this.debt += (t.totalPrice - t.paidPrice));
+            this.debtCreditTotalSubject.next({debt: this.debt, credit: this.credit, total: this.credit - this.debt});
         });
 
-        this.debt = 0.0;
-        //this.ticketsByFriend.forEach(t => this.debt += t.totalPrice);
+        this.ticketsByMeObs = await this.ticketService.getCreditTicketsFrom(this.friend);
+        this.ticketsByMeObs.subscribe(tArr => {
+            this.ticketsByMe = tArr;
+            this.ticketsByMe.forEach(t => this.credit += (t.totalPrice - t.paidPrice));
+            this.debtCreditTotalSubject.next({debt: this.debt, credit: this.credit, total: this.credit - this.debt});
+        });
 
-        this.credit = Math.random() * 10;
 
-        console.log(this.debt);
-        console.log(this.credit);
     }
 
     getFriendName() {

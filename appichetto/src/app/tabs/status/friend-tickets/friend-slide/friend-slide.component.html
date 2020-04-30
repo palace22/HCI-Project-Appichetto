@@ -7,10 +7,26 @@
     </ion-segment-button>
 </ion-segment>
 
-<div *ngIf="ticketsByFriendObs | async">
-    <div *ngIf="debtsSelected">
+<div *ngIf="(ticketsByFriendObs | async) && (ticketsByMeObs | async)">
+    <div>
         <ion-grid>
-            <ion-row *ngFor="let ticket of ticketsByFriend">
+            <ion-row *ngIf="ticketsByFriend.length === 0 && debtsSelected">
+                <ion-col>
+                    <ion-card>
+                        <ion-card-header>{{ friend.name }} has no tickets with you!</ion-card-header>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="ticketsByMe.length === 0 && !debtsSelected">
+                <ion-col>
+                    <ion-card>
+                        <ion-card-header>You have no tickets with {{ friend.name }}!</ion-card-header>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+
+            <ion-row *ngFor="let ticket of (debtsSelected ? ticketsByFriend : ticketsByMe)">
                 <ion-col>
                     <ion-card>
                         <ion-card-header (click)="selectTicket(ticket)" style="padding-top: -30%">
@@ -33,7 +49,8 @@
                         </ion-card-header>
 
                         <ion-card-content>
-                            <ion-text color="danger" style="margin-bottom: -30%">Debt: -{{ticket.totalPrice}}</ion-text>
+                            <ion-text color="danger" style="margin-bottom: -30%" *ngIf="debtsSelected">Debt: {{ticket.totalPrice }}</ion-text>
+                            <ion-text color="success" style="margin-bottom: -30%" *ngIf="!debtsSelected">Credit: {{ticket.totalPrice }}</ion-text>
 
                             <app-expandable [expanded]="selectedTicketTimestamp === ticket.timestamp">
                                 <ion-grid>
@@ -46,45 +63,6 @@
                                     <app-ticket-product *ngFor="let product of ticket.products;"
                                                         [product]="product"
                                                         [participants]="[ticket.participant]"
-                                                        [viewMode]="true"
-                                    ></app-ticket-product>
-                                </ion-grid>
-                            </app-expandable>
-                        </ion-card-content>
-                    </ion-card>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </div>
-    <div *ngIf="!debtsSelected">
-        <ion-grid>
-            <ion-row *ngFor="let item of items">
-                <ion-col>
-                    <ion-card>
-                        <ion-card-header (click)="expandItem(item)">
-                            <ion-card-title>Ticket {{ item.ticket.timestamp }}
-                            </ion-card-title>
-                        </ion-card-header>
-
-
-                        <ion-card-content>
-                            <div slot="end">
-                                <ion-text color="success">Credit: +{{item.credit}}</ion-text>
-                            </div>
-
-                            <app-expandable [expanded]="item.expanded">
-                                <ion-grid>
-                                    <ion-row>
-                                        <ion-col>Name</ion-col>
-                                        <ion-col>Quantity</ion-col>
-                                        <ion-col>Price</ion-col>
-                                        <ion-col>Participant</ion-col>
-                                    </ion-row>
-                                </ion-grid>
-                                <ion-grid *ngFor="let product of item.ticket.products;">
-                                    <app-ticket-product style="margin-left: 3%"
-                                                        [product]="product"
-                                                        [participants]="item.ticket.participants"
                                                         [viewMode]="true"
                                     ></app-ticket-product>
                                 </ion-grid>

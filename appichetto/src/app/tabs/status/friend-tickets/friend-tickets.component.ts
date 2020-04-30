@@ -67,11 +67,14 @@ export class FriendTicketsComponent implements OnInit {
         this.slides.getActiveIndex().then(i => {
             const friendSlideComponent = this.slideList.toArray()[i];
             this.selectedFriendName = friendSlideComponent.getFriendName();
+            console.log(this.selectedFriendName);
 
-            this.displayedDebt = friendSlideComponent.debt.toFixed(2);
-            this.displayedCredit = friendSlideComponent.credit.toFixed(2);
-            this.total = friendSlideComponent.credit - friendSlideComponent.debt;
-            this.displayedTotal = (friendSlideComponent.credit - friendSlideComponent.debt).toFixed(2);
+            friendSlideComponent.debtCreditTotalSubject.subscribe(dct => {
+                this.total = dct.credit - dct.debt;
+                this.displayedDebt = dct.debt.toFixed(2);
+                this.displayedCredit = dct.credit.toFixed(2);
+                this.displayedTotal = (dct.credit - dct.debt).toFixed(2);
+            });
         });
     }
 

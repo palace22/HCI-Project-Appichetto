@@ -75,14 +75,14 @@ export class TicketService {
   getDebtTicketsOf(user: User): Promise<Observable<DebtTicket[]>> {
     return this.loginService.getLoggedUser()
       .then(loggedUser => {
-        return this.ticketRepositoryService.getDebtTicketsOf(user, loggedUser)
+        return this.ticketRepositoryService.getDebtTicketsOf(loggedUser, user)
       })
   }
 
-  getCreditTicketsTowards(user: User): Promise<Observable<DebtTicket[]>> {
+  getCreditTicketsFrom(user: User): Promise<Observable<DebtTicket[]>> {
     return this.loginService.getLoggedUser()
       .then(loggedUser => {
-        return this.ticketRepositoryService.getDebtTicketsOf(loggedUser, user)
+        return this.ticketRepositoryService.getDebtTicketsOf(user, loggedUser)
       })
   }
 
