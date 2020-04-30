@@ -45,7 +45,7 @@ export class FriendSlideComponent implements OnInit {
         this.ticketsByFriendObs = await this.ticketService.getDebtTicketsOf(this.friend);
         this.ticketsByFriendObs.subscribe(tArr => {
             this.ticketsByFriend = tArr;
-            this.debt = 0.0
+            this.debt = 0.0;
             this.ticketsByFriend.forEach(t => this.debt += (t.totalPrice - t.paidPrice));
             this.debtCreditTotalSubject.next({debt: this.debt, credit: this.credit, total: this.credit - this.debt});
         });

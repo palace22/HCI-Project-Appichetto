@@ -34,7 +34,7 @@ export class LoginService {
             this.userFriendRepository.initialize(loggedUser.email)
           }
           this.ngZone.run(() => {
-            this.router.navigateByUrl('tabs/profile');
+            this.router.navigateByUrl('tabs/status');
           })
         })
       } else {
