@@ -23,13 +23,13 @@
                         <div slot="end">
                         <ion-list slot="end">
                             <ion-text color="danger">
-                                Debt: -{{ debts[friend.email].debt }}<br>
+                                Debt: -{{ debts[friend.email] }}€<br>
                             </ion-text>
                             <ion-text color="success">
-                                Credit: +{{ debts[friend.email].credit }}<br>
+                                Credit: +{{ credits[friend.email] }}€<br>
                             </ion-text>
                             <ion-text>
-                                Total = {{ debts[friend.email].total }}
+                                Total = {{ - debts[friend.email] + credits[friend.email]}}€
                             </ion-text>
                         </ion-list>
                         </div>

@@ -28,7 +28,6 @@ export class FriendSlideComponent implements OnInit {
     selectedTicketTimestamp: number;
 
     private debtsSelected: boolean;
-    private items = [];
 
     @Input()
     private loggedUser: User;
@@ -46,6 +45,7 @@ export class FriendSlideComponent implements OnInit {
         this.ticketsByFriendObs = await this.ticketService.getDebtTicketsOf(this.friend);
         this.ticketsByFriendObs.subscribe(tArr => {
             this.ticketsByFriend = tArr;
+            this.debt = 0.0
             this.ticketsByFriend.forEach(t => this.debt += (t.totalPrice - t.paidPrice));
             this.debtCreditTotalSubject.next({debt: this.debt, credit: this.credit, total: this.credit - this.debt});
         });
@@ -53,6 +53,7 @@ export class FriendSlideComponent implements OnInit {
         this.ticketsByMeObs = await this.ticketService.getCreditTicketsFrom(this.friend);
         this.ticketsByMeObs.subscribe(tArr => {
             this.ticketsByMe = tArr;
+            this.credit = 0.0;
             this.ticketsByMe.forEach(t => this.credit += (t.totalPrice - t.paidPrice));
             this.debtCreditTotalSubject.next({debt: this.debt, credit: this.credit, total: this.credit - this.debt});
         });
@@ -60,8 +61,8 @@ export class FriendSlideComponent implements OnInit {
 
     }
 
-    getFriendName() {
-        return this.friend.name;
+    getFriend() {
+        return this.friend;
     }
 
     selectTicket(ticket: DebtTicket) {
@@ -69,21 +70,6 @@ export class FriendSlideComponent implements OnInit {
             this.selectedTicketTimestamp = 0;
         } else {
             this.selectedTicketTimestamp = ticket.timestamp;
-        }
-    }
-
-    expandItem(item): void {
-        if (item.expanded) {
-            item.expanded = false;
-        } else {
-            this.items.map(listItem => {
-                if (item === listItem) {
-                    listItem.expanded = !listItem.expanded;
-                } else {
-                    listItem.expanded = false;
-                }
-                return listItem;
-            });
         }
     }
 
