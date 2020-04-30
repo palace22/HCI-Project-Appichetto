@@ -98,7 +98,9 @@ export class TicketService {
         })
   }
 
-  payDebtTicket(debtTicket: DebtTicket) {
+  async payDebtTicket(debtTicket: DebtTicket, paidPrice: number) {
+    let ticket = await this.ticketRepositoryService.getTicketOf(debtTicket.owner, debtTicket.timestamp.toString())
+    ticket.paidPrice += paidPrice
     if (debtTicket.paidPrice === debtTicket.totalPrice) {
       this.ticketRepositoryService.savePaidDebtTicket(debtTicket)
       this.ticketRepositoryService.deleteDebtTicket(debtTicket)
@@ -106,5 +108,10 @@ export class TicketService {
       this.ticketRepositoryService.saveDebtTicket(debtTicket)
     }
 
+    if (ticket.paidPrice === ticket.totalPrice) {
+      this.ticketRepositoryService.saveOwnerPassedTicket(ticket)
+      this.ticketRepositoryService.deleteTicket(ticket)
+    } else
+      this.ticketRepositoryService.updateTicket(ticket)
   }
 }
