@@ -70,6 +70,11 @@ export class TicketRepositoryService {
     return activeTickets.valueChanges()
   }
 
+  getPassedTicketsOf(owner: User): Observable<Ticket[]> {
+    let activeTickets: AngularFirestoreCollection<Ticket> = this.ticketCollection.doc(owner.email).collection(environment.firebaseDB.owner_passed_ticket) as AngularFirestoreCollection<Ticket>
+    return activeTickets.valueChanges()
+  }
+
   async getTicketOf(owner: User, ticketId: string): Promise<Ticket> {
     return await (await this.ticketCollection.doc(owner.email).collection(environment.firebaseDB.owner_ticket).doc(ticketId).ref.get()).data() as Ticket
   }
