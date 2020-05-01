@@ -36,6 +36,7 @@ export class LoginService {
 
   logout() {
     this.angularFireAuth.signOut().then(() => {
+      this.loadingUser.emit(false)
       this.router.navigateByUrl('login');
     })
   }

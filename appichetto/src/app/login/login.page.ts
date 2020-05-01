@@ -22,7 +22,9 @@ export class LoginPage implements OnInit {
     })
     this.loginService.getFirebaseLoggedUser().then(user => {
       if (user) {
+        console.log(user)
         this.loginService.verifyUser(user)
+        this.loadingUser = false
         this.router.navigateByUrl('tabs/status');
       } else {
         this.loadingUser = false
@@ -34,9 +36,5 @@ export class LoginPage implements OnInit {
     this.loginService.login()
   }
 
-  logout() {
-    this.loginService.logout()
-    this.loadingUser = false
-  }
 
 }

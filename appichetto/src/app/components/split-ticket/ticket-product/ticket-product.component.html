@@ -1,7 +1,13 @@
 <ion-row *ngIf="!selected" class="items">
-  <ion-col [size]="!viewMode ? 4 : 4" class="items">{{ product.name }}</ion-col>
-  <ion-col [size]="!viewMode ? 2 : 4" class="items">{{ product.quantity }}</ion-col>
-  <ion-col [size]="!viewMode ? 2 : 4" class="items">{{ product.price }}</ion-col>
+  <ion-col [size]="!viewMode ? 4 : 4" [class]="!viewMode ? 'items' : null">{{
+    product.name
+  }}</ion-col>
+  <ion-col [size]="!viewMode ? 2 : 4" [class]="!viewMode ? 'items' : null">{{
+    product.quantity
+  }}</ion-col>
+  <ion-col [size]="!viewMode ? 2 : 4" [class]="!viewMode ? 'items' : null">{{
+    product.price
+  }}</ion-col>
   <ion-col [size]="!viewMode ? 2 : 0">
     <ion-fab-button
       color="dark"
