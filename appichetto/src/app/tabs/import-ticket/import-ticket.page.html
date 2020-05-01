@@ -63,6 +63,7 @@
   <ion-input
     placeholder=""
     type="file"
+    accept="application/pdf"
     *ngIf="method==='pdf'"
     (change)="readPdf($event)"
     class="upload"
