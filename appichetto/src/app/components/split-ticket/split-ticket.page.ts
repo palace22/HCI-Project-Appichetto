@@ -21,45 +21,7 @@ export class SplitTicketPage implements OnInit {
 
   user: User
   ticket: Ticket = {
-    products: [
-      {
-        name: "Pasta e patate e fagioli",
-        quantity: 2,
-        price: 1.1,
-        participants: [this.user]
-      }, {
-        name: "Pasta",
-        quantity: 2,
-        price: 1.1,
-        participants: []
-      }, {
-        name: "Pasta pesto panna saliccia sugo",
-        quantity: 2,
-        price: 1.1,
-        participants: []
-      }, {
-        name: "Pasta",
-        quantity: 2,
-        price: 1.1,
-        participants: []
-      },
-      {
-        name: "Pasta e patate e fagioli",
-        quantity: 2,
-        price: 1.1,
-        participants: []
-      }, {
-        name: "Pasta",
-        quantity: 2,
-        price: 1111111111.1,
-        participants: []
-      }, {
-        name: "Pasta pesto panna saliccia sugo",
-        quantity: 2,
-        price: 1.1,
-        participants: []
-      }
-    ],
+    products: [],
     timestamp: 9999,
     owner: { name: "Pippo" },
     id: "aaa",
@@ -117,15 +79,21 @@ export class SplitTicketPage implements OnInit {
 
 
   async saveTicket() {
-    try {
-      this.ticketService.save(this.ticket)
-      this.presentToast("Saved correctly").then(
-        () => this.router.navigateByUrl("tabs/status")
-      )
-    } catch (error) {
-      console.log(error)
-      await this.presentToast("Error while saving")
-      await this.presentToast(error)
+    let productIndex: number = this.findProductThatNotContainParticipants()
+    if (productIndex === -1)
+      try {
+        this.ticketService.save(this.ticket)
+        this.presentToast("Saved correctly").then(
+          () => this.router.navigateByUrl("tabs/status")
+        )
+      } catch (error) {
+        console.log(error)
+        await this.presentToast("Error while saving")
+        await this.presentToast(error)
+      }
+    else {
+      let message = "Item: '" + this.ticket.products[productIndex].name + "' not contain participants"
+      this.presentToast(message)
     }
   }
 
@@ -138,4 +106,7 @@ export class SplitTicketPage implements OnInit {
     toast.present();
   }
 
+  findProductThatNotContainParticipants(): number {
+    return this.ticket.products.findIndex(product => product.participants.length === 0)
+  }
 }

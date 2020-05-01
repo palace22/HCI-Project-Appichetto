@@ -7,13 +7,13 @@
 </ion-header>
 <ion-grid
   ><ion-row>
-    <ion-col *ngFor="let method of methods">
+    <ion-col size="6" *ngFor="let method of methods">
       <ion-card
         (click)="updateMethod(method)"
         [ngClass]="isSelected(method) ? 'selected-card' : 'unselected-card'"
       >
-        <ion-card-content text-center>
-          <ion-img [src]="method.icon"></ion-img>
+        <ion-card-content text-center >
+          <ion-img class="avatar" [src]="method.icon"></ion-img>
           <ion-card-title>
             {{ method.name }}
           </ion-card-title>

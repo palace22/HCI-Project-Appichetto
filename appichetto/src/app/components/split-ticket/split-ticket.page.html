@@ -55,6 +55,11 @@
     </ion-row>
   </ion-grid>
 </ion-content>
-<ion-button slot="bottom" color="dark" expand="block" (click)="saveTicket()"
+<ion-button
+  slot="bottom"
+  color="dark"
+  expand="block"
+  [disabled]="ticket.products.length===0"
+  (click)="saveTicket()"
   >SAVE</ion-button
 >
