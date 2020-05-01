@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <div
+  <!-- <div
     style="
       position: absolute;
       top: 50%;
@@ -15,7 +15,8 @@
       font-size: 25px;
       z-index: 2;
     "
-    (click)="slidePrev()">
+    (click)="slidePrev()"
+  >
     <ion-icon name="arrow-back"></ion-icon>
   </div>
   <div
@@ -29,22 +30,24 @@
     (click)="slideNext()"
   >
     <ion-icon name="arrow-forward"></ion-icon>
-  </div>
+  </div> -->
   <ion-slides scrollbar="true" pager="true" [options]="slideOpts">
     <ion-slide>
-      <app-select-participants
-        [participants]="participants"
-      ></app-select-participants>
-    </ion-slide>
-    <ion-slide>
       <app-select-market
+        (marketChanged)="this.marketObs.next($event)"
         (marketChanged)="this.market = $event"
       ></app-select-market>
     </ion-slide>
     <ion-slide>
       <app-select-method
+        (methodChanged)="this.methodObs.next($event)"
         (methodChanged)="this.method = $event"
       ></app-select-method>
+    </ion-slide>
+    <ion-slide>
+      <app-select-participants
+        [participants]="participants"
+      ></app-select-participants>
     </ion-slide>
   </ion-slides>
 </ion-content>
@@ -54,7 +57,7 @@
     (click)="importTicket()"
     color="dark"
     expand="block"
-    [disabled]="!hasMarketAndMethodSelected()"
+    [disabled]="!hasMarketMethodAndParticipantsSelected()"
     >Go</ion-button
   >
   <ion-input
