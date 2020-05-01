@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonSlides } from '@ionic/angular';
 import { Ticket } from 'src/app/models/ticket';
@@ -6,6 +6,8 @@ import { User } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login.service';
 import { PdfToTextService } from 'src/app/services/pdf-to-text.service';
 import { TicketFormatterService } from 'src/app/services/ticket-formatter.service';
+import { of, Observable, Subject } from 'rxjs';
+import { first, takeUntil, takeWhile, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-import-ticket',
@@ -14,7 +16,9 @@ import { TicketFormatterService } from 'src/app/services/ticket-formatter.servic
 })
 export class ImportTicketPage {
   market: string
+  marketObs: Subject<string> = new Subject()
   method: string
+  methodObs: Subject<string> = new Subject()
   participants: User[]
 
   constructor(
@@ -25,6 +29,18 @@ export class ImportTicketPage {
   ) {
     this.participants = new Array<User>()
   }
+
+  ngAfterViewInit() {
+    this.marketObs.pipe(first((market) => market !== undefined)).subscribe(market => {
+      this.market = market
+      this.slides.slideNext()
+    })
+    this.methodObs.pipe(first((method) => method !== undefined)).subscribe(method => {
+      this.method = method
+      this.slides.slideNext()
+    })
+  }
+
 
   @ViewChild(IonSlides, { static: false }) slides: IonSlides;
   slidePrev() {
@@ -62,20 +78,17 @@ export class ImportTicketPage {
     })
   }
 
-  hasMarketAndMethodSelected() {
+  hasMarketMethodAndParticipantsSelected() {
     return this.market !== (undefined && "") && this.method !== (undefined && "") && this.participants.length !== 0
+  }
+
+  hasMarketAndMethodSelected() {
+    return this.market !== (undefined && "") && this.method !== (undefined && "")
   }
 
 
   slideOpts = {
     initialSlide: 0,
-    speed: 400,
-    coverflowEffect: {
-      rotate: 50,
-      stretch: 0,
-      depth: 100,
-      modifier: 1,
-      slideShadows: true,
-    }
+    speed: 1000,
   };
 }
