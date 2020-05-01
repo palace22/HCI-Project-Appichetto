@@ -36,7 +36,8 @@
                                     <ion-col size="10">
                                         <ion-card-title>
                                             <ion-text style="text-align: left">
-                                                Ticket {{ ticket.timestamp }}</ion-text>
+                                                Ticket {{ this.displayedDates[ticket.timestamp.toString()] }}
+                                            </ion-text>
                                         </ion-card-title>
                                     </ion-col>
                                     <ion-col>
