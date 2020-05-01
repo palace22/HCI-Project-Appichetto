@@ -1,5 +1,6 @@
 <!--<h3>YOU PAY!!!!!</h3>-->
 <!--<ion-img [src]="'https://cdn.corrieredellosport.it/images/2018/04/11/232225757-daa6d105-d3cc-4139-bef5-71817a98362f.jpg'"></ion-img>-->
+<div *ngIf="!showSpinner">
 <ion-header style="padding: 5%; text-align: center">Pay your debt to <b>{{ friend.name }}</b></ion-header>
 <ion-list style="padding-left: 5%">
     <ion-list-header lines="none">Summary:</ion-list-header>
@@ -20,7 +21,11 @@
             <ion-button (click)="this.popoverController.dismiss()">Cancel</ion-button>
         </ion-col>
         <ion-col>
-            <ion-button>Confirm</ion-button>
+            <ion-button (click)="pay()">Confirm</ion-button>
         </ion-col>
     </ion-row>
 </ion-grid>
+</div>
+<div *ngIf="showSpinner" style="padding:100px">
+    <ion-spinner></ion-spinner>
+</div>

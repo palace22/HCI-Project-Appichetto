@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../../../models/user';
 import {NavParams, PopoverController} from '@ionic/angular';
+import {TicketService} from '../../../../services/ticket.service';
 
 @Component({
   selector: 'app-pay-popover',
@@ -15,7 +16,10 @@ export class PayPopoverComponent implements OnInit {
   credit: number;
   total: number;
 
-  constructor(private navParams: NavParams, private popoverController: PopoverController) {
+  showSpinner = false;
+  showSuccess = false;
+
+  constructor(private navParams: NavParams, private popoverController: PopoverController, private ticketService: TicketService) {
     this.friend = navParams.get('friend');
 
     this.total = navParams.get('total');
@@ -23,6 +27,16 @@ export class PayPopoverComponent implements OnInit {
     this.debt = navParams.get('debt');
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  pay() {
+    // this.ticketService.payDebtTicket();
+    this.showSpinner = true;
+    setTimeout(() => {
+      this.showSpinner = false;
+      this.showSuccess = true;
+    }, 4000)
+  }
 
 }
