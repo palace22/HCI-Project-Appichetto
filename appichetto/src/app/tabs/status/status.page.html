@@ -14,7 +14,7 @@
     </ion-item>
 
     <div *ngIf="userFriendsObs | async">
-        <ion-list [scrollEvents]="true">
+        <ion-list>
             <ion-item button *ngFor="let friend of userFriends.friends; index as index" (click)="goToFriendTicket(index)">
                         <ion-avatar item-start>
                             <ion-img [src]="friend.photoUrl"></ion-img>

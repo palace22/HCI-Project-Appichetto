@@ -67,7 +67,6 @@ export class SplitTicketPage implements OnInit {
   }
 
   deleteProduct(index: number, $event) {
-    console.log($event)
     this.ticket.totalPrice -= this.ticket.products[index].price * this.ticket.products[index].quantity
     this.ticket.products.splice(index, 1);
   }

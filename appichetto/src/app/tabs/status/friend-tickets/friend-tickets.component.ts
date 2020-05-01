@@ -1,16 +1,13 @@
-import {Component, Input, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {User} from '../../../models/user';
-import {Router} from '@angular/router';
-import {Ticket} from '../../../models/ticket';
-import {RetrieveTicketService} from '../../../services/retrieve-ticket.service';
-import {LoginService} from '../../../services/login.service';
-import {UserFriends} from '../../../models/user-friends';
-import {UserFriendsService} from '../../../services/user-friends.service';
-import {Observable} from 'rxjs';
-import {IonSlides, PopoverController} from '@ionic/angular';
-import {FriendSlideComponent} from './friend-slide/friend-slide.component';
-import {ParticipantsPopoverComponent} from '../../../components/split-ticket/ticket-product/participants-popover/participants-popover.component';
-import {PayPopoverComponent} from './pay-popover/pay-popover.component';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Router } from '@angular/router';
+import { IonSlides, PopoverController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { User } from '../../../models/user';
+import { UserFriends } from '../../../models/user-friends';
+import { LoginService } from '../../../services/login.service';
+import { UserFriendsService } from '../../../services/user-friends.service';
+import { FriendSlideComponent } from './friend-slide/friend-slide.component';
+import { PayPopoverComponent } from './pay-popover/pay-popover.component';
 
 @Component({
     selector: 'app-friend-tickets',

@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, ToastController } from '@ionic/angular';
 import { Ticket } from 'src/app/models/ticket';
 import { User } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login.service';
@@ -8,6 +8,7 @@ import { PdfToTextService } from 'src/app/services/pdf-to-text.service';
 import { TicketFormatterService } from 'src/app/services/ticket-formatter.service';
 import { of, Observable, Subject } from 'rxjs';
 import { first, takeUntil, takeWhile, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-import-ticket',
@@ -26,6 +27,7 @@ export class ImportTicketPage {
     private pdfToTextService: PdfToTextService,
     private ticketFormatterService: TicketFormatterService,
     private router: Router,
+    public toastController: ToastController,
   ) {
     this.participants = new Array<User>()
   }
@@ -63,8 +65,10 @@ export class ImportTicketPage {
 
   async readPdf($event) {
     let arrayPdfTicket = await this.pdfToTextService.getPDFText($event.target.files[0])
-    let ticket: Ticket = this.ticketFormatterService.formatPdfTicket(arrayPdfTicket)
-    await this.navigateToSplitTicket(ticket)
+    if (await this.verifyMarketTicketValidity(arrayPdfTicket)) {
+      let ticket: Ticket = this.ticketFormatterService.formatPdfTicket(arrayPdfTicket)
+      await this.navigateToSplitTicket(ticket)
+    }
   }
 
   async navigateToSplitTicket(ticket: Ticket) {
@@ -87,6 +91,23 @@ export class ImportTicketPage {
     return this.market !== (undefined && "") && this.method !== (undefined && "")
   }
 
+  async verifyMarketTicketValidity(arrayTicket) {
+    let a: string = arrayTicket.items[4].str
+    if (!a.toLowerCase().includes(this.market.toLowerCase())) {
+      await this.presentToast("This is not " + this.market + " pdf ticket")
+      return false
+    }
+    return true
+  }
+
+  async presentToast(message: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: "middle",
+    });
+    toast.present();
+  }
 
   slideOpts = {
     initialSlide: 0,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +11,24 @@ export class LoginPage implements OnInit {
   loadingUser: boolean = true
 
   constructor(
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router,
   ) { }
 
   ngOnInit() {
     this.loginService.getLoadingUser().subscribe(isLoading => {
-    this.loadingUser = isLoading
+      this.loadingUser = isLoading
       console.log(isLoading)
+    })
+    this.loginService.getFirebaseLoggedUser().then(user => {
+      if (user) {
+        console.log(user)
+        this.loginService.verifyUser(user)
+        this.loadingUser = false
+        this.router.navigateByUrl('tabs/status');
+      } else {
+        this.loadingUser = false
+      }
     })
   }
 
@@ -24,8 +36,5 @@ export class LoginPage implements OnInit {
     this.loginService.login()
   }
 
-  logout() {
-    this.loginService.logout()
-  }
 
 }

@@ -25,36 +25,19 @@ export class LoginService {
   ) {
     this.loadingUser.emit(true)
     this.googleLoggedUserPipe = new GoogleLoggedUserPipe()
-    this.angularFireAuth.onAuthStateChanged(user => {
-      if (user) {
-        let loggedUser = this.googleLoggedUserPipe.transform(user)
-        this.userRepository.userExists(loggedUser.email).then(exists => {
-          if (!exists) {
-            this.userRepository.addUser(loggedUser)
-            this.userFriendRepository.initialize(loggedUser.email)
-          }
-          this.ngZone.run(() => {
-            this.router.navigateByUrl('tabs/status');
-          })
-        })
-      } else {
-        this.loadingUser.emit(false)
-        console.log("There's no user here");
-      }
-    });
   }
 
   async login() {
-    this.googleProvider = new auth.GoogleAuthProvider()
-    await this.angularFireAuth.signInWithRedirect(this.googleProvider)
+    this.ngZone.run(async () => {
+      this.googleProvider = new auth.GoogleAuthProvider()
+      await this.angularFireAuth.signInWithRedirect(this.googleProvider)
+    })
   }
 
   logout() {
     this.angularFireAuth.signOut().then(() => {
-      this.router.navigateByUrl('login').then(() =>
-        this.loadingUser.emit(false)
-      );
       this.loadingUser.emit(false)
+      this.router.navigateByUrl('login');
     })
   }
 
@@ -63,8 +46,28 @@ export class LoginService {
     return this.googleLoggedUserPipe.transform(user)
   }
 
+  async getFirebaseLoggedUser(): Promise<firebase.User> {
+    let user: firebase.User = await this.angularFireAuth.authState.pipe(first()).toPromise()
+    return user
+  }
+
   getLoadingUser() {
     return this.loadingUser
+  }
+
+  verifyUser(user: firebase.User) {
+    if (user) {
+      let loggedUser = this.googleLoggedUserPipe.transform(user)
+      this.userRepository.userExists(loggedUser.email).then(exists => {
+        if (!exists) {
+          this.userRepository.addUser(loggedUser)
+          this.userFriendRepository.initialize(loggedUser.email)
+        }
+      })
+    } else {
+      this.loadingUser.emit(false)
+      console.log("There's no user here");
+    }
   }
 
 }
