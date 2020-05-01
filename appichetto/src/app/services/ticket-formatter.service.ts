@@ -87,6 +87,7 @@ export class TicketFormatterService {
     })
     ticket.timestamp = Date.now()
     ticket.products = prods
+    ticket.paidPrice = 0
 
     return ticket
   }
