@@ -31,7 +31,6 @@ export class PayPopoverComponent implements OnInit {
     }
 
     pay() {
-        // this.ticketService.payDebtTicket();
         this.showSpinner = true;
         setTimeout(() => {
             this.showSpinner = false;

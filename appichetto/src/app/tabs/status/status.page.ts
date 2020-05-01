@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {IonSlides} from '@ionic/angular';
 import {TicketService} from '../../services/ticket.service';
 import {DebtTicket} from '../../models/ticket';
+import {NotificationService} from '../../services/notification.service';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class StatusPage implements OnInit {
     private ticketsByMeObs: Observable<DebtTicket[]>;
 
 
-    constructor(private userFriendsService: UserFriendsService, private ticketService: TicketService, private loginService: LoginService, private router: Router) {
+    constructor(private userFriendsService: UserFriendsService, private ticketService: TicketService, private loginService: LoginService, private router: Router, private notificationService: NotificationService) {
     }
 
     async ngOnInit() {
