@@ -22,3 +22,10 @@ ion-col {
   text-align: center;
   align-items: center;
 }
+
+.items {
+  display: flex !important;
+  //align-content: center !important;
+  //align-items: center !important;
+  text-align: center !important;
+}

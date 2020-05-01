@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { UserFriendsService } from './user-friends.service';
 import { first, takeLast } from 'rxjs/operators';
 import { UserFriends } from '../models/user-friends';
+import {tick} from '@angular/core/testing';
 
 @Injectable({
   providedIn: 'root'
@@ -21,14 +22,14 @@ export class TicketService {
   ) { }
 
   private initializeDebtTickets(ticket: Ticket): Map<string, DebtTicket> {
-    let debtTicket: Map<string, DebtTicket> = new Map<string, DebtTicket>()
+    const debtTicket: Map<string, DebtTicket> = new Map<string, DebtTicket>()
 
     ticket.participants.forEach(participant => debtTicket.set(participant.email, {
       id: ticket.id,
       timestamp: ticket.timestamp,
       owner: ticket.owner,
       market: ticket.market,
-      participant: participant,
+      participant,
       products: [],
       totalPrice: 0,
       paidPrice: 0,
@@ -39,10 +40,10 @@ export class TicketService {
 
   private split(ticket: Ticket, debtTicket: Map<string, DebtTicket>) {
     ticket.products.forEach(product => {
-      let participantPrice = product.price / product.participants.length
+      const participantPrice = product.price / product.participants.length
 
       product.participants.forEach(participant => {
-        let participantDebtTicket: DebtTicket = debtTicket.get(participant.email)
+        const participantDebtTicket: DebtTicket = debtTicket.get(participant.email)
         participantDebtTicket.products.push({
           name: product.name,
           price: participantPrice,
@@ -94,8 +95,8 @@ export class TicketService {
   }
 
   async getPaidTicketsOfLoggedUser(): Promise<DebtTicket[]> {
-    let loggedUser: User = await this.loginService.getLoggedUser()
-    let loggedUserFriends: UserFriends = await this.userFriendsService.getUserFriends(loggedUser.email).pipe(first()).toPromise()
+    const loggedUser: User = await this.loginService.getLoggedUser()
+    const loggedUserFriends: UserFriends = await this.userFriendsService.getUserFriends(loggedUser.email).pipe(first()).toPromise()
     return await Promise.all(
       loggedUserFriends.friends.map(
         async friend => {
@@ -105,8 +106,35 @@ export class TicketService {
         })
   }
 
+    async payAllDebtTicketTo(receivingUser: User) {
+        console.log('paying!');
+        // const loggedUser: User = await this.loginService.getLoggedUser();
+
+        // first pay all ticket to
+        const ticketsByFriendObs: Observable<DebtTicket[]> = await this.getDebtTicketsOf(receivingUser);
+        const ticketsByFriend = await ticketsByFriendObs.pipe(first()).toPromise();
+
+        while (ticketsByFriend.length !== 0) {
+            const debtTicket = ticketsByFriend.pop();
+            this.ticketRepositoryService.savePaidDebtTicket(debtTicket)
+            this.ticketRepositoryService.deleteDebtTicket(debtTicket);
+        }
+
+
+        // then pay all ticket from receivingUser to payer, if any
+        const ticketByPayerObs: Observable<DebtTicket[]> = await this.getCreditTicketsFrom(receivingUser);
+        const ticketByPayer = await ticketByPayerObs.pipe(first()).toPromise();
+
+        while (ticketByPayer.length !== 0) {
+            const debtTicket = ticketByPayer.pop();
+            this.ticketRepositoryService.savePaidDebtTicket(debtTicket)
+            this.ticketRepositoryService.deleteDebtTicket(debtTicket);
+        }
+
+    }
+
   async payDebtTicket(debtTicket: DebtTicket, paidPrice: number) {
-    let ticket = await this.ticketRepositoryService.getTicketOf(debtTicket.owner, debtTicket.timestamp.toString())
+    const ticket = await this.ticketRepositoryService.getTicketOf(debtTicket.owner, debtTicket.timestamp.toString())
     ticket.paidPrice += paidPrice
     if (debtTicket.paidPrice === debtTicket.totalPrice) {
       this.ticketRepositoryService.savePaidDebtTicket(debtTicket)

@@ -8,6 +8,7 @@ import {LoginService} from '../../services/login.service';
 import {Router} from '@angular/router';
 import {IonSlides} from '@ionic/angular';
 import {TicketService} from '../../services/ticket.service';
+import {DebtTicket} from '../../models/ticket';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class StatusPage implements OnInit {
     credits = {};
     noFriends = false;
     user: User;
+    private ticketsByFriendObs: Observable<DebtTicket[]>;
+    private ticketsByMeObs: Observable<DebtTicket[]>;
 
 
     constructor(private userFriendsService: UserFriendsService, private ticketService: TicketService, private loginService: LoginService, private router: Router) {
@@ -39,16 +42,16 @@ export class StatusPage implements OnInit {
                 this.userFriends = userFriends;
                 for (const user of this.userFriends.friends) {
 
-                    this.debts[user.email] = 0.0;
-                    this.credits[user.email] = 0.0;
 
-                    const ticketsByFriendObs = await this.ticketService.getDebtTicketsOf(user);
-                    ticketsByFriendObs.subscribe(tArr => {
+                    this.ticketsByFriendObs = await this.ticketService.getDebtTicketsOf(user);
+                    this.ticketsByFriendObs.subscribe(tArr => {
+                        this.debts[user.email] = 0.0;
                         tArr.forEach(t => this.debts[user.email] += (t.totalPrice - t.paidPrice));
                     });
 
-                    const ticketsByMeObs = await this.ticketService.getCreditTicketsFrom(user);
-                    ticketsByMeObs.subscribe(tArr => {
+                    this.ticketsByMeObs = await this.ticketService.getCreditTicketsFrom(user);
+                    this.ticketsByMeObs.subscribe(tArr => {
+                        this.credits[user.email] = 0.0;
                         tArr.forEach(t => this.credits[user.email] += (t.totalPrice - t.paidPrice));
                     });
                 }

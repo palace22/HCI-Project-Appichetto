@@ -4,39 +4,40 @@ import {NavParams, PopoverController} from '@ionic/angular';
 import {TicketService} from '../../../../services/ticket.service';
 
 @Component({
-  selector: 'app-pay-popover',
-  templateUrl: './pay-popover.component.html',
-  styleUrls: ['./pay-popover.component.scss'],
+    selector: 'app-pay-popover',
+    templateUrl: './pay-popover.component.html',
+    styleUrls: ['./pay-popover.component.scss'],
 })
 export class PayPopoverComponent implements OnInit {
 
-  friend: User;
+    friend: User;
 
-  debt: number;
-  credit: number;
-  total: number;
+    debt: number;
+    credit: number;
+    total: number;
 
-  showSpinner = false;
-  showSuccess = false;
+    showSpinner = false;
+    showSuccess = false;
 
-  constructor(private navParams: NavParams, private popoverController: PopoverController, private ticketService: TicketService) {
-    this.friend = navParams.get('friend');
+    constructor(private navParams: NavParams, private popoverController: PopoverController, private ticketService: TicketService) {
+        this.friend = navParams.get('friend');
 
-    this.total = navParams.get('total');
-    this.credit = navParams.get('credit');
-    this.debt = navParams.get('debt');
-  }
+        this.total = navParams.get('total');
+        this.credit = navParams.get('credit');
+        this.debt = navParams.get('debt');
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
-  pay() {
-    // this.ticketService.payDebtTicket();
-    this.showSpinner = true;
-    setTimeout(() => {
-      this.showSpinner = false;
-      this.showSuccess = true;
-    }, 4000)
-  }
+    pay() {
+        // this.ticketService.payDebtTicket();
+        this.showSpinner = true;
+        setTimeout(() => {
+            this.showSpinner = false;
+            this.showSuccess = true;
+            this.ticketService.payAllDebtTicketTo(this.friend);
+        }, 1000);
+    }
 
 }
