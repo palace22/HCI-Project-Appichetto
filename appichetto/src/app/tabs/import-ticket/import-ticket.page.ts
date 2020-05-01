@@ -55,6 +55,7 @@ export class ImportTicketPage {
       products: [],
       totalPrice: 0,
       paidPrice: 0,
+      timestamp: Date.now(),
     }
     if (this.method === "manual")
       await this.navigateToSplitTicket(ticket)

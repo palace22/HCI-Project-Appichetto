@@ -8,7 +8,7 @@
 <ion-grid>
   <div *ngIf="userFriendsObs | async">
     <ion-row>
-      <ion-col *ngFor="let user of userFriends.friends">
+      <ion-col size="6" *ngFor="let user of userFriends.friends">
         <ion-card
           (click)="updateParticipants(user)"
           [ngClass]="isSelected(user) ? 'selected-card' : 'unselected-card'"
@@ -18,7 +18,9 @@
               <ion-img [src]="user.photoUrl"></ion-img>
             </ion-avatar>
             <ion-card-title>
-              {{ user.name }}
+              {{ user.name.split(" ")[0] }}
+              <ion-card-title> </ion-card-title>
+              {{ user.name.split(" ")[1] }}
             </ion-card-title>
           </ion-card-content>
         </ion-card>
