@@ -1,10 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../../../models/user';
-import {DebtTicket, Ticket} from '../../../../models/ticket';
-import {RetrieveTicketService} from '../../../../services/retrieve-ticket.service';
+import {DebtTicket} from '../../../../models/ticket';
 import {TicketService} from '../../../../services/ticket.service';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {Subject} from 'rxjs';
 
 @Component({
     selector: 'app-friend-slide',
@@ -22,6 +20,8 @@ export class FriendSlideComponent implements OnInit {
 
     ticketsByMeObs: Observable<DebtTicket[]>;
     ticketsByMe: DebtTicket[];
+
+    displayedDates= {};
 
     debtCreditTotalSubject: BehaviorSubject<any>;
 
@@ -48,6 +48,10 @@ export class FriendSlideComponent implements OnInit {
             this.debt = 0.0;
             this.ticketsByFriend.forEach(t => this.debt += (t.totalPrice - t.paidPrice));
             this.debtCreditTotalSubject.next({debt: this.debt, credit: this.credit, total: this.credit - this.debt});
+            tArr.forEach(t => {
+                const date = new Date(t.timestamp);
+                this.displayedDates[t.timestamp.toString()] = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+            })
         });
 
         this.ticketsByMeObs = await this.ticketService.getCreditTicketsFrom(this.friend);
@@ -56,6 +60,10 @@ export class FriendSlideComponent implements OnInit {
             this.credit = 0.0;
             this.ticketsByMe.forEach(t => this.credit += (t.totalPrice - t.paidPrice));
             this.debtCreditTotalSubject.next({debt: this.debt, credit: this.credit, total: this.credit - this.debt});
+            tArr.forEach(t => {
+                const date = new Date(t.timestamp);
+                this.displayedDates[t.timestamp.toString()] = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+            })
         });
 
 

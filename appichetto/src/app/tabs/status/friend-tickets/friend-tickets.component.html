@@ -34,8 +34,8 @@
 </ion-content>
 
 <ion-footer style="text-align: center">
-    <h6>Debt: <ion-text color="danger">-{{ this.displayedDebt }}</ion-text>; Credit: <ion-text color="success">+{{ this.displayedCredit }}</ion-text>; Total: {{ this.displayedTotal }}</h6>
-    <ion-button expand="block" (click)="presentPopover()" [disabled]="this.total >= -0.01">Pay</ion-button>
+    <h6>Debt: <ion-text color="danger">-{{ this.displayedDebt }}€</ion-text>; Credit: <ion-text color="success">+{{ this.displayedCredit }}€</ion-text>; Total: {{ this.displayedTotal }}€</h6>
+    <ion-button expand="block" (click)="presentPopover()" [disabled]="this.total >= -0.01">Pay all</ion-button>
 </ion-footer>
 
 

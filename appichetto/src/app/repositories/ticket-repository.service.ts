@@ -49,7 +49,7 @@ export class TicketRepositoryService {
 
   savePaidDebtTicket(ticket: DebtTicket) {
     const firebaseTicket = this.firebaseDebtTicketPipe.transform(ticket);
-    this.ticketDebtCollection.doc(ticket.participant.email).collection(ticket.owner.email).doc(ticket.timestamp.toString()).set(firebaseTicket).catch(error => {
+    this.paidTicketDebtCollection.doc(ticket.participant.email).collection(ticket.owner.email).doc(ticket.timestamp.toString()).set(firebaseTicket).catch(error => {
       throw new Error(error);
     });
   }
