@@ -24,4 +24,8 @@ export class NotificationPopoverComponent implements OnInit {
 
     }
 
+    delete(message: InboxMessage) {
+        console.log(message);
+        this.messagesRepositoryService.deleteMessageOfReceiver(message);
+    }
 }
