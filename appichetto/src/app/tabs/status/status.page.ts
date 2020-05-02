@@ -29,7 +29,7 @@ export class StatusPage implements OnInit {
     private ticketsByMeObs: Observable<DebtTicket[]>;
 
 
-    constructor(private userFriendsService: UserFriendsService, private ticketService: TicketService, private loginService: LoginService, private router: Router, private notificationService: NotificationService) {
+    constructor(private userFriendsService: UserFriendsService, private ticketService: TicketService, private loginService: LoginService, private router: Router) {
     }
 
     async ngOnInit() {

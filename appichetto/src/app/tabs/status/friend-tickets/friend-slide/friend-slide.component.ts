@@ -1,8 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {User} from '../../../../models/user';
-import {DebtTicket} from '../../../../models/ticket';
+import {DebtTicket, Ticket} from '../../../../models/ticket';
 import {TicketService} from '../../../../services/ticket.service';
 import {BehaviorSubject, Observable} from 'rxjs';
+import {PayPopoverComponent} from '../pay-popover/pay-popover.component';
+import {PopoverController} from '@ionic/angular';
+import {PayticketPopoverComponent} from './payticket-popover/payticket-popover.component';
 
 @Component({
     selector: 'app-friend-slide',
@@ -34,7 +37,7 @@ export class FriendSlideComponent implements OnInit {
     private debt = 0.0;
     private credit = 0.0;
 
-    constructor(private ticketService: TicketService) {
+    constructor(private ticketService: TicketService, private popoverController: PopoverController) {
         this.debtsSelected = true;
         this.debtCreditTotalSubject = new BehaviorSubject<any>({debt: 0.0, credit: 0.0, total: 0.0});
     }
@@ -88,6 +91,18 @@ export class FriendSlideComponent implements OnInit {
             this.debtsSelected = false;
         }
     }
+
+    async presentPopover(ev: any, ticket: DebtTicket) {
+        const popover = await this.popoverController.create({
+            component: PayticketPopoverComponent,
+            event: ev,
+            // componentProps: {total: this.total, debt: this.debt, credit: this.credit, friend: this.selectedFriend},
+            componentProps: {ticket: ticket, friend: this.friend, debtSelected: this.debtsSelected},
+            translucent: true,
+        });
+        return await popover.present();
+    }
+
 
 
 }

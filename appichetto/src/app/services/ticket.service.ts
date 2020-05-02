@@ -149,4 +149,9 @@ export class TicketService {
     } else
       this.ticketRepositoryService.updateTicket(ticket)
   }
+
+  async paySingleDebtTicket(debtTicket: DebtTicket){
+      this.ticketRepositoryService.savePaidDebtTicket(debtTicket)
+      this.ticketRepositoryService.deleteDebtTicket(debtTicket)
+  }
 }
