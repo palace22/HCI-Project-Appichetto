@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-select-method',
@@ -6,6 +6,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./select-method.component.scss'],
 })
 export class SelectMethodComponent implements OnInit {
+  @Input()
   method: string
   @Output()
   methodChanged = new EventEmitter<string>()

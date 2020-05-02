@@ -9,6 +9,7 @@ import { ImportTicketPage } from './import-ticket.page';
 import { SelectMarketComponent } from './select-market/select-market.component';
 import { SelectMethodComponent } from './select-method/select-method.component';
 import { SelectParticipantsComponent } from './select-participants/select-participants.component';
+import { CameraScanComponent } from 'src/app/components/camera-scan/camera-scan.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { SelectParticipantsComponent } from './select-participants/select-partic
     SelectMarketComponent,
     SelectMethodComponent,
     SelectParticipantsComponent,
+    CameraScanComponent,
   ],
   providers: [UserRepositoryService, LoginService]
 })

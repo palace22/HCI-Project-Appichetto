@@ -32,7 +32,13 @@ export class ImportTicketPage {
     this.participants = new Array<User>()
   }
 
-  ngAfterViewInit() {
+  ionViewWillEnter() {
+    this.slides.slideTo(0)
+    this.market = null
+    this.method = null
+    this.participants = []
+    this.marketObs = new Subject()
+    this.methodObs = new Subject()
     this.marketObs.pipe(first((market) => market !== undefined)).subscribe(market => {
       this.market = market
       this.slides.slideNext()
@@ -61,6 +67,9 @@ export class ImportTicketPage {
     }
     if (this.method === "manual")
       await this.navigateToSplitTicket(ticket)
+
+    if (this.method === "camera")
+      await this.router.navigateByUrl('tabs/ticket/camera')
   }
 
   async readPdf($event) {

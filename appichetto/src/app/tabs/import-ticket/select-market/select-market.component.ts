@@ -7,6 +7,7 @@ import { environment } from '../../../../environments/environment'
   styleUrls: ['./select-market.component.scss'],
 })
 export class SelectMarketComponent implements OnInit {
+  @Input()
   market: string
   @Output()
   marketChanged = new EventEmitter<string>()
