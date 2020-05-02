@@ -6,10 +6,12 @@ import {UserFriends} from 'src/app/models/user-friends';
 import {Observable} from 'rxjs';
 import {LoginService} from '../../services/login.service';
 import {Router} from '@angular/router';
-import {IonSlides} from '@ionic/angular';
+import {IonSlides, PopoverController} from '@ionic/angular';
 import {TicketService} from '../../services/ticket.service';
 import {DebtTicket} from '../../models/ticket';
 import {NotificationService} from '../../services/notification.service';
+import {PayPopoverComponent} from './friend-tickets/pay-popover/pay-popover.component';
+import {NotificationPopoverComponent} from './notification-popover/notification-popover.component';
 
 
 @Component({
@@ -29,7 +31,7 @@ export class StatusPage implements OnInit {
     private ticketsByMeObs: Observable<DebtTicket[]>;
 
 
-    constructor(private userFriendsService: UserFriendsService, private ticketService: TicketService, private loginService: LoginService, private router: Router) {
+    constructor(private userFriendsService: UserFriendsService, private ticketService: TicketService, private loginService: LoginService, private router: Router, private popoverController: PopoverController) {
     }
 
     async ngOnInit() {
@@ -64,4 +66,15 @@ export class StatusPage implements OnInit {
     goToFriendTicket(index) {
         this.router.navigateByUrl('tabs/status/friend-tickets', {state: {friendIndex: index}});
     }
+
+    async presentNotificationPopover(ev: any) {
+        const popover = await this.popoverController.create({
+            component: NotificationPopoverComponent,
+            event: ev,
+            //componentProps: {total: this.total, debt: this.debt, credit: this.credit, friend: this.selectedFriend},
+            translucent: true,
+        });
+        return await popover.present();
+    }
+
 }

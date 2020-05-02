@@ -17,6 +17,7 @@ import {GoogleLoggedUserPipe} from './pipe/google-logged-user.pipe';
 import {FirebaseTicketPipe} from './pipe/firebase-ticket.pipe';
 import {FirebaseDebtTicketPipe} from './pipe/firebase-debt-ticket.pipe';
 import {AngularFireMessagingModule} from '@angular/fire/messaging';
+import {MessagesRepositoryService} from './repositories/messages-repository.service';
 
 @NgModule({
     declarations: [AppComponent, FirebaseTicketPipe, FirebaseDebtTicketPipe],
@@ -36,6 +37,7 @@ import {AngularFireMessagingModule} from '@angular/fire/messaging';
         GoogleLoggedUserPipe,
         FirebaseTicketPipe,
         FirebaseDebtTicketPipe,
+        MessagesRepositoryService,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

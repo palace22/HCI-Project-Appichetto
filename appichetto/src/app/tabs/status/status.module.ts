@@ -15,6 +15,7 @@ import {ParticipantsPopoverComponent} from 'src/app/components/split-ticket/tick
 import {FriendSlideComponent} from './friend-tickets/friend-slide/friend-slide.component';
 import {PayPopoverComponent} from './friend-tickets/pay-popover/pay-popover.component';
 import {PayticketPopoverComponent} from './friend-tickets/friend-slide/payticket-popover/payticket-popover.component';
+import {NotificationPopoverComponent} from './notification-popover/notification-popover.component';
 
 @NgModule({
     imports: [
@@ -24,7 +25,15 @@ import {PayticketPopoverComponent} from './friend-tickets/friend-slide/payticket
         RouterModule.forChild([{path: '', component: StatusPage}]),
         // SplitTicketPageModule
     ],
-    declarations: [StatusPage, FriendTicketsComponent, TicketProductComponent, ParticipantsPopoverComponent, ExpandableComponent, FriendSlideComponent, PayPopoverComponent, PayticketPopoverComponent]
+    declarations: [StatusPage,
+        FriendTicketsComponent,
+        TicketProductComponent,
+        ParticipantsPopoverComponent,
+        ExpandableComponent,
+        FriendSlideComponent,
+        PayPopoverComponent,
+        PayticketPopoverComponent,
+        NotificationPopoverComponent,]
 })
 export class StatusPageModule {
 }
