@@ -29,13 +29,13 @@
                 <div slot="end">
                     <ion-list slot="end">
                         <ion-text color="danger">
-                            Debt: -{{ debts[friend.email] }}€<br>
+                            Debt: -{{ debts[friend.email].toFixed(2) }}€<br>
                         </ion-text>
                         <ion-text color="success">
-                            Credit: +{{ credits[friend.email] }}€<br>
+                            Credit: +{{ credits[friend.email].toFixed(2) }}€<br>
                         </ion-text>
                         <ion-text>
-                            Total = {{ -debts[friend.email] + credits[friend.email]}}€
+                            Total = {{ (-debts[friend.email] + credits[friend.email]).toFixed(2)}}€
                         </ion-text>
                     </ion-list>
                 </div>
