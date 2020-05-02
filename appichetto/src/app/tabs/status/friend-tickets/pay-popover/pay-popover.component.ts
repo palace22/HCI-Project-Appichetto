@@ -39,7 +39,7 @@ export class PayPopoverComponent implements OnInit {
             this.ticketService.payAllDebtTicketTo(this.friend);
 
             // send notification
-            const content = 'All the debts have been solved, for ' + this.total + '€';
+            const content = 'All the debts have been solved, for ' + -this.total + '€';
             this.messagesRepositoryService.sendMessageFromLoggedUser(this.friend, content);
 
         }, 1000);

@@ -19,7 +19,7 @@ export class NotificationPopoverComponent implements OnInit {
     ngOnInit() {
         this.messagesRepositoryService.retrieveLoggedUserInbox().then(obs => {
             this.messagesObs = obs;
-            this.messagesObs.subscribe(m => this.messages = m);
+            this.messagesObs.subscribe(m => this.messages = m.reverse());
         });
 
     }

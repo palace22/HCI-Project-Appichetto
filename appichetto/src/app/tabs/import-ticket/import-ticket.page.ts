@@ -111,6 +111,6 @@ export class ImportTicketPage {
 
   slideOpts = {
     initialSlide: 0,
-    speed: 1000,
+    speed: 300,
   };
 }
