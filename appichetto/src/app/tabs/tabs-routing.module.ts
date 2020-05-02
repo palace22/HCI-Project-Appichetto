@@ -6,6 +6,7 @@ import { FriendTicketsComponent } from './status/friend-tickets/friend-tickets.c
 import { TicketHistoryComponent } from './profile/ticket-history/ticket-history.component';
 import { SplitTicketPage } from '../components/split-ticket/split-ticket.page';
 import { PaidTicketComponent } from './profile/paid-ticket/paid-ticket.component';
+import { CameraScanComponent } from '../components/camera-scan/camera-scan.component';
 
 const routes: Routes = [
     {
@@ -47,6 +48,10 @@ const routes: Routes = [
                         path: 'import',
                         loadChildren: () =>
                             import('../tabs/import-ticket/import-ticket.module').then(m => m.ImportTicketPageModule)
+                    },
+                    {
+                        path: 'camera',
+                        component: CameraScanComponent,
                     },
                     {
                         path: 'split',

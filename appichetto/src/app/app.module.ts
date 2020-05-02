@@ -1,23 +1,21 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {RouteReuseStrategy} from '@angular/router';
-
-import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
-import {SplashScreen} from '@ionic-native/splash-screen/ngx';
-import {StatusBar} from '@ionic-native/status-bar/ngx';
-
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-
-import {environment} from '../environments/environment';
-import {AngularFireModule} from '@angular/fire';
-import {AngularFireAuthModule} from '@angular/fire/auth';
-import {AngularFirestore} from '@angular/fire/firestore';
-import {GoogleLoggedUserPipe} from './pipe/google-logged-user.pipe';
-import {FirebaseTicketPipe} from './pipe/firebase-ticket.pipe';
-import {FirebaseDebtTicketPipe} from './pipe/firebase-debt-ticket.pipe';
-import {AngularFireMessagingModule} from '@angular/fire/messaging';
-import {MessagesRepositoryService} from './repositories/messages-repository.service';
+import { NgModule } from '@angular/core';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouteReuseStrategy } from '@angular/router';
+import { Camera } from '@ionic-native/camera/ngx';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FirebaseDebtTicketPipe } from './pipe/firebase-debt-ticket.pipe';
+import { FirebaseTicketPipe } from './pipe/firebase-ticket.pipe';
+import { GoogleLoggedUserPipe } from './pipe/google-logged-user.pipe';
+import { MessagesRepositoryService } from './repositories/messages-repository.service';
 
 @NgModule({
     declarations: [AppComponent, FirebaseTicketPipe, FirebaseDebtTicketPipe],
@@ -37,8 +35,9 @@ import {MessagesRepositoryService} from './repositories/messages-repository.serv
         GoogleLoggedUserPipe,
         FirebaseTicketPipe,
         FirebaseDebtTicketPipe,
+        Camera,
         MessagesRepositoryService,
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
     ],
     bootstrap: [AppComponent]
 })

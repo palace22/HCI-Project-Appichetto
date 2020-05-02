@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, DoCheck } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { Ticket } from 'src/app/models/ticket';
 import { Router } from '@angular/router';
@@ -14,20 +14,10 @@ import { TicketService } from 'src/app/services/ticket.service';
   styleUrls: ['./split-ticket.page.scss'],
 })
 export class SplitTicketPage implements OnInit {
-  participants: User[] = [{
-    name: "Pippo",
-  },
-  { name: "Pluto" }]
+  participants: User[]
 
   user: User
-  ticket: Ticket = {
-    products: [],
-    timestamp: 9999,
-    owner: { name: "Pippo" },
-    id: "aaa",
-    participants: [{ name: "Pippo" }]
-  }
-
+  ticket: Ticket = { products: [] }
   newProduct: Product;
 
   @ViewChild('mySelect', { static: true }) selectRef: IonSelect;
@@ -50,12 +40,16 @@ export class SplitTicketPage implements OnInit {
     }
   }
 
+  goBack() { this.router.navigateByUrl('tabs/ticket'); }
+
   productIsReady(): boolean {
-    return this.newProduct.name !== (undefined && '') && this.newProduct.price !== (undefined && '') && this.newProduct.quantity !== (undefined && '');
+    return this.newProduct.name !== (undefined && '') && this.newProduct.price !== (undefined && '');
   }
 
   addProduct() {
     try {
+      if (this.newProduct.quantity === undefined || null)
+        this.newProduct.quantity = 1
       let newProduct = plainToClass(Product, this.newProduct);
       newProduct.participants = [];
       this.ticket.products.push(newProduct);
@@ -83,7 +77,7 @@ export class SplitTicketPage implements OnInit {
       try {
         this.ticketService.save(this.ticket)
         this.presentToast("Saved correctly").then(
-          () => this.router.navigateByUrl("tabs/status")
+          () => this.router.navigate(["tabs/status"])
         )
       } catch (error) {
         console.log(error)

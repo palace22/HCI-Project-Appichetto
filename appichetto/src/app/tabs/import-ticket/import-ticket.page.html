@@ -34,12 +34,14 @@
   <ion-slides scrollbar="true" pager="true" [options]="slideOpts">
     <ion-slide>
       <app-select-market
+        [market]="market"
         (marketChanged)="this.marketObs.next($event)"
         (marketChanged)="this.market = $event"
       ></app-select-market>
     </ion-slide>
     <ion-slide>
       <app-select-method
+        [method]="method"
         (methodChanged)="this.methodObs.next($event)"
         (methodChanged)="this.method = $event"
       ></app-select-method>
