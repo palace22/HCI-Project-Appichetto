@@ -1,6 +1,11 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>Your status</ion-title>
+        <div style="padding-right: 4%" slot="end" (click)="presentNotificationPopover()">
+            <ion-button>
+                <ion-icon name="notifications-outline" size="large"></ion-icon>
+            </ion-button>
+        </div>
     </ion-toolbar>
 </ion-header>
 
@@ -15,24 +20,25 @@
 
     <div *ngIf="userFriendsObs | async">
         <ion-list>
-            <ion-item button *ngFor="let friend of userFriends.friends; index as index" (click)="goToFriendTicket(index)">
-                        <ion-avatar item-start>
-                            <ion-img [src]="friend.photoUrl"></ion-img>
-                        </ion-avatar>
-                        <ion-item>{{ friend.name }}</ion-item>
-                        <div slot="end">
-                        <ion-list slot="end">
-                            <ion-text color="danger">
-                                Debt: -{{ debts[friend.email] }}€<br>
-                            </ion-text>
-                            <ion-text color="success">
-                                Credit: +{{ credits[friend.email] }}€<br>
-                            </ion-text>
-                            <ion-text>
-                                Total = {{ - debts[friend.email] + credits[friend.email]}}€
-                            </ion-text>
-                        </ion-list>
-                        </div>
+            <ion-item button *ngFor="let friend of userFriends.friends; index as index"
+                      (click)="goToFriendTicket(index)">
+                <ion-avatar item-start>
+                    <ion-img [src]="friend.photoUrl"></ion-img>
+                </ion-avatar>
+                <ion-item>{{ friend.name }}</ion-item>
+                <div slot="end">
+                    <ion-list slot="end">
+                        <ion-text color="danger">
+                            Debt: -{{ debts[friend.email] }}€<br>
+                        </ion-text>
+                        <ion-text color="success">
+                            Credit: +{{ credits[friend.email] }}€<br>
+                        </ion-text>
+                        <ion-text>
+                            Total = {{ -debts[friend.email] + credits[friend.email]}}€
+                        </ion-text>
+                    </ion-list>
+                </div>
             </ion-item>
         </ion-list>
     </div>

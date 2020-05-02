@@ -1,0 +1,12 @@
+<ion-header>
+    <ion-title>Your notifications</ion-title>
+</ion-header>
+
+<ion-list *ngIf="messagesObs | async">
+    <ion-item *ngFor="let message of messages">
+        <ion-list>
+        <l>From: <b>{{ message.from }}</b><br></l>
+        {{ message.content }}
+        </ion-list>
+    </ion-item>
+</ion-list>

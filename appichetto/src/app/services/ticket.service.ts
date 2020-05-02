@@ -9,6 +9,7 @@ import { UserFriendsService } from './user-friends.service';
 import { first, takeLast } from 'rxjs/operators';
 import { UserFriends } from '../models/user-friends';
 import {tick} from '@angular/core/testing';
+import {MessagesRepositoryService} from '../repositories/messages-repository.service';
 
 @Injectable({
   providedIn: 'root'
@@ -107,12 +108,11 @@ export class TicketService {
   }
 
     async payAllDebtTicketTo(receivingUser: User) {
-        console.log('paying!');
-        // const loggedUser: User = await this.loginService.getLoggedUser();
-
-        // first pay all ticket to
+              // first pay all ticket to
         const ticketsByFriendObs: Observable<DebtTicket[]> = await this.getDebtTicketsOf(receivingUser);
         const ticketsByFriend = await ticketsByFriendObs.pipe(first()).toPromise();
+
+
 
         while (ticketsByFriend.length !== 0) {
             const debtTicket = ticketsByFriend.pop();
@@ -131,6 +131,7 @@ export class TicketService {
             this.ticketRepositoryService.deleteDebtTicket(debtTicket);
         }
 
+        const loggedUser = await this.loginService.getLoggedUser()
     }
 
   async payDebtTicket(debtTicket: DebtTicket, paidPrice: number) {
@@ -149,4 +150,9 @@ export class TicketService {
     } else
       this.ticketRepositoryService.updateTicket(ticket)
   }
+
+    async paySingleDebtTicket(debtTicket: DebtTicket) {
+        this.ticketRepositoryService.savePaidDebtTicket(debtTicket);
+        this.ticketRepositoryService.deleteDebtTicket(debtTicket);
+   }
 }

@@ -9,14 +9,15 @@ import {mergeMapTo} from 'rxjs/operators';
 })
 export class NotificationService {
     constructor(private afMessaging: AngularFireMessaging) {
-        afMessaging.usePublicVapidKey('BBdCoTXITEpcwKckuPuvzzDq7eA73pIRKZL-ac1g3gwkb2sxPLb3QDyFRHQc9-K4W49wp4OlQMpSiLGAiPibkLQ');
+        afMessaging.usePublicVapidKey('BEtdna4430vl7D_WZvKYcCHxPue1mA4GwDYh6PcQTKyf1SH1Zo-ArxEvUiIYEWIZMIYUnyXQymwDavY5RTMZOSg');
 
         this.afMessaging.requestPermission
             .pipe(mergeMapTo(this.afMessaging.tokenChanges))
             .subscribe(
-                (token) => { console.log('Permission granted! Save to the server!', token); },
+                (token) => { console.log('Permission granted! Save to the server!'); console.log(token); },
                 (error) => { console.error(error); },
             );
+        this.afMessaging.messages.subscribe(payload => console.log('Payload incoming', payload));
     }
 
 }
