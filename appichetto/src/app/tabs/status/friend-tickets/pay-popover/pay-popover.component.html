@@ -5,14 +5,14 @@
     <ion-list style="padding-left: 5%">
         <ion-list-header lines="none">Summary:</ion-list-header>
         <ion-text color="danger">
-            Debt: -{{ this.debt}}€<br>
+            Debt: -{{ this.debt.toFixed(2)}}€<br>
         </ion-text>
         <ion-text color="success">
-            Credit: +{{ this.credit }}€<br>
+            Credit: +{{ this.credit.toFixed(2) }}€<br>
         </ion-text>
         <ion-item-divider></ion-item-divider>
         <ion-text>
-            Total = {{ this.total }}€
+            Total = {{ this.total.toFixed(2) }}€
         </ion-text>
     </ion-list>
     <ion-grid style="padding-left: 5%">
