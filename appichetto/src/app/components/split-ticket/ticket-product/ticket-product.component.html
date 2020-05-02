@@ -1,12 +1,12 @@
-<ion-row *ngIf="!selected" class="items">
-  <ion-col [size]="!viewMode ? 4 : 4" [class]="!viewMode ? 'items' : null">{{
+<ion-row *ngIf="!selected">
+  <ion-col [size]="!viewMode ? 4 : 4" [class]="viewMode ? 'items' : null">{{
     product.name
   }}</ion-col>
-  <ion-col [size]="!viewMode ? 2 : 4" [class]="!viewMode ? 'items' : null">{{
+  <ion-col [size]="!viewMode ? 2 : 4" [class]="viewMode ? 'items' : null">{{
     product.quantity
   }}</ion-col>
-  <ion-col [size]="!viewMode ? 2 : 4" [class]="!viewMode ? 'items' : null">{{
-    product.price
+  <ion-col [size]="!viewMode ? 2 : 4" [class]="viewMode ? 'items' : null">{{
+    product.price.toFixed(2)
   }}</ion-col>
   <ion-col [size]="!viewMode ? 2 : 0">
     <ion-fab-button
