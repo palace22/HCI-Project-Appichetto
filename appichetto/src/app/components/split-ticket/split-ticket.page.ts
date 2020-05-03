@@ -40,8 +40,6 @@ export class SplitTicketPage implements OnInit {
     }
   }
 
-  goBack() { this.router.navigateByUrl('tabs/ticket'); }
-
   productIsReady(): boolean {
     return this.newProduct.name !== (undefined && '') && this.newProduct.price !== (undefined && '');
   }

@@ -17,7 +17,7 @@ export class TicketProductComponent implements OnInit {
   @ViewChild('mySelect', { static: false }) selectRef: IonSelect;
 
   @Input()
-  product: Product
+  product: Product = new Product()
   @Input()
   participants: User[]
 
@@ -61,7 +61,7 @@ export class TicketProductComponent implements OnInit {
     const popover = await this.popoverController.create({
       component: ParticipantsPopoverComponent,
       event: ev,
-      componentProps: {participantList: participants},
+      componentProps: { participantList: participants },
       translucent: true
     });
     return await popover.present();
