@@ -33,7 +33,7 @@ export class TicketFormatterService {
       if (element.str.includes("IVA") && element.str.includes("EURO")) {
         firstProductIndex = ++index
         rightProductLimit = element.str.indexOf("IVA")
-        leftPriceLimit = element.str.indexOf("EURO") - 1
+        leftPriceLimit = element.str.indexOf("EURO") - 2
         rightPriceLimit = element.str.length
       }
       if (element.str.includes("TOTALE") && element.str.includes("EURO"))

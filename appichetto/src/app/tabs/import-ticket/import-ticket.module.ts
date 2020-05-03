@@ -10,6 +10,7 @@ import { SelectMarketComponent } from './select-market/select-market.component';
 import { SelectMethodComponent } from './select-method/select-method.component';
 import { SelectParticipantsComponent } from './select-participants/select-participants.component';
 import { CameraScanComponent } from 'src/app/components/camera-scan/camera-scan.component';
+import { CameraScanService } from 'src/app/services/camera-scan.service';
 
 @NgModule({
   imports: [
@@ -25,6 +26,6 @@ import { CameraScanComponent } from 'src/app/components/camera-scan/camera-scan.
     SelectParticipantsComponent,
     CameraScanComponent,
   ],
-  providers: [UserRepositoryService, LoginService]
+  providers: [UserRepositoryService, LoginService, CameraScanService]
 })
 export class ImportTicketPageModule { }

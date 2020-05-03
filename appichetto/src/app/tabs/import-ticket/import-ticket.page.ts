@@ -9,6 +9,7 @@ import { TicketFormatterService } from 'src/app/services/ticket-formatter.servic
 import { of, Observable, Subject } from 'rxjs';
 import { first, takeUntil, takeWhile, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { CameraScanService } from 'src/app/services/camera-scan.service';
 
 @Component({
   selector: 'app-import-ticket',
@@ -28,6 +29,7 @@ export class ImportTicketPage {
     private ticketFormatterService: TicketFormatterService,
     private router: Router,
     public toastController: ToastController,
+    private cameraScanService: CameraScanService,
   ) {
     this.participants = new Array<User>()
   }
@@ -58,7 +60,7 @@ export class ImportTicketPage {
     this.slides.slideNext();
   }
 
-  async importTicket() {
+  importTicket() {
     let ticket: Ticket = {
       products: [],
       totalPrice: 0,
@@ -66,10 +68,16 @@ export class ImportTicketPage {
       timestamp: Date.now(),
     }
     if (this.method === "manual")
-      await this.navigateToSplitTicket(ticket)
+      this.navigateToSplitTicket(ticket)
 
-    if (this.method === "camera")
-      await this.router.navigateByUrl('tabs/ticket/camera')
+    if (this.method === "camera") {
+      this.cameraScanService.scanFromPhoto().then(scannedTicket => {
+        ticket.products = scannedTicket.products
+        this.navigateToSplitTicket(ticket)
+      })
+    }
+
+    //await this.router.navigateByUrl('tabs/ticket/camera')
   }
 
   async readPdf($event) {
