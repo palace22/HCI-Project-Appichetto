@@ -19,12 +19,12 @@ import { CameraScanService } from 'src/app/services/camera-scan.service';
     FormsModule,
     RouterModule.forChild([{ path: '', component: ImportTicketPage }])
   ],
+  entryComponents: [CameraScanService],
   declarations: [
     ImportTicketPage,
     SelectMarketComponent,
     SelectMethodComponent,
     SelectParticipantsComponent,
-    CameraScanComponent,
   ],
   providers: [UserRepositoryService, LoginService, CameraScanService]
 })
