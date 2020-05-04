@@ -29,7 +29,6 @@ export class NotificationPopoverComponent implements OnInit {
     }
 
     ionViewWillLeave() {
-        console.log(this.messages);
         if (this.messages !== undefined) {
             this.messages.forEach(m => this.messagesRepositoryService.setMessageAsDisplayed(m));
         }
