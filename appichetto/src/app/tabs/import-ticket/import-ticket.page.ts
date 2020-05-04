@@ -51,6 +51,9 @@ export class ImportTicketPage {
     })
   }
 
+  ionViewWillLeave() {
+    this.toastController.dismiss()
+  }
 
   @ViewChild(IonSlides, { static: false }) slides: IonSlides;
   slidePrev() {
@@ -71,8 +74,10 @@ export class ImportTicketPage {
       this.navigateToSplitTicket(ticket)
 
     if (this.method === "camera") {
+      this.presentToast("Attend... scanning ticket...", 99999999)
       this.cameraScanService.scanFromPhoto().then(scannedTicket => {
         ticket.products = scannedTicket.products
+        this.toastController.dismiss()
         this.navigateToSplitTicket(ticket)
       })
     }
@@ -117,11 +122,11 @@ export class ImportTicketPage {
     return true
   }
 
-  async presentToast(message: string) {
+  async presentToast(message: string, duration: number = 2000) {
     const toast = await this.toastController.create({
       message: message,
-      duration: 2000,
       position: "middle",
+      duration: duration,
     });
     toast.present();
   }
