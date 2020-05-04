@@ -4,6 +4,7 @@ import { User } from '../models/user';
 import { UserFriends } from '../models/user-friends';
 import { UserFriendsRepositoryService } from '../repositories/user-friends-repository.service';
 import { UserRepositoryService } from '../repositories/user-repository.service';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +22,13 @@ export class UserFriendsService {
   }
 
   async addFriend(userId: string, friendId: string, userFriends: UserFriends) {
-    let user: User = await this.userRepositoryService.getUser(friendId)
-    userFriends.friends.push(user)
+    let friend: User = await this.userRepositoryService.getUser(friendId)
+    let user: User = await this.userRepositoryService.getUser(userId)
+    let friendUserFriends = await this.getUserFriends(friendId).pipe(first()).toPromise()
+    userFriends.friends.push(friend)
+    friendUserFriends.friends.push(user)
     this.userFriendsRepositoryService.updateUserFriends(userId, userFriends)
+    this.userFriendsRepositoryService.updateUserFriends(friendId, friendUserFriends)
   }
 
   async removeFriend(userId: string, friend: User, userFriends: UserFriends) {
