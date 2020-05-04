@@ -95,7 +95,6 @@ export class StatusPage implements OnInit {
         this.inboxMessagesObs.subscribe(mArr => {
             this.newMessages = 0;
             mArr.forEach(m => (this.newMessages += (m.displayed ? 0 : 1)));
-            console.log(this.newMessages);
         });
     }
 
@@ -107,10 +106,8 @@ export class StatusPage implements OnInit {
         const popover = await this.popoverController.create({
             component: NotificationPopoverComponent,
             event: ev,
-            //componentProps: {total: this.total, debt: this.debt, credit: this.credit, friend: this.selectedFriend},
             translucent: true,
         });
-        ;
 
         return popover.present();
     }

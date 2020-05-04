@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {InboxMessage} from '../../../models/inbox-message';
 import {Observable} from 'rxjs';
 import {MessagesRepositoryService} from '../../../repositories/messages-repository.service';
+import {PopoverController} from '@ionic/angular';
 
 @Component({
     selector: 'app-notification-popover',
@@ -13,7 +14,7 @@ export class NotificationPopoverComponent implements OnInit {
     messagesObs: Observable<InboxMessage[]>;
     messages: InboxMessage[];
 
-    constructor(private messagesRepositoryService: MessagesRepositoryService) {
+    constructor(private messagesRepositoryService: MessagesRepositoryService, private popoverController: PopoverController) {
     }
 
     ngOnInit() {
@@ -21,14 +22,20 @@ export class NotificationPopoverComponent implements OnInit {
             this.messagesObs = obs;
             this.messagesObs.subscribe(messagesArray => {
                 this.messages = messagesArray.reverse();
-                messagesArray.forEach(m => this.messagesRepositoryService.setMessageAsDisplayed(m));
+                // messagesArray.forEach(m => this.messagesRepositoryService.setMessageAsDisplayed(m));
             });
         });
 
     }
 
+    ionViewWillLeave() {
+        console.log(this.messages);
+        if (this.messages !== undefined) {
+            this.messages.forEach(m => this.messagesRepositoryService.setMessageAsDisplayed(m));
+        }
+    }
+
     delete(message: InboxMessage) {
-        console.log(message);
         this.messagesRepositoryService.deleteMessageOfReceiver(message);
     }
 }
