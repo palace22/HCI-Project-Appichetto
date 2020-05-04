@@ -25,7 +25,7 @@ export class CameraScanService {
   ngOnInit() { }
 
   scanFromPhoto(): Promise<Ticket> {
-    return this.getPhoto(this.camera.PictureSourceType.PHOTOLIBRARY)
+    return this.getPhoto(this.camera.PictureSourceType.CAMERA)
       .then(imageData =>
         `data:image/jpeg;base64,${imageData}`)
       .then(selectedPhoto => this.scanPhoto(selectedPhoto))
@@ -79,12 +79,13 @@ export class CameraScanService {
       console.log(element)
       product = element.slice(0, element.length - 5)
       price = parseFloat(element.slice(element.length - 5, element.length).replace(',', '.'))
-      ticket.products.push({
-        name: product,
-        price: price,
-        quantity: 1,
-        participants: []
-      })
+      if (!isNaN(price))
+        ticket.products.push({
+          name: product,
+          price: price,
+          quantity: 1,
+          participants: []
+        })
     });
     return ticket
   }

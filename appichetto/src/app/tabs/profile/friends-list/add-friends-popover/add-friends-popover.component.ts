@@ -21,7 +21,7 @@ export class AddFriendsPopoverComponent implements OnInit {
   }
 
   async searchUser() {
-    this.user = await this.userFriendsService.searchFriend(this.userId)
+    this.user = await this.userFriendsService.searchFriend(this.userId.toLowerCase())
     if (this.user) {
       this.popoverController.dismiss(this.user)
     }
