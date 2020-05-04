@@ -17,21 +17,13 @@ export class MessagesRepositoryService {
         this.messageCollection = this.firestore.collection(environment.firebaseDB.messages) as AngularFirestoreCollection<InboxMessage>;
     }
 
-    sendMessage(from: User, to: User, content: string) {
-        const message: InboxMessage = {
-            from: from.name,
-            to: to.name,
-            content: content,
-        };
-        this.messageCollection.doc(to.email).collection('inbox').doc(Date.now().toString()).set(message);
-    }
-
     async sendMessageFromLoggedUser(to: User, content: string) {
         const loggedUser = await this.loginService.getLoggedUser();
         const message: InboxMessage = {
             from: loggedUser.name,
             to: to.name,
             content: content,
+            displayed: false,
         };
         this.messageCollection.doc(to.email).collection('inbox').doc(Date.now().toString()).set(message);
     }
@@ -52,5 +44,12 @@ export class MessagesRepositoryService {
         const loggedUser = await this.loginService.getLoggedUser();
         const messageToDelete = this.messageCollection.doc(loggedUser.email).collection('inbox').doc(message.id);
         messageToDelete.delete();
+    }
+
+    async setMessageAsDisplayed(message: InboxMessage) {
+        const loggedUser = await this.loginService.getLoggedUser();
+        const messageUpdated = this.messageCollection.doc(loggedUser.email).collection('inbox').doc(message.id);
+        message.displayed = true;
+        messageUpdated.update(message);
     }
 }

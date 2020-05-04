@@ -5,4 +5,5 @@ export class InboxMessage{
     from: string;
     to: string;
     content: string;
+    displayed: boolean;
 }
