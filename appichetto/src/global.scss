@@ -27,10 +27,12 @@
 
 .selected-card {
   box-shadow: 0 1px 50px rgba(0, 0, 0, 0.4);
+  background-color: var(--ion-color-primary)
+
 }
 .unselected-card {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  background-color: #e9e9e9;
+  background-color: var(--ion-color-secondary-contrast)
 }
 
 .avatar {
@@ -42,11 +44,37 @@ ion-fab-button {
 }
 
 ion-segment-button {
-  --color-checked: black;
-  --color-focused: #6e6e6e;
-  --color-hover: #6e6e6e;
 }
 
 ion-fab-button{
   transform: scale(0.7);
 }
+
+ion-toolbar{
+  --color: var(--ion-color-primary);
+  --background: var(--ion-color-secondary);
+
+}
+
+ion-tab-bar{
+  --color-activated: var(--ion-color-primary);
+  --color: var(--ion-color-medium-tint);
+  --background: var(--ion-color-secondary);
+}
+
+ion-content{
+  --background: var(--ion-color-secondary-contrast);
+}
+
+ion-item{
+  --background: var(--ion-color-secondary-contrast);
+}
+
+ion-list{
+  --ion-background-color: transparent !important;
+}
+
+ion-footer{
+  background: var(--ion-color-secondary-contrast);
+}
+

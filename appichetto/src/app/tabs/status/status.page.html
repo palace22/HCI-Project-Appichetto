@@ -38,8 +38,7 @@
         <ion-avatar item-start>
           <ion-img [src]="friend.photoUrl"></ion-img>
         </ion-avatar>
-        <ion-item>{{ friend.name }}</ion-item>
-        <div slot="end">
+        <ion-item style="--ion-border-color: transparent;">{{ friend.name }}</ion-item>
           <ion-list slot="end">
             <ion-text color="danger">
               Debt: -{{ debts[friend.email] }}€<br />
@@ -51,7 +50,6 @@
               Total = {{ total[friend.email] }}€
             </ion-text>
           </ion-list>
-        </div>
       </ion-item>
     </ion-list>
   </div>
