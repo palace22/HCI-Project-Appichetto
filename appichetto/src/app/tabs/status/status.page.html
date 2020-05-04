@@ -6,9 +6,10 @@
       slot="end"
       (click)="presentNotificationPopover($event)"
     >
-      <ion-button>
+      <ion-fab-button style="z-index: 1">
         <ion-icon name="notifications-outline" size="large"></ion-icon>
-      </ion-button>
+      </ion-fab-button>
+        <ion-badge color="danger" *ngIf="newMessages != 0">{{ this.newMessages }}</ion-badge>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -41,14 +42,13 @@
         <div slot="end">
           <ion-list slot="end">
             <ion-text color="danger">
-              Debt: -{{ debts[friend.email].toFixed(2) }}€<br />
+              Debt: -{{ debts[friend.email] }}€<br />
             </ion-text>
             <ion-text color="success">
-              Credit: +{{ credits[friend.email].toFixed(2) }}€<br />
+              Credit: +{{ credits[friend.email] }}€<br />
             </ion-text>
             <ion-text>
-              Total = {{ (-debts[friend.email] +
-              credits[friend.email]).toFixed(2)}}€
+              Total = {{ total[friend.email] }}€
             </ion-text>
           </ion-list>
         </div>

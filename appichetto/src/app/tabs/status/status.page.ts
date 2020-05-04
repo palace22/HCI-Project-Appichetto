@@ -12,6 +12,8 @@ import {DebtTicket} from '../../models/ticket';
 import {NotificationService} from '../../services/notification.service';
 import {PayPopoverComponent} from './friend-tickets/pay-popover/pay-popover.component';
 import {NotificationPopoverComponent} from './notification-popover/notification-popover.component';
+import {InboxMessage} from '../../models/inbox-message';
+import {MessagesRepositoryService} from '../../repositories/messages-repository.service';
 
 
 @Component({
@@ -23,15 +25,27 @@ import {NotificationPopoverComponent} from './notification-popover/notification-
 export class StatusPage implements OnInit {
     userFriendsObs: Observable<UserFriends>;
     userFriends: UserFriends;
+
     debts = {};
     credits = {};
+    total = {}
+
     noFriends = false;
     user: User;
+
+    newMessages = 0;
+
     private ticketsByFriendObs: Observable<DebtTicket[]>;
     private ticketsByMeObs: Observable<DebtTicket[]>;
+    private inboxMessagesObs: Observable<InboxMessage[]>;
 
 
-    constructor(private userFriendsService: UserFriendsService, private ticketService: TicketService, private loginService: LoginService, private router: Router, private popoverController: PopoverController) {
+    constructor(private userFriendsService: UserFriendsService,
+                private ticketService: TicketService,
+                private loginService: LoginService,
+                private router: Router,
+                private popoverController: PopoverController,
+                private messagesRepositoryService: MessagesRepositoryService) {
     }
 
     async ngOnInit() {
@@ -49,17 +63,32 @@ export class StatusPage implements OnInit {
                     this.ticketsByFriendObs = await this.ticketService.getDebtTicketsOf(user);
                     this.ticketsByFriendObs.subscribe(tArr => {
                         this.debts[user.email] = 0.0;
+                        this.total[user.email] = 0.0;
+
                         tArr.forEach(t => this.debts[user.email] += (t.totalPrice - t.paidPrice));
+                        this.total[user.email] -= this.debts[user.email]
+                        this.debts[user.email] = this.debts[user.email].toFixed(2);
                     });
 
                     this.ticketsByMeObs = await this.ticketService.getCreditTicketsFrom(user);
                     this.ticketsByMeObs.subscribe(tArr => {
                         this.credits[user.email] = 0.0;
                         tArr.forEach(t => this.credits[user.email] += (t.totalPrice - t.paidPrice));
+                        this.total[user.email] += this.credits[user.email]
+                        this.total[user.email] = this.total[user.email].toFixed(2);
+                        this.credits[user.email] = this.credits[user.email].toFixed(2);
+
                     });
+
                 }
                 this.noFriends = this.userFriends.friends.length === 0;
             }
+        });
+        this.inboxMessagesObs = await this.messagesRepositoryService.retrieveLoggedUserInbox();
+        this.inboxMessagesObs.subscribe(mArr => {
+            this.newMessages = 0;
+            mArr.forEach(m => (this.newMessages += (m.displayed  ? 0 : 1)));
+            console.log(this.newMessages);
         });
     }
 
@@ -74,7 +103,9 @@ export class StatusPage implements OnInit {
             //componentProps: {total: this.total, debt: this.debt, credit: this.credit, friend: this.selectedFriend},
             translucent: true,
         });
-        return await popover.present();
+        ;
+
+        return popover.present();
     }
 
 }
