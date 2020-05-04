@@ -9,7 +9,7 @@
       <ion-fab-button style="z-index: 1">
         <ion-icon name="notifications-outline" size="large"></ion-icon>
       </ion-fab-button>
-        <ion-badge color="danger" *ngIf="newMessages != 0">{{ this.newMessages }}</ion-badge>
+      <ion-badge color="danger" *ngIf="this.inboxMessagesObs | async"><span *ngIf="newMessages !== 0">{{ this.newMessages }}</span></ion-badge>
     </div>
   </ion-toolbar>
 </ion-header>

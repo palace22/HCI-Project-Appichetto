@@ -28,7 +28,7 @@ export class StatusPage implements OnInit {
 
     debts = {};
     credits = {};
-    total = {}
+    total = {};
 
     noFriends = false;
     user: User;
@@ -48,6 +48,13 @@ export class StatusPage implements OnInit {
                 private messagesRepositoryService: MessagesRepositoryService) {
     }
 
+    updateTotals(user: User) {
+        this.total[user.email] = 0.0;
+        this.total[user.email] -= parseFloat(this.debts[user.email]);
+        this.total[user.email] += parseFloat(this.credits[user.email]);
+        this.total[user.email] = this.total[user.email].toFixed(2);
+    }
+
     async ngOnInit() {
         // federico.vaccaro@stud.unifi.it
         // palazzolo1995@gmail.com
@@ -63,21 +70,21 @@ export class StatusPage implements OnInit {
                     this.ticketsByFriendObs = await this.ticketService.getDebtTicketsOf(user);
                     this.ticketsByFriendObs.subscribe(tArr => {
                         this.debts[user.email] = 0.0;
-                        this.total[user.email] = 0.0;
 
                         tArr.forEach(t => this.debts[user.email] += (t.totalPrice - t.paidPrice));
-                        this.total[user.email] -= this.debts[user.email]
                         this.debts[user.email] = this.debts[user.email].toFixed(2);
+
+                        this.updateTotals(user);
                     });
 
                     this.ticketsByMeObs = await this.ticketService.getCreditTicketsFrom(user);
                     this.ticketsByMeObs.subscribe(tArr => {
                         this.credits[user.email] = 0.0;
+
                         tArr.forEach(t => this.credits[user.email] += (t.totalPrice - t.paidPrice));
-                        this.total[user.email] += this.credits[user.email]
-                        this.total[user.email] = this.total[user.email].toFixed(2);
                         this.credits[user.email] = this.credits[user.email].toFixed(2);
 
+                        this.updateTotals(user);
                     });
 
                 }
@@ -87,7 +94,7 @@ export class StatusPage implements OnInit {
         this.inboxMessagesObs = await this.messagesRepositoryService.retrieveLoggedUserInbox();
         this.inboxMessagesObs.subscribe(mArr => {
             this.newMessages = 0;
-            mArr.forEach(m => (this.newMessages += (m.displayed  ? 0 : 1)));
+            mArr.forEach(m => (this.newMessages += (m.displayed ? 0 : 1)));
             console.log(this.newMessages);
         });
     }
