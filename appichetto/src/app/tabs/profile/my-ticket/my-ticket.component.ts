@@ -3,13 +3,13 @@ import { DebtTicket } from 'src/app/models/ticket';
 import { TicketService } from 'src/app/services/ticket.service';
 
 @Component({
-  selector: 'app-paid-ticket',
-  templateUrl: './paid-ticket.component.html',
-  styleUrls: ['./paid-ticket.component.scss'],
+  selector: 'app-my-ticket',
+  templateUrl: './my-ticket.component.html',
+  styleUrls: ['./my-ticket.component.scss'],
 })
-export class PaidTicketComponent implements OnInit {
+export class MyTicketComponent implements OnInit {
 
-  paidTickets: DebtTicket[]
+  myTickets: DebtTicket[]
   selectedTicketTimestamp: number
 
   constructor(
@@ -17,7 +17,7 @@ export class PaidTicketComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.paidTickets = await this.ticketService.getPaidTicketsOfLoggedUser()
+    this.myTickets = await this.ticketService.getPartialTicketsOfLoggedUser()
   }
 
   getDate(date: string) {
@@ -34,4 +34,5 @@ export class PaidTicketComponent implements OnInit {
     else
       this.selectedTicketTimestamp = ticket.timestamp
   }
+
 }

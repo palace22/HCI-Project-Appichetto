@@ -7,6 +7,7 @@ import { TicketHistoryComponent } from './profile/ticket-history/ticket-history.
 import { SplitTicketPage } from '../components/split-ticket/split-ticket.page';
 import { PaidTicketComponent } from './profile/paid-ticket/paid-ticket.component';
 import { CameraScanComponent } from '../components/camera-scan/camera-scan.component';
+import { MyTicketComponent } from './profile/my-ticket/my-ticket.component';
 
 const routes: Routes = [
     {
@@ -71,6 +72,10 @@ const routes: Routes = [
                     {
                         path: 'friends-list',
                         component: FriendsListComponent,
+                    },
+                    {
+                        path: 'my-ticket',
+                        component: MyTicketComponent,
                     },
                     {
                         path: 'paid-ticket',

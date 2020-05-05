@@ -15,6 +15,7 @@ import { SplitTicketPage } from '../../components/split-ticket/split-ticket.page
 import { TicketProductComponent } from 'src/app/components/split-ticket/ticket-product/ticket-product.component';
 import { PaidTicketComponent } from './paid-ticket/paid-ticket.component';
 import { ExpandableComponent } from '../status/expandable/expandable.component';
+import { MyTicketComponent } from './my-ticket/my-ticket.component';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { ExpandableComponent } from '../status/expandable/expandable.component';
     SplitTicketPage,
     TicketProductComponent,
     PaidTicketComponent,
+    MyTicketComponent,
     ExpandableComponent,
   ],
   providers: [

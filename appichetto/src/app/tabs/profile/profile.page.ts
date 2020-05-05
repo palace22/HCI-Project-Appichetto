@@ -36,6 +36,10 @@ export class ProfilePage {
     this.router.navigateByUrl('tabs/profile/ticket-history')
   }
 
+  goToMyTicket() {
+    this.router.navigateByUrl('tabs/profile/my-ticket')
+  }
+
   goToPaidTicket() {
     this.router.navigateByUrl('tabs/profile/paid-ticket')
   }

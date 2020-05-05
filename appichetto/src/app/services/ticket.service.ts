@@ -114,6 +114,11 @@ export class TicketService {
         });
     }
 
+    async getPartialTicketsOfLoggedUser(): Promise<DebtTicket[]>{
+        const loggedUser: User = await this.loginService.getLoggedUser();
+        return await this.ticketRepositoryService.getDebtTicketsOf(loggedUser, loggedUser).pipe(first()).toPromise();
+    }
+
     async payAllDebtTicketTo(receivingUser: User) {
         // first pay all ticket to
         const ticketsByFriendObs: Observable<DebtTicket[]> = await this.getDebtTicketsOf(receivingUser);
