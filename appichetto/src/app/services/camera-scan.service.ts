@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { Camera, PictureSourceType } from '@ionic-native/camera/ngx'
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, ToastController } from '@ionic/angular';
 import * as Tesseract from 'tesseract.js'
 import { Ticket } from 'src/app/models/ticket';
 import { of } from 'rxjs';
@@ -20,9 +20,14 @@ export class CameraScanService {
   constructor(
     private actionSheetCtrl: ActionSheetController,
     private camera: Camera,
+    public toastController: ToastController,
   ) { }
 
   ngOnInit() { }
+
+  ionViewWillLeave() {
+    this.toastController.dismiss()
+  }
 
   scanFromPhoto(): Promise<Ticket> {
     return this.getPhoto(this.camera.PictureSourceType.CAMERA)

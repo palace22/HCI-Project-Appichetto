@@ -51,9 +51,7 @@ export class ImportTicketPage {
     })
   }
 
-  ionViewWillLeave() {
-    this.toastController.dismiss()
-  }
+
 
   @ViewChild(IonSlides, { static: false }) slides: IonSlides;
   slidePrev() {
