@@ -16,10 +16,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    toggleDarkTheme(prefersDark.matches);
-    prefersDark.addListener((mediaQuery) => toggleDarkTheme(mediaQuery.matches));
-
+    toggleDarkTheme(localStorage.getItem('enableDark') === 'true')
     this.initializeApp();
   }
 

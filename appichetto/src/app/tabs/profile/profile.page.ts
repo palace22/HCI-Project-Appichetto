@@ -16,9 +16,13 @@ export class ProfilePage {
     photoUrl: "",
   }
 
-  constructor(private router: Router, private loginService: LoginService, private ticketService: TicketService) { }
+  checked: boolean
+
+  constructor(private router: Router, private loginService: LoginService, private ticketService: TicketService) {
+  }
 
   async ngOnInit() {
+    this.checked = localStorage.getItem('enableDark') === 'true'
     try {
       this.user = await this.loginService.getLoggedUser()
     } catch (error) {
@@ -47,5 +51,6 @@ export class ProfilePage {
 
   enableDark($event) {
     toggleDarkTheme($event.detail.checked)
+    localStorage.setItem('enableDark', $event.detail.checked)
   }
 }
