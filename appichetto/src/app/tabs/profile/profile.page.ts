@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { LoginService } from 'src/app/services/login.service';
 import { TicketService } from 'src/app/services/ticket.service';
+import { toggleDarkTheme } from 'src/util/utils';
 
 @Component({
   selector: 'app-profile',
@@ -44,7 +45,7 @@ export class ProfilePage {
     this.router.navigateByUrl('tabs/profile/paid-ticket')
   }
 
-  test() {
-    this.ticketService.getPaidTicketsOfLoggedUser()
+  enableDark($event) {
+    toggleDarkTheme($event.detail.checked)
   }
 }

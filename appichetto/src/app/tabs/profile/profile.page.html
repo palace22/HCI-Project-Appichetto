@@ -3,6 +3,7 @@
     <ion-title>
       Profile
     </ion-title>
+    <ion-toggle slot="end" (ionChange)="enableDark($event)"></ion-toggle>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +14,6 @@
     </ion-avatar>
     <ion-title>{{user.name}}</ion-title>
   </ion-item>
-
   <ion-list>
     <ion-item>
       <ion-label (click)="goToAddFriends()">Friends</ion-label>
@@ -31,7 +31,5 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button expand="block" class="xc" (click)="logout()"
-    >LOGOUT</ion-button
-  >
+  <ion-button expand="block" class="xc" (click)="logout()">LOGOUT</ion-button>
 </ion-footer>
