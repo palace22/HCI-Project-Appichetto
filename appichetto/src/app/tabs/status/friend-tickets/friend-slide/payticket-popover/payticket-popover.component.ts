@@ -40,9 +40,9 @@ export class PayticketPopoverComponent implements OnInit {
             const ticketDate = new Date(this.ticket.timestamp);
             let content: string;
             if (this.debtSelected) {
-                content = 'The ticket ' + ticketDate.getDate() + '/' + ticketDate.getMonth() + '/' + ticketDate.getFullYear() + ' has been paid for ' + this.ticket.totalPrice + '€';
+                content = 'The ticket ' + ticketDate.getDate() + '/' + ticketDate.getMonth() + '/' + ticketDate.getFullYear() + ' has been paid for ' + this.ticket.totalPrice.toFixed(2) + '€';
             } else {
-                content = 'The ticket ' + ticketDate.getDate() + '/' + ticketDate.getMonth() + '/' + ticketDate.getFullYear() + ' has been marked as paid, for ' + this.ticket.totalPrice + '€';
+                content = 'The ticket ' + ticketDate.getDate() + '/' + ticketDate.getMonth() + '/' + ticketDate.getFullYear() + ' has been marked as paid, for ' + this.ticket.totalPrice.toFixed(2) + '€';
             }
             this.messagesRepositoryService.sendMessageFromLoggedUser(this.friend, content);
         }, 1000);
