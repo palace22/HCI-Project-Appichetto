@@ -46,7 +46,7 @@ export class FriendSlideComponent implements OnInit {
         // this.ticketsByFriend = this.ticketService.getTicketBoughtByWithParticipant(this.friend, this.loggedUser);
         this.ticketsByFriendObs = await this.ticketService.getDebtTicketsOf(this.friend);
         this.ticketsByFriendObs.subscribe(tArr => {
-            this.ticketsByFriend = tArr;
+            this.ticketsByFriend = tArr.reverse();
             this.debt = 0.0;
             this.ticketsByFriend.forEach(t => this.debt += (t.totalPrice - t.paidPrice));
             this.debtCreditTotalSubject.next({debt: this.debt, credit: this.credit, total: this.credit - this.debt});
@@ -58,7 +58,7 @@ export class FriendSlideComponent implements OnInit {
 
         this.ticketsByMeObs = await this.ticketService.getCreditTicketsFrom(this.friend);
         this.ticketsByMeObs.subscribe(tArr => {
-            this.ticketsByMe = tArr;
+            this.ticketsByMe = tArr.reverse();
             this.credit = 0.0;
             this.ticketsByMe.forEach(t => this.credit += (t.totalPrice - t.paidPrice));
             this.debtCreditTotalSubject.next({debt: this.debt, credit: this.credit, total: this.credit - this.debt});
