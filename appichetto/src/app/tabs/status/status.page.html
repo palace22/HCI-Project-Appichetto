@@ -37,7 +37,7 @@
   <div *ngIf="userFriendsObs | async">
     <ion-list>
       <ion-card *ngFor="let friend of userFriends.friends; index as index"
-      (click)="goToFriendTicket(index)">
+      (click)="goToFriendTickets(friend)">
         <ion-item
           button
         >

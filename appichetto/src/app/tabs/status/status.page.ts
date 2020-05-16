@@ -98,8 +98,9 @@ export class StatusPage implements OnInit {
         });
     }
 
-    goToFriendTicket(index) {
-        this.router.navigateByUrl('tabs/status/friend-tickets', {state: {friendIndex: index}});
+    goToFriendTickets(friend: User) {
+        console.log(friend);
+        this.router.navigateByUrl('tabs/status/friend-tickets', {state: {friend: friend}});
     }
 
     async presentNotificationPopover(ev: any) {

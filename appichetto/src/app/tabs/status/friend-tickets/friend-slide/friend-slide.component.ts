@@ -17,6 +17,9 @@ export class FriendSlideComponent implements OnInit {
     @Input()
     private friend: User;
 
+    @Input()
+    private debtSelected: boolean;
+
 
     ticketsByFriendObs: Observable<DebtTicket[]>;
     ticketsByFriend: DebtTicket[];
@@ -30,20 +33,16 @@ export class FriendSlideComponent implements OnInit {
 
     selectedTicketTimestamp: number;
 
-    private debtsSelected: boolean;
-
     @Input()
     private loggedUser: User;
     private debt = 0.0;
     private credit = 0.0;
 
     constructor(private ticketService: TicketService, private popoverController: PopoverController) {
-        this.debtsSelected = true;
         this.debtCreditTotalSubject = new BehaviorSubject<any>({debt: 0.0, credit: 0.0, total: 0.0});
     }
 
     async ngOnInit() {
-
         // this.ticketsByFriend = this.ticketService.getTicketBoughtByWithParticipant(this.friend, this.loggedUser);
         this.ticketsByFriendObs = await this.ticketService.getDebtTicketsOf(this.friend);
         this.ticketsByFriendObs.subscribe(tArr => {
@@ -72,6 +71,8 @@ export class FriendSlideComponent implements OnInit {
 
     }
 
+
+
     getFriend() {
         return this.friend;
     }
@@ -84,20 +85,20 @@ export class FriendSlideComponent implements OnInit {
         }
     }
 
-    segmentChanged(ev: any) {
-        if (ev.detail.valueOf().value === 'debts') {
-            this.debtsSelected = true;
-        } else {
-            this.debtsSelected = false;
-        }
-    }
+    // segmentChanged(ev: any) {
+    //     if (ev.detail.valueOf().value === 'debts') {
+    //         this.debtsSelected = true;
+    //     } else {
+    //         this.debtsSelected = false;
+    //     }
+    // }
 
     async presentPopover(ev: any, ticket: DebtTicket) {
         const popover = await this.popoverController.create({
             component: PayticketPopoverComponent,
             event: ev,
             // componentProps: {total: this.total, debt: this.debt, credit: this.credit, friend: this.selectedFriend},
-            componentProps: {ticket: ticket, friend: this.friend, debtSelected: this.debtsSelected},
+            componentProps: {ticket: ticket, friend: this.friend, debtSelected: this.debtSelected},
             translucent: true,
         });
         return await popover.present();

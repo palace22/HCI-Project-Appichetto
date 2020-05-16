@@ -42,7 +42,8 @@ ion-fab-button {
   margin: auto;
 }
 
-ion-segment-button {
+ion-segment {
+  --background: var(--ion-color-secondary-contrast);
 }
 
 ion-fab-button {
