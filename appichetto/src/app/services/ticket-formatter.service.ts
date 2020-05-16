@@ -60,14 +60,16 @@ export class TicketFormatterService {
     }
 
     //Final insert
-    for (let index = 0; index < productArray.length; index++)
-      ticket.products.push(
-        {
-          name: productArray[index],
-          price: priceArray[index],
-          quantity: 1,
-          participants: []
-        })
+    for (let index = 0; index < productArray.length; index++) {
+      if (!Number.isNaN(priceArray[index]))
+        ticket.products.push(
+          {
+            name: productArray[index],
+            price: priceArray[index],
+            quantity: 1,
+            participants: []
+          })
+    }
 
     ticket.totalPrice = 0
     for (let index = 0; index < ticket.products.length; index++) {
