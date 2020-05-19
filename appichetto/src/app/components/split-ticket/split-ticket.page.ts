@@ -4,7 +4,7 @@ import { Ticket } from 'src/app/models/ticket';
 import { Router } from '@angular/router';
 import { plainToClass } from 'class-transformer';
 import { User } from 'src/app/models/user';
-import {IonSelect, NavController, ToastController} from '@ionic/angular';
+import { IonSelect, NavController, ToastController } from '@ionic/angular';
 import { RetrieveTicketService } from 'src/app/services/retrieve-ticket.service';
 import { TicketService } from 'src/app/services/ticket.service';
 
@@ -42,7 +42,7 @@ export class SplitTicketPage implements OnInit {
   }
 
   productIsReady(): boolean {
-    return this.newProduct.name !== (undefined && '') && this.newProduct.price !== (undefined && '');
+    return (this.newProduct.name !== (undefined && '')) && (this.newProduct.price !== (undefined && ''));
   }
 
   addProduct() {
