@@ -22,13 +22,23 @@ export class UserFriendsService {
   }
 
   async addFriend(userId: string, friendId: string, userFriends: UserFriends) {
-    let friend: User = await this.userRepositoryService.getUser(friendId)
+    let newFriend: User = await this.userRepositoryService.getUser(friendId)
     let user: User = await this.userRepositoryService.getUser(userId)
     let friendUserFriends = await this.getUserFriends(friendId).pipe(first()).toPromise()
-    userFriends.friends.push(friend)
-    friendUserFriends.friends.push(user)
-    this.userFriendsRepositoryService.updateUserFriends(userId, userFriends)
-    this.userFriendsRepositoryService.updateUserFriends(friendId, friendUserFriends)
+
+    if (userFriends.friends.findIndex(friend => friend.email === user.email) === -1)
+      throw Error("Can't add this user")
+
+    if (userFriends.friends.findIndex(friend => friend.email === newFriend.email) === -1) {
+      userFriends.friends.push(newFriend)
+      this.userFriendsRepositoryService.updateUserFriends(userId, userFriends)
+    } else
+      throw Error("Can't add this user")
+
+    if (friendUserFriends.friends.findIndex(friend => friend.email === user.email) === -1) {
+      friendUserFriends.friends.push(user)
+      this.userFriendsRepositoryService.updateUserFriends(friendId, friendUserFriends)
+    }
   }
 
   async removeFriend(userId: string, friend: User, userFriends: UserFriends) {

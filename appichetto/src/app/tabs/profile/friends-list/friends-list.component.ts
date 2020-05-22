@@ -5,7 +5,7 @@ import { User } from 'src/app/models/user';
 import { UserFriends } from 'src/app/models/user-friends';
 import { UserFriendsService } from 'src/app/services/user-friends.service';
 import { AddFriendsPopoverComponent } from './add-friends-popover/add-friends-popover.component';
-import {LoginService} from '../../../services/login.service';
+import { LoginService } from '../../../services/login.service';
 
 @Component({
   selector: 'app-friends-list',
@@ -47,13 +47,10 @@ export class FriendsListComponent implements OnInit {
     popover.present().then(() =>
       popover.onDidDismiss().then(async data => {
         let newFriend = data.data as User
-        if (this.userFriends.friends === undefined || this.userFriends.friends.findIndex(friend => friend.email === newFriend.email) === -1) {
-          await this.presentToast("Added correctly")
-          await this.userFriendsService.addFriend(this.loggedUserEmail, newFriend.email, this.userFriends)
-        } else {
-          await this.presentToast("Can't add this user")
-        }
-
+        const app = this
+        this.userFriendsService.addFriend(this.loggedUserEmail, newFriend.email, this.userFriends)
+          .then(a => this.presentToast("Added correctly"))
+          .catch(e => this.presentToast("Can't add this user"))
       })
     )
   }
