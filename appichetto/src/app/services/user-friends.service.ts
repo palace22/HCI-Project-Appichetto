@@ -26,7 +26,7 @@ export class UserFriendsService {
     let user: User = await this.userRepositoryService.getUser(userId)
     let friendUserFriends = await this.getUserFriends(friendId).pipe(first()).toPromise()
 
-    if (userFriends.friends.findIndex(friend => friend.email === user.email) === -1)
+    if (newFriend.email === user.email)
       throw Error("Can't add this user")
 
     if (userFriends.friends.findIndex(friend => friend.email === newFriend.email) === -1) {
