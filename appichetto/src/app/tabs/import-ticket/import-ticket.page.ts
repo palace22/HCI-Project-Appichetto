@@ -22,6 +22,7 @@ export class ImportTicketPage {
   method: string
   methodObs: Subject<string> = new Subject()
   participants: User[]
+  scanningToastIsActive: boolean
 
   constructor(
     private loginService: LoginService,
@@ -51,7 +52,12 @@ export class ImportTicketPage {
     })
   }
 
-
+  ionViewWillLeave() {
+    if (this.scanningToastIsActive) {
+      this.scanningToastIsActive = false
+      this.toastController.dismiss()
+    }
+  }
 
   @ViewChild(IonSlides, { static: false }) slides: IonSlides;
   slidePrev() {
@@ -72,15 +78,19 @@ export class ImportTicketPage {
       this.navigateToSplitTicket(ticket)
 
     if (this.method === "camera") {
-      this.presentToast("Attend... scanning ticket...", 99999999)
-      this.cameraScanService.scanFromPhoto().then(scannedTicket => {
+      this.cameraScanService.scanFromPhoto(this, this.showToast).then(scannedTicket => {
+        this.scanningToastIsActive = true
         ticket.products = scannedTicket.products
         this.toastController.dismiss()
         this.navigateToSplitTicket(ticket)
-      })
+      }).catch(e => this.presentToast("Cannot use camera in this device", 2000))
     }
 
     //await this.router.navigateByUrl('tabs/ticket/camera')
+  }
+
+  showToast(app) {
+    app.presentToast("Attend... scanning ticket...", 99999999)
   }
 
   async readPdf($event) {

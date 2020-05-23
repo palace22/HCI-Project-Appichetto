@@ -29,10 +29,12 @@ export class CameraScanService {
     this.toastController.dismiss()
   }
 
-  scanFromPhoto(): Promise<Ticket> {
+  scanFromPhoto(parent, showToast): Promise<Ticket> {
     return this.getPhoto(this.camera.PictureSourceType.CAMERA)
-      .then(imageData =>
-        `data:image/jpeg;base64,${imageData}`)
+      .then(imageData => {
+        showToast(parent)
+        return `data:image/jpeg;base64,${imageData}`
+      })
       .then(selectedPhoto => this.scanPhoto(selectedPhoto))
       .then(scannedArray => {
         return this.formatItems(scannedArray)
