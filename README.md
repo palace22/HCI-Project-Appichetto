@@ -31,7 +31,9 @@ boring and error prone where there are a lot of items to differently share among
 
 
 # Project Documents
-*Put links here to the **final report** and **presentation** for the project when finished.*
+- The report is __HCI.pdf__
+- The presentation is in progress
+
 
 # Bibliography
 *Be sure to include any relevant links to tools or bibliographic references to the literature.*
